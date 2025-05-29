@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FCFCF4;
+  --foreground: #000000;
+}
+
+.font-gartis {
+  font-family: var(--gartis), var(--inter);
+}
+
+.font-inter {
+  font-family: var(--inter);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--inter);
+}
+
