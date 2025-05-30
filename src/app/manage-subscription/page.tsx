@@ -41,8 +41,9 @@ export default function ManageSubscription() {
       }
 
       setSuccess(true)
-    } catch (err: any) {
-      setError(err.message || "An error occurred while canceling your subscription")
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "An error occurred while canceling your subscription";
+      setError(errorMessage);
     } finally {
       setLoading(false)
     }

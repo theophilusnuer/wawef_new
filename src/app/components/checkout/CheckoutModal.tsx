@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { XMarkIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { loadStripe, StripeEmbeddedCheckout } from "@stripe/stripe-js";
 import ThankYouModal from "./ThankYouModal";
@@ -51,41 +51,42 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     setStep(1);
   };
 
+  const fetchSessionId = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          amount: amount,
+          type,
+          donationMode,
+          programTitle,
+          paymentMethod: "card",
+          country,
+        }),
+      });
+      const result = await response.json();
+      if (result.error) {
+        setError(result.error);
+        setLoading(false);
+        return;
+      }
+      setSessionId(result.sessionId);
+      setClientSecret(result.clientSecret);
+      setDonationId(result.donationId);
+      setLoading(false);
+    } catch (err: unknown) {
+      setError("Failed to initialize payment session. Please try again.");
+      console.error("Error in fetchSessionId:", err);
+      setLoading(false);
+    }
+  }, [name, email, amount, type, donationMode, programTitle, country]);
+
   useEffect(() => {
     if (isOpen && step === 2) {
-      const fetchSessionId = async () => {
-        try {
-          setLoading(true);
-          const response = await fetch("/api/checkout-session", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name,
-              email,
-              amount: amount,
-              type,
-              donationMode,
-              programTitle,
-              paymentMethod: "card",
-              country,
-            }),
-          });
-          const result = await response.json();
-          if (result.error) {
-            setError(result.error);
-            setLoading(false);
-            return;
-          }
-          setSessionId(result.sessionId);
-          setClientSecret(result.clientSecret);
-          setDonationId(result.donationId);
-          setLoading(false);
-        } catch (err: any) {
-          setError("Failed to initialize payment session. Please try again.");
-          console.error("Error in fetchSessionId:", err);
-          setLoading(false);
-        }
-      };
       fetchSessionId();
       const initializeStripe = async () => {
         await stripePromise;
@@ -108,10 +109,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         setStep(1);
       }
     };
-  }, [isOpen, amount, type, donationMode, programTitle, country, step]);
+  }, [isOpen, step, fetchSessionId]);
 
   useEffect(() => {
-    if (stripeReady && clientSecret && checkoutRef.current) {
+    // Capture ref values at the top of the effect
+    const currentCheckoutRef = checkoutRef.current;
+    const currentCheckoutInstance = checkoutInstanceRef.current;
+
+    if (stripeReady && clientSecret && currentCheckoutRef) {
       const initializeCheckout = async () => {
         const stripe = await stripePromise;
         if (!stripe) {
@@ -119,8 +124,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         }
 
         try {
-          if (checkoutInstanceRef.current) {
-            checkoutInstanceRef.current.destroy();
+          if (currentCheckoutInstance) {
+            currentCheckoutInstance.destroy();
             checkoutInstanceRef.current = null;
           }
 
@@ -130,8 +135,8 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
 
           checkoutInstanceRef.current = checkout;
 
-          if (checkoutRef.current) {
-            checkout.mount(checkoutRef.current);
+          if (currentCheckoutRef) {
+            checkout.mount(currentCheckoutRef);
           }
         } catch (err: unknown) {
           setError("Failed to load payment form. Please try again.");
@@ -143,12 +148,12 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     }
 
     return () => {
-      if (checkoutInstanceRef.current) {
-        checkoutInstanceRef.current.destroy();
+      if (currentCheckoutInstance) {
+        currentCheckoutInstance.destroy();
         checkoutInstanceRef.current = null;
       }
-      if (checkoutRef.current) {
-        checkoutRef.current.innerHTML = "";
+      if (currentCheckoutRef) {
+        currentCheckoutRef.innerHTML = "";
       }
     };
   }, [stripeReady, clientSecret]);
@@ -168,7 +173,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
             setError("Payment session expired. Please try again.");
             setLoading(false);
           }
-        } catch (err: any) {
+        } catch (err: unknown) {
           setError("Failed to verify payment status. Please try again.");
           console.error("Error in checkDonationStatus:", err);
           setLoading(false);

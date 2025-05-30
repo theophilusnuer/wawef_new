@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import Donation from "@/models/Donation";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: "2025-04-30.basil", 
+});
 
 export async function GET(request: Request) {
   try {
@@ -18,8 +23,9 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.json({ status: donation.status });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error checking donation status:", error);
-    return NextResponse.json({ error: "Failed to check donation status" }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : "Failed to check donation status";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

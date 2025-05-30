@@ -6,7 +6,7 @@ import transporter from "@/app/utils/Transporter";
 import { emailTemplates } from "@/lib/emailTemplates";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2023-10-16",
+  apiVersion: "2025-04-30.basil", 
 });
 
 export async function POST(request: Request) {
@@ -22,9 +22,10 @@ export async function POST(request: Request) {
   try {
     const body = await request.text();
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
-  } catch (err: any) {
-    console.error("Webhook signature verification failed:", err.message);
-    return NextResponse.json({ error: "Webhook Error: Invalid signature" }, { status: 400 });
+  } catch (err: unknown) {
+    console.error("Webhook signature verification failed:", err);
+    const errorMessage = err instanceof Error ? err.message : "Webhook Error: Invalid signature";
+    return NextResponse.json({ error: errorMessage }, { status: 400 });
   }
 
   await connectToDatabase();
@@ -76,8 +77,9 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ received: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error processing webhook:", error);
-    return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : "Webhook processing failed";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

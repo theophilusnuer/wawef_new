@@ -20,7 +20,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-emoji-render": "^2.0.1",
-    "stripe": "^14.25.0"
+    "stripe": "18.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

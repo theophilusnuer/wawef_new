@@ -11,7 +11,7 @@ interface CachedConnection {
   promise: Promise<typeof mongoose> | null;
 }
 
-let cached: CachedConnection = { conn: null, promise: null };
+const cached: CachedConnection = { conn: null, promise: null }; // Changed 'let' to 'const'
 
 export async function connectToDatabase(): Promise<typeof mongoose> {
   if (cached.conn) {

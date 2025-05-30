@@ -4,7 +4,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 import Donation from "@/models/Donation";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2023-10-16",
+  apiVersion: "2025-04-30.basil", // Updated from 2023-10-16 to match webhook version
 });
 
 export async function POST(request: Request) {
@@ -136,8 +136,9 @@ export async function POST(request: Request) {
         donationId: donation._id,
       });
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error in checkout-session API:", error);
-    return NextResponse.json({ error: error.message || "Failed to create checkout session" }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : "Failed to create checkout session";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
