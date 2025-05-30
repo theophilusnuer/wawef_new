@@ -2,67 +2,82 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { connectToDatabase } from "@/lib/mongodb";
 import Donation from "@/models/Donation";
-import { buffer } from "micro";
+import transporter from "@/app/utils/Transporter";
+import { emailTemplates } from "@/lib/emailTemplates";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2023-10-16",
 });
 
-export const config = {
-  api: {
-    bodyParser: false, // Disable body parsing to handle raw body for Stripe signature verification
-  },
-};
+export async function POST(request: Request) {
+  const sig = request.headers.get("stripe-signature");
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!sig || !webhookSecret) {
+    return NextResponse.json({ error: "Missing webhook signature or secret" }, { status: 400 });
+  }
 
-export async function POST(req: Request) {
+  let event: Stripe.Event;
+
   try {
-    await connectToDatabase();
+    const body = await request.text();
+    event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
+  } catch (err: any) {
+    console.error("Webhook signature verification failed:", err.message);
+    return NextResponse.json({ error: "Webhook Error: Invalid signature" }, { status: 400 });
+  }
 
-    const sig = req.headers.get("stripe-signature") as string;
-    const rawBody = await buffer(req);
+  await connectToDatabase();
 
-    let event: Stripe.Event;
+  try {
+    switch (event.type) {
+      case "checkout.session.completed": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const sessionId = session.id;
+        const customerEmail = session.customer_email || session.customer_details?.email;
+        const metadata = session.metadata || {};
 
-    try {
-      event = stripe.webhooks.constructEvent(rawBody, sig, endpointSecret as string);
-    } catch (err: any) {
-      console.error("Webhook signature verification failed:", err.message);
-      return NextResponse.json({ error: "Webhook signature verification failed" }, { status: 400 });
+        const donation = await Donation.findOne({ stripeCheckoutSessionId: sessionId });
+        if (!donation) {
+          return NextResponse.json({ error: "Donation not found" }, { status: 404 });
+        }
+
+        donation.status = "completed";
+        await donation.save();
+
+        // Send thank-you email
+        if (customerEmail) {
+          const type = metadata.type || "donation";
+          const template = emailTemplates[type === "donation" ? "donation" : "sponsorship"];
+          await transporter.sendMail({
+            from: `"West Africa Women Empowerment Foundation (WAWEF)" <${process.env.EMAIL_FROM}>`,
+            to: customerEmail,
+            subject: template.subject.replace("{firstName}", donation.name.split(" ")[0]),
+            text: template.text.replace("{firstName}", donation.name.split(" ")[0]),
+            html: template.html?.replace("{firstName}", donation.name.split(" ")[0]) || template.text.replace("{firstName}", donation.name.split(" ")[0]),
+          });
+        }
+
+        break;
+      }
+      case "checkout.session.expired": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        const sessionId = session.id;
+
+        const donation = await Donation.findOne({ stripeCheckoutSessionId: sessionId });
+        if (donation) {
+          donation.status = "expired";
+          await donation.save();
+        }
+        break;
+      }
+      default:
+        console.log(`Unhandled event type: ${event.type}`);
     }
 
-    // Handle the checkout.session.completed event
-    if (event.type === "checkout.session.completed") {
-      const session = event.data.object as Stripe.Checkout.Session;
-
-      // Find the donation by stripeCheckoutSessionId
-      const donation = await Donation.findOne({ stripeCheckoutSessionId: session.id });
-      if (!donation) {
-        console.error("Donation not found for session:", session.id);
-        return NextResponse.json({ error: "Donation not found" }, { status: 404 });
-      }
-
-      // Verify payment status
-      if (session.payment_status === "paid") {
-        await Donation.updateOne(
-          { _id: donation._id },
-          { $set: { status: "completed" } }
-        );
-        console.log("Donation status updated to completed for session:", session.id);
-      } else {
-        console.log("Payment not completed for session:", session.id);
-        // Optionally update to "failed" status if needed
-        await Donation.updateOne(
-          { _id: donation._id },
-          { $set: { status: "failed" } }
-        );
-      }
-    }
-
-    return NextResponse.json({ received: true }, { status: 200 });
+    return NextResponse.json({ received: true });
   } catch (error: any) {
-    console.error("Error in webhook handler:", error);
-    return NextResponse.json({ error: error.message || "Internal server error" }, { status: 500 });
+    console.error("Error processing webhook:", error);
+    return NextResponse.json({ error: "Webhook processing failed" }, { status: 500 });
   }
 }

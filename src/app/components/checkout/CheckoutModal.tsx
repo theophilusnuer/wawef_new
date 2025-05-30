@@ -55,6 +55,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     if (isOpen && step === 2) {
       const fetchSessionId = async () => {
         try {
+          setLoading(true);
           const response = await fetch("/api/checkout-session", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -65,21 +66,24 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               type,
               donationMode,
               programTitle,
-              paymentMethod: "card", // Hardcoded to card payment
+              paymentMethod: "card",
               country,
             }),
           });
           const result = await response.json();
           if (result.error) {
             setError(result.error);
+            setLoading(false);
             return;
           }
           setSessionId(result.sessionId);
           setClientSecret(result.clientSecret);
           setDonationId(result.donationId);
+          setLoading(false);
         } catch (err: any) {
           setError("Failed to initialize payment session. Please try again.");
           console.error("Error in fetchSessionId:", err);
+          setLoading(false);
         }
       };
       fetchSessionId();
@@ -134,13 +138,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           console.error("Error in initializeCheckout:", err);
         }
         setLoading(false);
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const sessionIdFromUrl = urlParams.get("session_id");
-        if (sessionIdFromUrl === sessionId && donationId) {
-          setShowThankYou(true);
-          onClose();
-        }
       };
       initializeCheckout();
     }
@@ -154,7 +151,34 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         checkoutRef.current.innerHTML = "";
       }
     };
-  }, [stripeReady, clientSecret, sessionId, donationId, onClose]);
+  }, [stripeReady, clientSecret]);
+
+  // Poll the donation status to confirm payment
+  useEffect(() => {
+    if (donationId && !showThankYou) {
+      const checkDonationStatus = async () => {
+        try {
+          const response = await fetch(`/api/check-donation-status?donationId=${donationId}`);
+          const result = await response.json();
+          if (result.status === "completed") {
+            setShowThankYou(true);
+            setLoading(false);
+            onClose();
+          } else if (result.status === "expired") {
+            setError("Payment session expired. Please try again.");
+            setLoading(false);
+          }
+        } catch (err: any) {
+          setError("Failed to verify payment status. Please try again.");
+          console.error("Error in checkDonationStatus:", err);
+          setLoading(false);
+        }
+      };
+
+      const interval = setInterval(checkDonationStatus, 2000); // Poll every 2 seconds
+      return () => clearInterval(interval);
+    }
+  }, [donationId, showThankYou, onClose]);
 
   if (!isOpen) return null;
 

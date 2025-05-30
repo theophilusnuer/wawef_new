@@ -7,6 +7,7 @@ import jane from "../../assets/images/jane.jpg";
 import kyei from "../../assets/images/kyei.jpg";
 import essien from "../../assets/images/essien.jpg";
 import miriam from "../../assets/images/miriam.jpg";
+import frank from "../../assets/images/frank.jpg";
 
 export const teamData = [
   {
@@ -94,9 +95,22 @@ export const teamData = [
     description: [
       "Dr. Kofi Essien is a seasoned Ghanaian development professional with over two decades of experience in NGO leadership, strategic partnerships, sustainable community development, and resource mobilization. A trailblazer in financial inclusion and rural transformation, Dr. Essien has successfully mobilized millions in funding through multi-country campaigns, donor engagement, and cross-sectoral collaborations. He served as the Director of Partnership Building & Resource Mobilization at The Hunger Project-Ghana, where he led groundbreaking fundraising strategies that increased donor contributions by over 40% and secured partnerships with global institutions such as IFAD, USAID, BMZ, Microsoft, and the Bill & Melinda Gates Foundation.",
       "Dr. Essien has a strong academic foundation, holding a PhD in NGO Studies and Sustainable Community Development, an MBA in Finance and Entrepreneurship, and a BSc in Agricultural Economics from the University of Cape Coast. He also holds professional certifications in grant writing, climate change, financial management, and credit risk. His work has directly empowered over 10,000 women entrepreneurs and supported MSMEs through training, lending products, and inclusive development models.",
-      "Janet is also the Founding President of Zoetexx Global, an organization committed to digital security, project management, and social innovation. She served as the Educational Manager for  Arise e.V. in 2020 to 2021 before transitioning to become the volunteer mentor for the organization, where she contributes her skills and experiences to mentor international volunteers through the Verein Niedersächsischer Bildungsinitiativen e.V. (VNB) as part of the weltwärts program.",
       "Passionate about creating resilient communities, Dr. Essien has designed and implemented multi-sectoral programs integrating agribusiness, climate adaptation, and grassroots capacity building. He has also held leadership positions in rural banks and financial institutions, where he led credit portfolios, developed agricultural finance products, and managed large-scale economic empowerment projects",
       "Dr. Essien is affiliated with the Ghana Association of Agricultural Economists, the University of Cape Coast’s Department of Agricultural Economics and Extension, Climate Coaching Africa, and the Philanthropy Forum-Ghana. His lifelong commitment is to advancing equity, dignity, and opportunity for underserved communities across Africa and beyond.",
+    ],
+  },
+  {
+    name: "Frank Odoi Okantey",
+    pic: frank.src,
+    role: "Marketing and Finance",
+    description: [
+      "As a seasoned Life Insurance Consultant with Prudential Life Insurance Ghana and esteemed member of the Million Dollar Round Table (MDRT), Frank leverages over a decade of experience in business development and customer relationship management within the banking and financial sector.",
+      "Key Strengths:",
+      "1. Life Insurance Expertise: Proven track record in selling competitive insurance products",
+      "2. Real Estate Mastery: Skilled in selling and renting prime properties in Accra, with a strong referral network built on professionalism and client-centricity",
+      "3. Relationship Management: Expertise in managing, maintaining, and growing relationships, leveraging the value chain",
+      "4. Event Management: Successfully managed over 200 corporate and social events in the past 4 years, showcasing; Excellent communication and interpersonal skills, Proven event management capabilities, and Strong stakeholder relationships (decoration teams, caterers, musicians, entertainment professionals) ",
+"Frank's dedication to excellence, attention to detail, and passion for his work make him a reliable choice for life insurance, real estate, and event hosting needs.",
     ],
   },
   {
