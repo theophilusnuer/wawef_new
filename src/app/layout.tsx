@@ -1,23 +1,87 @@
-import type { Metadata } from "next";
-import localFont from 'next/font/local';
+import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
+import Script from "next/script";
 
 const gartis = localFont({
-  src: '../../public/fonts/gartis.otf',
-  variable: '--gartis'
+  src: "../../public/fonts/gartis.otf",
+  variable: "--gartis",
 });
 
 const inter = Inter({
-  variable: '--inter',
-  subsets: ['latin'],
-});;
+  variable: "--inter",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: "WAWEF",
-  description: "Empowering Women, Transforming Futures",
+  metadataBase: new URL("https://wawef.org"), 
+  title: {
+    default: "WAWEF - Empowering Women, Transforming Futures",
+    template: "%s | WAWEF",
+  },
+  description:
+    "The West Africa Women Empowerment Foundation (WAWEF) empowers women and girls through education, health, and economic opportunities, transforming futures across West Africa.",
+  keywords: [
+    "WAWEF",
+    "Women Empowerment",
+    "Ghana",
+    "West Africa",
+    "Menstrual Hygiene",
+    "Education for Women",
+    "Gender Equality",
+  ],
+  authors: [{ name: "WAWEF", url: "https://wawef.org" }],
+  openGraph: {
+    title: "WAWEF - Empowering Women, Transforming Futures",
+    description:
+      "Join WAWEF in empowering women and girls in West Africa through education, health, and economic initiatives.",
+    url: "https://wawef.org", 
+    siteName: "WAWEF",
+    images: [
+      {
+        url: "/images/logo.png", 
+        width: 1200,
+        height: 630,
+        alt: "WAWEF Empowering Women",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "WAWEF - Empowering Women, Transforming Futures",
+    description:
+      "Empowering women and girls in West Africa with WAWEF. Learn more about our initiatives.",
+    images: ["/images/logo.png"], 
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
+  alternates: {
+    canonical: "https://wawef.org", 
+  },
+};
+
+// Separate viewport export as per Next.js documentation
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -27,12 +91,41 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          id="structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "West Africa Women Empowerment Foundation",
+              url: "https://wawef.org",
+              logo: "/images/logo.png",
+              description:
+                "WAWEF empowers women and girls in West Africa through education, health, and economic opportunities.",
+              sameAs: [
+                "https://www.facebook.com/share/1E671tfEF1/",
+                "https://instagram.com/wawef_org",
+                "https://linkedin.com/company/wawef",
+                "https://youtube.com/@wawef",
+              ],
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "Stakeholder Support",
+                email: "info@wawef.org",
+                availableLanguage: ["English"],
+              },
+            }),
+          }}
+        />
+      </head>
       <body
         className={`min-h-screen flex flex-col justify-between ${inter.variable} ${gartis.variable} antialiased`}
-        >
-        <Navbar/>
-       <main className="flex-1">{children}</main> 
-      <Footer/>
+      >
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   );

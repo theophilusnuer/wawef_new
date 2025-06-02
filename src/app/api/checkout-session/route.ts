@@ -4,7 +4,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 import Donation from "@/models/Donation";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2025-04-30.basil", // Updated from 2023-10-16 to match webhook version
+  apiVersion: "2025-04-30.basil",
 });
 
 export async function POST(request: Request) {
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     }
 
     const paymentMethodTypes: Stripe.Checkout.SessionCreateParams.PaymentMethodType[] = ["card"];
-    const amountInCents = Math.round(amount * 100); // Always USD for card payments
+    const amountInCents = Math.round(amount * 100);
 
     if (type === "donation" && donationMode === "monthly") {
       const product = await stripe.products.create({
@@ -85,11 +85,13 @@ export async function POST(request: Request) {
         status: "pending",
       });
 
-      return NextResponse.json({
+      const response = {
         sessionId: session.id,
         clientSecret: session.client_secret,
-        donationId: donation._id,
-      });
+        donationId: donation._id.toString(),
+      };
+      console.log("Checkout session response:", response);
+      return NextResponse.json(response);
     } else {
       const effectiveDonationMode = type === "donation" && !donationMode ? "once" : donationMode || "once";
       const session = await stripe.checkout.sessions.create({
@@ -130,14 +132,15 @@ export async function POST(request: Request) {
         status: "pending",
       });
 
-      return NextResponse.json({
+      const response = {
         sessionId: session.id,
         clientSecret: session.client_secret,
-        donationId: donation._id,
-      });
+        donationId: donation._id.toString(),
+      };
+  
+      return NextResponse.json(response);
     }
   } catch (error: unknown) {
-    console.error("Error in checkout-session API:", error);
     const errorMessage = error instanceof Error ? error.message : "Failed to create checkout session";
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }

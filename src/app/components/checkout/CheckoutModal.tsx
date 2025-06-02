@@ -80,7 +80,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       setLoading(false);
     } catch (err: unknown) {
       setError("Failed to initialize payment session. Please try again.");
-      console.error("Error in fetchSessionId:", err);
       setLoading(false);
     }
   }, [name, email, amount, type, donationMode, programTitle, country]);
@@ -112,7 +111,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   }, [isOpen, step, fetchSessionId]);
 
   useEffect(() => {
-    // Capture ref values at the top of the effect
     const currentCheckoutRef = checkoutRef.current;
     const currentCheckoutInstance = checkoutInstanceRef.current;
 
@@ -140,7 +138,6 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
           }
         } catch (err: unknown) {
           setError("Failed to load payment form. Please try again.");
-          console.error("Error in initializeCheckout:", err);
         }
         setLoading(false);
       };
@@ -158,32 +155,43 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     };
   }, [stripeReady, clientSecret]);
 
-  // Poll the donation status to confirm payment
   useEffect(() => {
-    if (donationId && !showThankYou) {
+    if (donationId && !showThankYou && isOpen) {
       const checkDonationStatus = async () => {
         try {
           const response = await fetch(`/api/check-donation-status?donationId=${donationId}`);
           const result = await response.json();
           if (result.status === "completed") {
+            console.log("Status is completed, showing ThankYouModal");
             setShowThankYou(true);
             setLoading(false);
-            onClose();
+            // Do not call onClose() here; let the ThankYouModal handle closing
           } else if (result.status === "expired") {
             setError("Payment session expired. Please try again.");
             setLoading(false);
+            onClose();
           }
         } catch (err: unknown) {
           setError("Failed to verify payment status. Please try again.");
-          console.error("Error in checkDonationStatus:", err);
           setLoading(false);
+          onClose();
         }
       };
 
-      const interval = setInterval(checkDonationStatus, 2000); // Poll every 2 seconds
-      return () => clearInterval(interval);
+      const interval = setInterval(checkDonationStatus, 2000);
+      const timeout = setTimeout(() => {
+        clearInterval(interval);
+        setError("Payment verification timed out. Please contact support.");
+        setLoading(false);
+        onClose();
+      }, 60000);
+
+      return () => {
+        clearInterval(interval);
+        clearTimeout(timeout);
+      };
     }
-  }, [donationId, showThankYou, onClose]);
+  }, [donationId, showThankYou, isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -191,10 +199,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
     return (
       <ThankYouModal
         isOpen={true}
-        onClose={() => {
-          setShowThankYou(false);
-          onClose();
-        }}
+        onClose={onClose} // Let ThankYouModal handle closing
         type={type}
         amount={amount}
         donationMode={donationMode}
@@ -250,7 +255,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               {error && <div className="text-red-500 text-sm md:text-base mb-4">{error}</div>}
               <button
                 onClick={handleContinue}
-                className="w-full bg-[#F2C94C] text-black py-2 rounded hover:bg-yellow-500 transition"
+                className="w-full bg-[#F2C94C] text-black py-2 rounded cursor-pointer"
               >
                 Continue
               </button>

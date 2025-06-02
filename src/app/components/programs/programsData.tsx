@@ -13,6 +13,7 @@ import fas1 from '../../assets/images/fas1.webp';
 import fas2 from '../../assets/images/fas2.webp';
 import fas3 from '../../assets/images/fas3.webp';
 import fas4 from '../../assets/images/fas4.webp';
+import eccentric from '../../assets/images/eccentric.png';
 
 
 
@@ -96,10 +97,12 @@ cos4.src,
             "Dedicated mentor support during the program and afterwards to give women the best chance of succeeding and overcoming any challenges.",
             "Post-graduate support through seed funding and expert guidance to help women turn their skills into successful businesses.",
         ],
-        partners: ["Ga Mantse Foundation", "Royal Africa Generational Thinkers"],
+        partners: ["Ga Mantse Foundation", "Royal Africa Generational Thinkers", "Eccentric Clothing"],
         partnerLogo: [
           mantse.src,
-          raget.src
+          raget.src,
+          eccentric.src
+
         ],
         gallery: [
 fas1.src,

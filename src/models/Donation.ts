@@ -8,6 +8,7 @@ export interface IDonation extends Document {
   donationMode?: "once" | "monthly";
   programTitle?: string;
   stripeCustomerId?: string;
+   stripeCheckoutSessionId?: string;
   stripePaymentIntentId?: string;
   stripeSubscriptionId?: string;
   stripeSetupIntentId?: string;
@@ -56,6 +57,9 @@ const DonationSchema = new Schema(
       },
     },
     stripeCustomerId: {
+      type: String,
+    },
+     stripeCheckoutSessionId: {
       type: String,
     },
     stripePaymentIntentId: {

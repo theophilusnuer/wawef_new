@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import Donation from "@/models/Donation";
 import Stripe from "stripe";
+import { ObjectId } from "mongodb";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2025-04-30.basil", 
+  apiVersion: "2025-04-30.basil",
 });
 
 export async function GET(request: Request) {
@@ -17,14 +18,19 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Donation ID is required" }, { status: 400 });
     }
 
+    if (!ObjectId.isValid(donationId)) {
+      return NextResponse.json({ error: "Invalid Donation ID format" }, { status: 400 });
+    }
+
     const donation = await Donation.findById(donationId);
     if (!donation) {
       return NextResponse.json({ error: "Donation not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ status: donation.status });
+    const response = { status: donation.status };
+    
+    return NextResponse.json(response);
   } catch (error: unknown) {
-    console.error("Error checking donation status:", error);
     const errorMessage = error instanceof Error ? error.message : "Failed to check donation status";
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }

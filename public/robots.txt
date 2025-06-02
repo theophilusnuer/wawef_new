@@ -1,0 +1,11 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/*
+Disallow: /dashboard/*
+
+# Host
+Host: https://wawef.org
+
+# Sitemaps
+Sitemap: https://wawef.org/sitemap.xml

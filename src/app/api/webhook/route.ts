@@ -5,9 +5,20 @@ import Donation from "@/models/Donation";
 import transporter from "@/app/utils/Transporter";
 import { emailTemplates } from "@/lib/emailTemplates";
 
+// Disable Next.js body parsing to get raw body for signature verification
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2025-04-30.basil", 
+  apiVersion: "2025-04-30.basil",
 });
+
+export async function GET(request: Request) {
+  return NextResponse.json({ message: "Webhook endpoint is active" }, { status: 200 });
+}
 
 export async function POST(request: Request) {
   const sig = request.headers.get("stripe-signature");
@@ -20,10 +31,10 @@ export async function POST(request: Request) {
   let event: Stripe.Event;
 
   try {
-    const body = await request.text();
-    event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
+    const rawBody = await request.text();
+    const normalizedBody = rawBody.replace(/\r\n/g, "\n");
+    event = stripe.webhooks.constructEvent(normalizedBody, sig, webhookSecret);
   } catch (err: unknown) {
-    console.error("Webhook signature verification failed:", err);
     const errorMessage = err instanceof Error ? err.message : "Webhook Error: Invalid signature";
     return NextResponse.json({ error: errorMessage }, { status: 400 });
   }
@@ -46,16 +57,29 @@ export async function POST(request: Request) {
         donation.status = "completed";
         await donation.save();
 
-        // Send thank-you email
         if (customerEmail) {
           const type = metadata.type || "donation";
+          const donationType = donation.donationMode === "monthly" ? "monthly donation" : "one-time donation";
           const template = emailTemplates[type === "donation" ? "donation" : "sponsorship"];
           await transporter.sendMail({
             from: `"West Africa Women Empowerment Foundation (WAWEF)" <${process.env.EMAIL_FROM}>`,
             to: customerEmail,
-            subject: template.subject.replace("{firstName}", donation.name.split(" ")[0]),
-            text: template.text.replace("{firstName}", donation.name.split(" ")[0]),
-            html: template.html?.replace("{firstName}", donation.name.split(" ")[0]) || template.text.replace("{firstName}", donation.name.split(" ")[0]),
+            subject: template.subject
+              .replace("{firstName}", donation.name.split(" ")[0])
+              .replace("{donationType}", donationType)
+              .replace("{programTitle}", donation.programTitle || ""),
+            text: template.text
+              .replace("{firstName}", donation.name.split(" ")[0])
+              .replace("{donationType}", donationType)
+              .replace("{programTitle}", donation.programTitle || ""),
+            html: template.html
+              ?.replace("{firstName}", donation.name.split(" ")[0])
+              .replace("{donationType}", donationType)
+              .replace("{programTitle}", donation.programTitle || "") ||
+              template.text
+                .replace("{firstName}", donation.name.split(" ")[0])
+                .replace("{donationType}", donationType)
+                .replace("{programTitle}", donation.programTitle || ""),
           });
         }
 
@@ -73,12 +97,12 @@ export async function POST(request: Request) {
         break;
       }
       default:
-        console.log(`Unhandled event type: ${event.type}`);
+        // Ignore other event types
+        break;
     }
 
     return NextResponse.json({ received: true });
   } catch (error: unknown) {
-    console.error("Error processing webhook:", error);
     const errorMessage = error instanceof Error ? error.message : "Webhook processing failed";
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }

@@ -3,9 +3,9 @@ import { FC, useState } from 'react';
 import { CheckoutModal } from '../checkout/CheckoutModal';
 
 export const DonateMonthly: FC = () => {
-  const [selectedAmount, setSelectedAmount] = useState<number | null>(100); // Default to $100
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(100); 
   const [customAmount, setCustomAmount] = useState<string>('');
-    const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+    const [isModalOpen, setIsModalOpen] = useState(false); 
   
 
   const predefinedAmounts = [50, 100, 150, 200];
@@ -28,8 +28,7 @@ export const DonateMonthly: FC = () => {
   const handleDonate = () => {
     if (selectedAmount) {
       setIsModalOpen(true); // Open the modal if an amount is selected
-      // console.log(`Donating $${selectedAmount} monthly`);
-      // Placeholder for Stripe integration
+
     } else {
       console.log('Please select an amount to donate.');
     }
@@ -116,6 +115,7 @@ export const DonateMonthly: FC = () => {
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
               type='donation'
+              donationMode="monthly" 
             />
           )}
         </>

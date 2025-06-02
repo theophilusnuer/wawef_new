@@ -76,7 +76,7 @@ export const Navbar: FC = () => {
                     <div>
                         <button
                             onClick={() => setIsModalOpen(true)}
-                            className="group flex items-center bg-[#F2C94C] text-black py-2 px-4 rounded-sm hover:scale-105 hover:shadow-md transition-all duration-200 text-sm md:text-base"
+                            className="group flex items-center bg-[#F2C94C] cursor-pointer text-black py-2 px-4 rounded-sm hover:scale-105 hover:shadow-md transition-all duration-200 text-sm md:text-base"
                         >
                             Give
                             <Emoji text="👩🏽" className="ml-1 group-hover:text-xl" />

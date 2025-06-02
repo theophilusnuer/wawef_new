@@ -12,30 +12,30 @@ export const ImpactNumbers: FC = () => {
                     {/* Communities */}
                     <div>
                         <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold">
-                            200+
+                            1
                         </h3>
                         <p className="md:text-lg mt-2">
-                            Communities to Be Served
+                            Community Served
                         </p>
                     </div>
 
                     {/* Projects */}
                     <div>
                         <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold">
-                            500+
+                           1
                         </h3>
                         <p className="md:text-lg mt-2">
-                            Projects to Be Undertaken
+                            Project Completed
                         </p>
                     </div>
 
                     {/* Lives */}
                     <div>
                         <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold">
-                            1k+
+                            200
                         </h3>
                         <p className="md:text-lg mt-2">
-                            Lives to Be Impacted
+                            Lives Impacted
                         </p>
                     </div>
                 </div>
