@@ -67,13 +67,13 @@ const PadAGirl = () => {
   return (
     <div className="">
       <PadAGirlHero />
+      <PadTeam/>
+      <PartnerTeam/>
       <Quote4 />
       <SupportPackages />
       <Possible />
       <PadGallery/>
       <PadPartners/>
-      <PartnerTeam/>
-      <PadTeam/>
     </div>
   );
 };

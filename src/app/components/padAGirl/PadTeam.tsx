@@ -9,6 +9,7 @@ import team5 from "../../assets/images/team5.jpg";
 import team6 from "../../assets/images/team6.jpg";
 import team7 from "../../assets/images/team7.jpg";
 import team8 from "../../assets/images/team8.jpg";
+import Link from "next/link";
 
 const PadTeam = () => {
   const teamMembers = [
@@ -23,7 +24,7 @@ const PadTeam = () => {
   ];
 
   return (
-    <section className="py-12 px-4 my-8">
+    <section className="py-12 px-4">
       <div className="container mx-auto max-w-6xl">
         <h2 className="inline-block text-lg md:text-2xl px-4 py-2 bg-[#FDF7E4] border border-[#F2C94C] rounded-md mb-8">
           PadHER - SHEflow Campaign Fund Raising Team
@@ -47,6 +48,12 @@ const PadTeam = () => {
             </div>
           ))}
         </div>
+         <Link
+          href="https://www.gofundme.com/f/padher-sheflow-campaign/donate?attribution_id=sl%3A375d0ab2-425e-427c-a6be-f46e9dfa0550&lang=en_US&ts=1749009077&utm_campaign=man_sharesheet_dash&utm_content=amp13_c-amp14_t1-amp15_c&utm_medium=customer&utm_source=copy_link&v=amp14_t1&source=btn_donate "
+          className="inline-flex w-full my-6 text-center justify-center bg-[#F2C94C] text-black py-1.5 md:py-3 px-6 rounded-sm cursor-pointer md:text-lg hover:scale-105 hover:shadow-md transition-all duration-200"
+        >
+          Donate Now
+        </Link>
       </div>
     </section>
   );

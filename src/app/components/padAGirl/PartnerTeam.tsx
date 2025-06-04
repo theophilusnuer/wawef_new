@@ -4,6 +4,7 @@ import part1 from "../../assets/images/part1.jpg";
 import part2 from "../../assets/images/part2.jpg";
 import part3 from "../../assets/images/part3.jpg";
 import part4 from "../../assets/images/part4.jpg";
+import Link from "next/link";
 
 const PartnerTeam = () => {
   const teamMembers = [
@@ -66,6 +67,12 @@ const PartnerTeam = () => {
             </div>
           ))}
         </div>
+         <Link
+          href="https://www.gofundme.com/f/padher-sheflow-campaign/donate?attribution_id=sl%3A375d0ab2-425e-427c-a6be-f46e9dfa0550&lang=en_US&ts=1749009077&utm_campaign=man_sharesheet_dash&utm_content=amp13_c-amp14_t1-amp15_c&utm_medium=customer&utm_source=copy_link&v=amp14_t1&source=btn_donate "
+          className="inline-flex w-full my-6 text-center justify-center bg-[#F2C94C] text-black py-1.5 md:py-3 px-6 rounded-sm cursor-pointer md:text-lg hover:scale-105 hover:shadow-md transition-all duration-200"
+        >
+          Donate Now
+        </Link>
       </div>
     </section>
   );
