@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://wawef.org"), 
+  metadataBase: new URL("https://wawef.org"),
   title: {
     default: "WAWEF - Empowering Women, Transforming Futures",
     template: "%s | WAWEF",
@@ -38,11 +38,11 @@ export const metadata: Metadata = {
     title: "WAWEF - Empowering Women, Transforming Futures",
     description:
       "Join WAWEF in empowering women and girls in West Africa through education, health, and economic initiatives.",
-    url: "https://wawef.org", 
+    url: "https://wawef.org",
     siteName: "WAWEF",
     images: [
       {
-        url: "/images/logo.png", 
+        url: "/images/logo.png",
         width: 1200,
         height: 630,
         alt: "WAWEF Empowering Women",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     title: "WAWEF - Empowering Women, Transforming Futures",
     description:
       "Empowering women and girls in West Africa with WAWEF. Learn more about our initiatives.",
-    images: ["/images/logo.png"], 
+    images: ["/images/logo.png"],
   },
   robots: {
     index: true,
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
   alternates: {
-    canonical: "https://wawef.org", 
+    canonical: "https://wawef.org",
   },
 };
 
@@ -119,7 +119,12 @@ export default function RootLayout({
             }),
           }}
         />
-        <meta name="google-site-verification" content="Gkv7kU6_P04XVv1VTtIKUseI1VCWEj3LZoQauk8n3hE" />
+        <meta
+          name="google-site-verification"
+          content="Gkv7kU6_P04XVv1VTtIKUseI1VCWEj3LZoQauk8n3hE"
+        />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico" />
       </head>
       <body
         className={`min-h-screen flex flex-col justify-between ${inter.variable} ${gartis.variable} antialiased`}

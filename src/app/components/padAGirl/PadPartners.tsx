@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import logo1 from "../../assets/images/logo1.png";
 import winetoya from "../../assets/images/winetoya.png";
+import mindset from "../../assets/images/mindset.jpg";
 
 const PadPartners = () => {
   const partners = [
@@ -17,6 +18,12 @@ const PadPartners = () => {
       name: "Winetoya Rural Child Foundation LBG",
       alt: "Winetoya Rural Child Foundation LBG Logo",
       url: "https://www.instagram.com/theruralchildfoundation",
+    },
+    {
+      src: mindset,
+      name: "Mindset Mastery 360 Global Movement",
+      alt: "Mindset Mastery 360 Global Movement logo",
+      url: "https://www.mindsetmastery360.org",
     },
   ];
 

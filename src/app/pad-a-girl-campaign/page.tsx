@@ -6,6 +6,7 @@ import Possible from "../components/padAGirl/Possible";
 import PadGallery from "../components/padAGirl/PadGallery";
 import PadPartners from "../components/padAGirl/PadPartners";
 import PadTeam from "../components/padAGirl/PadTeam";
+import PartnerTeam from "../components/padAGirl/PartnerTeam";
 
 export const metadata = {
   title: "PadHER - SHEflow Campaign",
@@ -71,6 +72,7 @@ const PadAGirl = () => {
       <Possible />
       <PadGallery/>
       <PadPartners/>
+      <PartnerTeam/>
       <PadTeam/>
     </div>
   );

@@ -12,7 +12,7 @@ import team8 from "../../assets/images/team8.jpg";
 
 const PadTeam = () => {
   const teamMembers = [
-    { src: team1, name: "Juliana Irene Buah", title: "Real estate builder/founder, and executive director of WAWEF" },
+    { src: team1, name: "Juliana Irene Buah", title: "Real Estate Builder/Founder, and Executive Director of WAWEF" },
     { src: team2, name: "Louisa Arhin", title: "Nurse RN, BSN" },
     { src: team3, name: "Yvonne Ofori", title: "Research Scientist and Brand Ambassador for Especially Yours" },
     { src: team4, name: "Sybil Selorm Seade", title: "Student" },
@@ -26,7 +26,7 @@ const PadTeam = () => {
     <section className="py-12 px-4 my-8">
       <div className="container mx-auto max-w-6xl">
         <h2 className="inline-block text-lg md:text-2xl px-4 py-2 bg-[#FDF7E4] border border-[#F2C94C] rounded-md mb-8">
-          PadHER - SHEflow Campaign Fund Raising Campaign Team
+          PadHER - SHEflow Campaign Fund Raising Team
         </h2>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {teamMembers.map((member, index) => (
