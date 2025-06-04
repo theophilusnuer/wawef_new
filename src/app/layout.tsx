@@ -119,6 +119,7 @@ export default function RootLayout({
             }),
           }}
         />
+        <meta name="google-site-verification" content="Gkv7kU6_P04XVv1VTtIKUseI1VCWEj3LZoQauk8n3hE" />
       </head>
       <body
         className={`min-h-screen flex flex-col justify-between ${inter.variable} ${gartis.variable} antialiased`}

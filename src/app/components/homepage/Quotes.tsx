@@ -33,6 +33,15 @@ export const Quote3: FC = () => {
     );
 };
 
+export const Quote4: FC = () => {
+    return (
+        <div className="py-8 px-10 md:px-4 md:py-10 max-w-md mx-auto items-center md:max-w-3xl">
+            <p className="text-base md:text-3xl text-center italic">
+                Over 1 in 10 girls in Africa miss school during their menstrual cycle due to lack of access to sanitary products. Together, we can change that.
+            </p>
+        </div>
+    );
+};
 // Default export for the entire Quotes section
 export const Quotes: FC = () => {
     return (
@@ -40,6 +49,7 @@ export const Quotes: FC = () => {
             <Quote1 />
             <Quote2 />
             <Quote3 />
+            <Quote4/>
         </div>
     );
 };

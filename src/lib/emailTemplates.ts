@@ -55,8 +55,8 @@ export const emailTemplates = {
     `,
   },
   donation: {
-    subject: "Thank You for Your Donation!",
-    text: `Dear {firstName},\n\nThank you for your generous {donationType} to the West Africa Women Empowerment Foundation (WAWEF). Your support helps empower women and girls in West Africa.\n\nBest regards,\nThe WAWEF Team`,
+    subject: "Thank You for Your Donation",
+    text: `Dear {firstName},\n\nThank you for your generous {donationType} of {amount} to the West Africa Women Empowerment Foundation (WAWEF). Your support helps empower women and girls in West Africa.\n\nBest regards,\nThe WAWEF Team`,
     html: `
       <div style="font-family: Arial, sans-serif; color: #333; background-color: #fff; padding: 25px;">
         <div style="max-width: 600px; margin: auto; background-color: #fffef5; border-radius: 10px; overflow: hidden;">
@@ -67,10 +67,10 @@ export const emailTemplates = {
           <div style="padding: 30px; font-size: 14px;">
             <h4 style="color: #000;">Dear {firstName},</h4>
             <p style="line-height: 1.6; color: #333;">
-              Thank you for your generous {donationType} to the West Africa Women Empowerment Foundation (WAWEF).
+              Thank you for your generous {donationType} of <strong>{amount}</strong> to the West Africa Women Empowerment Foundation (WAWEF).
             </p>
             <p style="line-height: 1.6; color: #333;">
-              Your ongoing support is invaluable, and we are deeply grateful for your contribution that helps us continue our mission. Your support helps empower women and girls in West Africa.<br/> We truly appreciate your contribution.<br/>
+              Your ongoing support is invaluable, and we are deeply grateful for your contribution that helps us continue our mission. Your support helps empower women and girls in West Africa.<br /> We truly appreciate your contribution.<br />
             </p>
             <p style="line-height: 1.6; color: #333;">
               Best regards,<br />The WAWEF Team
@@ -99,8 +99,8 @@ export const emailTemplates = {
     `,
   },
   sponsorship: {
-    subject: "Thank You for Sponsoring a Program!",
-    text: `Dear {firstName},\n\nThank you for sponsoring the {programTitle} program with the West Africa Women Empowerment Foundation (WAWEF). Your contribution makes a significant impact.\n\nBest regards,\nThe WAWEF Team`,
+    subject: "Thank You for Sponsoring {programTitle}.",
+    text: `Dear {firstName},\n\nThank you for sponsoring the {programTitle} program with {amount} through the West Africa Women Empowerment Foundation (WAWEF). Your contribution makes a significant impact.\n\nBest regards,\nThe WAWEF Team`,
     html: `
       <div style="font-family: Arial, sans-serif; color: #333; background-color: #fff; padding: 25px;">
         <div style="max-width: 600px; margin: auto; background-color: #fffef5; border-radius: 10px; overflow: hidden;">
@@ -111,10 +111,10 @@ export const emailTemplates = {
           <div style="padding: 30px; font-size: 14px;">
             <h4 style="color: #000;">Dear {firstName},</h4>
             <p style="line-height: 1.6; color: #333;">
-              Thank you for sponsoring the {programTitle} program with the West Africa Women Empowerment Foundation (WAWEF).
+              Thank you for sponsoring the <strong>{programTitle}</strong> program with <strong>{amount}</strong> through the West Africa Women Empowerment Foundation (WAWEF).
             </p>
             <p style="line-height: 1.6; color: #333;">
-              Your contribution makes a significant impact, and we are deeply grateful for your contribution that helps us continue our mission. <br/> We truly appreciate your contribution.<br/>
+              Your contribution makes a significant impact, and we are deeply grateful for your contribution that helps us continue our mission. <br /> We truly appreciate your contribution.<br />
             </p>
             <p style="line-height: 1.6; color: #333;">
               Best regards,<br />The WAWEF Team

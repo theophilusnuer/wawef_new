@@ -36,7 +36,7 @@ export const Padgirl: FC = () => {
   return (
     <section className="py-10 px-4 md:px-12 max-w-[78rem] mx-auto">
       <h2 className="inline-block text-base md:text-2xl px-2.5 py-1.5 md:px-4 md:py-3 rounded-sm bg-[#F2C94C] mb-8">
-         Pad a Girl Campaign
+         Pad a Girl SHEFlow Campaign
       </h2>
 
       <div className="flex flex-col md:flex-row gap-6">

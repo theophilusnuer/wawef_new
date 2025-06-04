@@ -60,6 +60,9 @@ export async function POST(request: Request) {
         if (customerEmail) {
           const type = metadata.type || "donation";
           const donationType = donation.donationMode === "monthly" ? "monthly donation" : "one-time donation";
+          const amount = session.amount_total
+            ? `$${((session.amount_total as number) / 100).toFixed(2)}` // Convert cents to dollars
+            : "Amount not available";
           const template = emailTemplates[type === "donation" ? "donation" : "sponsorship"];
           await transporter.sendMail({
             from: `"West Africa Women Empowerment Foundation (WAWEF)" <${process.env.EMAIL_FROM}>`,
@@ -67,19 +70,23 @@ export async function POST(request: Request) {
             subject: template.subject
               .replace("{firstName}", donation.name.split(" ")[0])
               .replace("{donationType}", donationType)
-              .replace("{programTitle}", donation.programTitle || ""),
+              .replace("{programTitle}", donation.programTitle || "")
+              .replace("{amount}", amount),
             text: template.text
               .replace("{firstName}", donation.name.split(" ")[0])
               .replace("{donationType}", donationType)
-              .replace("{programTitle}", donation.programTitle || ""),
+              .replace("{programTitle}", donation.programTitle || "")
+              .replace("{amount}", amount),
             html: template.html
               ?.replace("{firstName}", donation.name.split(" ")[0])
               .replace("{donationType}", donationType)
-              .replace("{programTitle}", donation.programTitle || "") ||
+              .replace("{programTitle}", donation.programTitle || "")
+              .replace("{amount}", amount) ||
               template.text
                 .replace("{firstName}", donation.name.split(" ")[0])
                 .replace("{donationType}", donationType)
-                .replace("{programTitle}", donation.programTitle || ""),
+                .replace("{programTitle}", donation.programTitle || "")
+                .replace("{amount}", amount),
           });
         }
 
