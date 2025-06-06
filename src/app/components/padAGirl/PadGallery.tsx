@@ -7,6 +7,7 @@ import img3 from "../../assets/images/img3.jpg";
 import img4 from "../../assets/images/img4.jpg";
 import img5 from "../../assets/images/img5.jpg";
 import img6 from "../../assets/images/img6.jpg";
+import PadDonation from "./PadDonation";
 
 const PadGallery = () => {
   return (
@@ -76,12 +77,7 @@ const PadGallery = () => {
             />
           </div>
         </div>
-        <Link
-          href="https://www.gofundme.com/f/padher-sheflow-campaign/donate?attribution_id=sl%3A375d0ab2-425e-427c-a6be-f46e9dfa0550&lang=en_US&ts=1749009077&utm_campaign=man_sharesheet_dash&utm_content=amp13_c-amp14_t1-amp15_c&utm_medium=customer&utm_source=copy_link&v=amp14_t1&source=btn_donate"
-          className="inline-flex items-center bg-[#F2C94C] text-black py-1.5 px-6 md:py-3 md:px-8 rounded-sm cursor-pointer text-base hover:scale-105 hover transition-all duration-200"
-        >
-          Donate Now
-        </Link>
+       <PadDonation/>
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import PadDonation from "./PadDonation";
 
 const SupportPackages = () => {
   const packages = [
@@ -29,13 +30,8 @@ const SupportPackages = () => {
               </div>
             ))}
           </div>
+        <PadDonation/>
         
-          <Link
-          href="https://www.gofundme.com/f/padher-sheflow-campaign/donate?attribution_id=sl%3A375d0ab2-425e-427c-a6be-f46e9dfa0550&lang=en_US&ts=1749009077&utm_campaign=man_sharesheet_dash&utm_content=amp13_c-amp14_t1-amp15_c&utm_medium=customer&utm_source=copy_link&v=amp14_t1&source=btn_donate "
-          className="inline-flex items-center bg-[#F2C94C] text-black py-1.5 px-6 rounded-sm cursor-pointer text-base hover:scale-105 hover:shadow-md transition-all duration-200"
-        >
-          Donate Now
-        </Link>
         </div>
       </div>
     </div>

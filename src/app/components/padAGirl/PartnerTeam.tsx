@@ -5,6 +5,7 @@ import part2 from "../../assets/images/part2.jpg";
 import part3 from "../../assets/images/part3.jpg";
 import part4 from "../../assets/images/part4.jpg";
 import Link from "next/link";
+import PadDonation from "./PadDonation";
 
 const PartnerTeam = () => {
   const teamMembers = [
@@ -12,7 +13,8 @@ const PartnerTeam = () => {
       src: part1,
       name: "Her Excellency Dr. Alisa Whyte",
       title: "Global Workforce, Life & Business Strategist",
-      subtitle: "#1 International Bestselling Author, Executive Producer & Host - Mindset Mastery Moments Podcast (Top 1% Worldwide)",
+      subtitle:
+        "#1 International Bestselling Author, Executive Producer & Host - Mindset Mastery Moments Podcast (Top 1% Worldwide)",
       position: "[Founder & President – Mindset Mastery 360 Global Movement]",
     },
     {
@@ -34,7 +36,8 @@ const PartnerTeam = () => {
       name: "Louisa Banzini Mahama",
       title: "BSc, MPhil Social Psychology",
       subtitle: "",
-      position: "[Project Lead for Menstrual Health and Hygiene, Winetoya Rural Child Foundation]",
+      position:
+        "[Project Lead for Menstrual Health and Hygiene, Winetoya Rural Child Foundation]",
     },
   ];
 
@@ -57,22 +60,27 @@ const PartnerTeam = () => {
                 />
               </div>
               <div className="mt-2 text-center">
-                <p className="text-sm md:text-base font-medium">{member.name}</p>
-                <p className="text-xs md:text-sm text-gray-800">{member.title}</p>
+                <p className="text-sm md:text-base font-medium">
+                  {member.name}
+                </p>
+                <p className="text-xs md:text-sm text-gray-800">
+                  {member.title}
+                </p>
                 {member.subtitle && (
-                  <p className="text-xs md:text-sm text-gray-600 italic">{member.subtitle}</p>
+                  <p className="text-xs md:text-sm text-gray-600 italic">
+                    {member.subtitle}
+                  </p>
                 )}
-                <p className="text-xs md:text-sm text-gray-600">{member.position}</p>
+                <p className="text-xs md:text-sm text-gray-600">
+                  {member.position}
+                </p>
               </div>
             </div>
           ))}
         </div>
-         <Link
-          href="https://www.gofundme.com/f/padher-sheflow-campaign/donate?attribution_id=sl%3A375d0ab2-425e-427c-a6be-f46e9dfa0550&lang=en_US&ts=1749009077&utm_campaign=man_sharesheet_dash&utm_content=amp13_c-amp14_t1-amp15_c&utm_medium=customer&utm_source=copy_link&v=amp14_t1&source=btn_donate "
-          className="inline-flex w-full my-6 text-center justify-center bg-[#F2C94C] text-black py-1.5 md:py-3 px-6 rounded-sm cursor-pointer md:text-lg hover:scale-105 hover:shadow-md transition-all duration-200"
-        >
-          Donate Now
-        </Link>
+        <div className="mt-8">
+          <PadDonation width="w-full" />
+        </div>
       </div>
     </section>
   );

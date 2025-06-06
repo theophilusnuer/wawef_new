@@ -10,19 +10,26 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 interface DonateButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   width?: string;
+  loading?: boolean; 
 }
 
 export function DonateButton({
   children,
   width = "w-40",
+  loading = false,
   ...props
 }: DonateButtonProps) {
   return (
     <button
       className={`inline-flex text-center justify-center bg-[#F2C94C] text-black py-1.5 md:py-3 px-6 rounded-sm cursor-pointer md:text-lg hover:scale-105 hover:shadow-md transition-all duration-200 ${width}`}
+      disabled={loading}
       {...props}
     >
-      {children}
+      {loading ? (
+        <div className="h-6 w-6 animate-spin rounded-full border-4 border-white border-t-transparent" />
+      ) : (
+        children
+      )}
     </button>
   );
 }
@@ -36,6 +43,8 @@ export function DonateOptions({ onClose }: { onClose: () => void }) {
     country: "US",
   });
   const [errors, setErrors] = useState({ name: "", email: "", country: "" });
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState(false); // Add error state
 
   const validateForm = () => {
     let isValid = true;
@@ -63,6 +72,8 @@ export function DonateOptions({ onClose }: { onClose: () => void }) {
 
   const handleSaveToDB = async () => {
     if (validateForm()) {
+      setLoading(true);
+      setApiError(false); // Reset error state
       const response = await fetch("/api/pad-donation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -72,7 +83,9 @@ export function DonateOptions({ onClose }: { onClose: () => void }) {
         setStep(2);
       } else {
         console.error("Failed to save donor data");
+        setApiError(true); // Set error state on failure
       }
+      setLoading(false);
     }
   };
 
@@ -83,9 +96,7 @@ export function DonateOptions({ onClose }: { onClose: () => void }) {
   if (step === 1) {
     return (
       <div className="">
-        <h3 className="text-lg font-medium mb-4 text-center">
-         Donor Details
-        </h3>
+        <h3 className="text-lg font-medium mb-4 text-center">Donor Details</h3>
         <div className="space-y-4">
           <div>
             <input
@@ -133,10 +144,14 @@ export function DonateOptions({ onClose }: { onClose: () => void }) {
               <p className="text-red-500 text-sm mt-1">{errors.country}</p>
             )}
           </div>
-          <DonateButton onClick={handleSaveToDB} width="w-full">
-            Next
+          {apiError && (
+            <p className="text-red-500 text-center">
+              Failed to proceed, try again later
+            </p>
+          )}
+          <DonateButton onClick={handleSaveToDB} width="w-full" loading={loading}>
+            Proceed to Donate
           </DonateButton>
-         
         </div>
       </div>
     );
@@ -163,12 +178,18 @@ export function DonateOptions({ onClose }: { onClose: () => void }) {
           <PaymentOptions donorData={donorData} onClose={onClose} />
         ) : (
           <div>
-            <p className="mb-4 text-center">
-              Donations from{" "}
-              {countries.find((c) => c.code === donorData.country)?.name ||
-                donorData.country}{" "}
-              are received via GoFundMe.
-            </p>
+            <div className="mb-4 text-center">
+              <p>
+                Donations from{" "}
+                {countries.find((c) => c.code === donorData.country)?.name ||
+                  donorData.country}{" "}
+                are received via GoFundMe.
+              </p>
+              <p>
+                Click on <strong>Donate Now</strong> button to proceed
+              </p>
+            </div>
+
             <a
               href="https://www.gofundme.com/f/padher-sheflow-campaign/donate?attribution_id=sl%3A375d0ab2-425e-427c-a6be-f46e9dfa0550&lang=en_US&ts=1749009077&utm_campaign=man_sharesheet_dash&utm_content=amp13_c-amp14_t1-amp15_c&utm_medium=customer&utm_source=copy_link&v=amp14_t1&source=btn_donate "
               className="flex bg-[#F2C94C] text-center justify-center py-2 px-4 rounded cursor-pointer w-full"
@@ -185,12 +206,16 @@ export function DonateOptions({ onClose }: { onClose: () => void }) {
 }
 
 // Main PadDonation Component (Modal Trigger)
-export default function PadDonation() {
+interface PadDonationProps {
+  width?: string; // Add width prop
+}
+
+export default function PadDonation({ width = "w-48" }: PadDonationProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
-      <DonateButton onClick={() => setIsOpen(true)} width="w-48">
+      <DonateButton onClick={() => setIsOpen(true)} width={width}>
         Donate Now
       </DonateButton>
       {isOpen &&

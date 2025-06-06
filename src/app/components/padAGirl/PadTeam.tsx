@@ -10,15 +10,32 @@ import team6 from "../../assets/images/team6.jpg";
 import team7 from "../../assets/images/team7.jpg";
 import team8 from "../../assets/images/team8.jpg";
 import Link from "next/link";
+import PadDonation from "./PadDonation";
 
 const PadTeam = () => {
   const teamMembers = [
-    { src: team1, name: "Juliana Irene Buah", title: "Real Estate Builder/Founder, and Executive Director of WAWEF" },
+    {
+      src: team1,
+      name: "Juliana Irene Buah",
+      title: "Real Estate Builder/Founder, and Executive Director of WAWEF",
+    },
     { src: team2, name: "Louisa Arhin", title: "Nurse RN, BSN" },
-    { src: team3, name: "Yvonne Ofori", title: "Research Scientist and Brand Ambassador for Especially Yours" },
+    {
+      src: team3,
+      name: "Yvonne Ofori",
+      title: "Research Scientist and Brand Ambassador for Especially Yours",
+    },
     { src: team4, name: "Sybil Selorm Seade", title: "Student" },
-    { src: team5, name: "Jennifer Obeng", title: "Long term care/ Rehabilitation Nurse" },
-    { src: team6, name: "Gracemargaret Boakye", title: "Certified Nursing Assistant" },
+    {
+      src: team5,
+      name: "Jennifer Obeng",
+      title: "Long term care/ Rehabilitation Nurse",
+    },
+    {
+      src: team6,
+      name: "Gracemargaret Boakye",
+      title: "Certified Nursing Assistant",
+    },
     { src: team7, name: "Louisa Mensah", title: "Family Nurse Practitioner" },
     { src: team8, name: "Christiana Ujialele", title: "Nurse APRN/FNP-BC" },
   ];
@@ -42,18 +59,19 @@ const PadTeam = () => {
                 />
               </div>
               <div className="mt-2 text-center">
-                <p className="text-sm md:text-base font-medium">{member.name}</p>
-                <p className="text-xs md:text-sm text-gray-600">{member.title}</p>
+                <p className="text-sm md:text-base font-medium">
+                  {member.name}
+                </p>
+                <p className="text-xs md:text-sm text-gray-600">
+                  {member.title}
+                </p>
               </div>
             </div>
           ))}
         </div>
-         <Link
-          href="https://www.gofundme.com/f/padher-sheflow-campaign/donate?attribution_id=sl%3A375d0ab2-425e-427c-a6be-f46e9dfa0550&lang=en_US&ts=1749009077&utm_campaign=man_sharesheet_dash&utm_content=amp13_c-amp14_t1-amp15_c&utm_medium=customer&utm_source=copy_link&v=amp14_t1&source=btn_donate "
-          className="inline-flex w-full my-6 text-center justify-center bg-[#F2C94C] text-black py-1.5 md:py-3 px-6 rounded-sm cursor-pointer md:text-lg hover:scale-105 hover:shadow-md transition-all duration-200"
-        >
-          Donate Now
-        </Link>
+        <div className="mt-8">
+          <PadDonation width="w-full" />
+        </div>
       </div>
     </section>
   );
