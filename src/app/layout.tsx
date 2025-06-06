@@ -124,7 +124,7 @@ export default function RootLayout({
           content="Gkv7kU6_P04XVv1VTtIKUseI1VCWEj3LZoQauk8n3hE"
         />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       </head>
       <body
         className={`min-h-screen flex flex-col justify-between ${inter.variable} ${gartis.variable} antialiased`}
