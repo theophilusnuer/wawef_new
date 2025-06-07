@@ -68,8 +68,8 @@ const PadAGirl = () => {
     <div className="">
       <PadAGirlHero />
       <PadTeam/>
-      <PartnerTeam/>
       <Quote4 />
+      <PartnerTeam/>
       <SupportPackages />
       <Possible />
       <PadGallery/>

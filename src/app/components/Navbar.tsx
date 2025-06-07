@@ -61,7 +61,7 @@ export const Navbar: FC = () => {
 
                         {/* Logo */}
                         <Link href="/" className="flex items-center">
-                            <Image src={logo} alt="WAWEF" className="sm:h-15 h-10 w-full" />
+                            <Image src={logo} alt="WAWEF" width={160} height={40} className="sm:h-15 h-10 w-full" />
                         </Link>
 
                         {/* Nav Items (Desktop Only) */}
