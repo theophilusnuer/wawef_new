@@ -63,8 +63,7 @@ export default function PaymentOptions({
             <div className="text-center">
               {activeTab === "zelle" && (
                 <div>
-                 
-                  <div className="">
+                  {/* <div className="">
                     <p className="text-sm text-gray-600">Scan to Donate</p>
                     <Image
                       src={zelleQR}
@@ -73,12 +72,12 @@ export default function PaymentOptions({
                       height={115}
                       className="mt-2 mx-auto"
                     />
-                  </div>
+                  </div> */}
                   <div className="mt-3">
-                    <p className="text-sm text-gray-600">Or?</p>
-                    <p className="text-sm text-gray-600">Zelle Donation Details:</p>
-                    <p><span className="text-gray-600">Name: </span>Juliana Buah</p>
-                    <p><span className="text-gray-600">Email: </span>wawefgh@gmail.com</p>
+                    {/* <p className="text-sm text-gray-600">Or?</p> */}
+                    {/* <p className="text-sm text-gray-600">Zelle Donation Details:</p> */}
+                    <p><span className="text-gray-600">Name: </span> <span className="font-bold">Juliana Buah</span></p>
+                    <p><span className="text-gray-600">Email: </span> <span className="font-bold">wawefgh@gmail.com</span></p>
                   </div>
                 </div>
               )}
