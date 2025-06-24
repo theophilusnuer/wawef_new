@@ -28,6 +28,7 @@ export const Navbar: FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
     const takeActionItems = [
+        { label: 'Pad A Girl', href: '/pad-a-girl-campaign' },
         { label: 'Sponsor a Program', href: '/programs' },
         { label: 'Give Monthly', href: '/give-monthly' },
     ];
@@ -37,6 +38,7 @@ export const Navbar: FC = () => {
         href: getProgramPath(program.title),
     }));
     const aboutUsItems = [
+        { label: 'Impact Her Series Webinar', href: '/impact-her-series' },
         { label: 'Who We Are', href: '/about-us' },
         { label: 'Meet the Team', href: '/team' },
     ];

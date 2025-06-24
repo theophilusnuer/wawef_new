@@ -23,6 +23,11 @@ export const Footer: FC = () => {
             <h3 className="mb-6 text-sm md:text-base">Take Action</h3>
             <ul className="space-y-2 text-xs md:text-base text-[#666666]">
               <li>
+                <Link href="/pad-a-girl-campaign" className="hover:underline underline-offset-5">
+                  Pad A Girl
+                </Link>
+              </li>
+              <li>
                 <Link href="/programs" className="hover:underline underline-offset-5">
                   Sponsor a Program
                 </Link>

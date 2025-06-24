@@ -4,8 +4,9 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import zelle from "../../assets/images/zelle.svg";
 import cashapp from "../../assets/images/cashapp.png";
-import zelleQR from "../../assets/images/zelleQR.jpg";
-import cashappQR from "../../assets/images/cashappQR.png";
+// import zelleQR from "../../assets/images/zelleQR.jpg";
+// import cashappQR from "../../assets/images/cashappQR.png";
+import Link from "next/link";
 
 export default function PaymentOptions({
   donorData,
@@ -27,12 +28,16 @@ export default function PaymentOptions({
             >
               ✕
             </button>
-            <h3 className="text-lg font-medium mb-4 text-center">Donation Options</h3>
+            <h3 className="text-lg font-medium mb-4 text-center">
+              Donation Options
+            </h3>
             <div className="flex mb-4">
               <button
                 onClick={() => setActiveTab("zelle")}
                 className={`flex-1 py-2 flex items-center justify-center space-x-2 ${
-                  activeTab === "zelle" ? "border-b-2 border-[#F2C94C] border-4" : ""
+                  activeTab === "zelle"
+                    ? "border-b-2 border-[#F2C94C] border-4"
+                    : ""
                 }`}
               >
                 <Image
@@ -47,7 +52,9 @@ export default function PaymentOptions({
               <button
                 onClick={() => setActiveTab("cashapp")}
                 className={`flex-1 py-2 flex items-center justify-center space-x-2 ${
-                  activeTab === "cashapp" ? "border-b-2 border-[#F2C94C] border-4" : ""
+                  activeTab === "cashapp"
+                    ? "border-b-2 border-[#F2C94C] border-4"
+                    : ""
                 }`}
               >
                 <Image
@@ -76,14 +83,20 @@ export default function PaymentOptions({
                   <div className="mt-3">
                     {/* <p className="text-sm text-gray-600">Or?</p> */}
                     {/* <p className="text-sm text-gray-600">Zelle Donation Details:</p> */}
-                    <p><span className="text-gray-600">Name: </span> <span className="font-bold">Juliana Buah</span></p>
-                    <p><span className="text-gray-600">Email: </span> <span className="font-bold">wawefgh@gmail.com</span></p>
+                    <p>
+                      <span className="text-gray-600">Name: </span>{" "}
+                      <span className="font-bold">Juliana Buah</span>
+                    </p>
+                    <p>
+                      <span className="text-gray-600">Phone No: </span>{" "}
+                      <span className="font-bold">404 623-8789</span>
+                    </p>
                   </div>
                 </div>
               )}
               {activeTab === "cashapp" && (
                 <div>
-                  <div className="">
+                  {/* <div className="">
                     <p className="text-sm text-gray-600">Scan to Donate</p>
                     <Image
                       src={cashappQR}
@@ -92,17 +105,24 @@ export default function PaymentOptions({
                       height={115}
                       className="mt-2 mx-auto"
                     />
-                  </div>
-                    <div className="mt-3">
+                  </div> */}
+                  <Link href="/https://cash.app/$WAWEFregister">
+                    <button className="bg-[#F2C94C] text-black py-1 px-3 md:px-6 md:py-3 rounded-md hover:scale-102 transition-all duration-200 cursor-pointer">
+                      Click to Donate
+                    </button>
+                  </Link>
+                  <div className="mt-3">
                     <p className="text-sm text-gray-600">Or?</p>
-                    <p className="text-sm text-gray-600">CashApp Donation Details:</p>
-                    <p><span className="text-gray-600">Name: </span>$WAWEF</p>
-                   
+                    <p className="text-sm text-gray-600">
+                      CashApp Donation Details:
+                    </p>
+                    <p>
+                      <span className="text-gray-600">Name: </span>$WAWEF
+                    </p>
                   </div>
                 </div>
               )}
             </div>
-            
           </div>
         </div>,
         document.body

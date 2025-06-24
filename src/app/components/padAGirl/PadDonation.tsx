@@ -183,7 +183,7 @@ export function DonateOptions({ onClose }: { onClose: () => void }) {
                 Donations from{" "}
                 {countries.find((c) => c.code === donorData.country)?.name ||
                   donorData.country}{" "}
-                are received via GoFundMe.
+                are received via <strong>GoFundMe</strong>.
               </p>
               <p>
                 Click on <strong>Donate Now</strong> button to proceed
