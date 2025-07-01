@@ -12,7 +12,7 @@ import ImpactFooter from '../components/impactHerSeries/ImpactHerFooter'
 const ImpactHerSeries = () => {
   return (
     <div>
-        <ImpactHerHero/>
+        {/* <ImpactHerHero/>
         <AboutSeries/>
         <WhatToExpect/>
         <WhoThisIsFor/>
@@ -20,7 +20,7 @@ const ImpactHerSeries = () => {
         <EventFlyer/>
         <Testimonials/>
         <GHLForms/>
-        <ImpactFooter/>
+        <ImpactFooter/> */}
     </div>
   )
 }
