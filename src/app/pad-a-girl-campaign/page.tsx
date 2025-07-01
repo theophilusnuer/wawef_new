@@ -26,12 +26,12 @@ export const metadata = {
   openGraph: {
     title: "PadHER - SHEflow Campaign",
     description:
-      "Discover how the Pad a Girl Campaign supports menstrual hygiene and education for girls in West Africa.",
+      "Donate to the Pad a Girl Campaign to support menstrual hygiene and education for girls in West Africa.",
     url: "https://wawef.org/pad-a-girl-campaign",
     siteName: "WAWEF",
     images: [
       {
-        url: "/images/pad-og-image.jpg",
+        url: "/assets/images/logo1.png",
         width: 1200,
         height: 630,
         alt: "Pad a Girl Campaign by WAWEF",
