@@ -38,7 +38,7 @@ export const Navbar: FC = () => {
         href: getProgramPath(program.title),
     }));
     const aboutUsItems = [
-        // { label: 'Impact Her Series Webinar', href: '/impact-her-series' },
+        { label: 'Impact Her Series Webinar', href: '/impact-her-series' },
         { label: 'Who We Are', href: '/about-us' },
         { label: 'Meet the Team', href: '/team' },
     ];
