@@ -13,7 +13,7 @@ export default function Home() {
     <div>
       <HomepageHero />
       <EconomicPrograms />
-      <Give />
+      <Give/>
       <ImpactNumbers />
       <Padgirl/>
       <Ewfsf />

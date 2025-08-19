@@ -24,16 +24,16 @@ export const teamData = [
       "This calling led to the founding of WAWEF, a nonprofit organization dedicated to empowering women and girls across West Africa. WAWEF’s mission is to break the cycle of poverty and unlock the potential of young women through targeted, practical, and transformative programs.",
     ],
   },
-  {
-    name: "Theresa Baffour, DNP, RN, CNL, PMHNP-BC",
-    pic: tess.src,
-    role: "Board Member",
-    description: [
-      "Dr. Theresa Baffour is a dedicated nursing professional who currently serves as the Vice President of the Association of Ghanaian Nurses in New Jersey. She earned her RN and BSN degrees from Seton Hall University. Committed to excellence in nursing leadership, she pursued a Master’s degree in Clinical Nursing Leadership at Rutgers University, followed by a Doctorate in Executive Leadership from the same institution. To further expand her expertise, Dr. Baffour obtained certification as a Psychiatric Mental Health Nurse Practitioner (PMHNP-BC) from Wilkes University.",
-      "With her extensive education and deep passion for healthcare, Dr. Baffour plays a pivotal role in advancing the association's mission to empower nurses of Ghanaian heritage and promote excellence in patient care. She is the founder of T & K Baffour Psychiatric Recovery Center in New Jersey, USA, where she provides compassionate, holistic care to individuals with mental health needs.",
-      "Dr. Baffour aspires to establish a similar organization in Ghana—dedicated to educating communities about the stigma surrounding mental health and delivering comprehensive, culturally sensitive care to her fellow Ghanaians.",
-    ],
-  },
+  // {
+  //   name: "Theresa Baffour, DNP, RN, CNL, PMHNP-BC",
+  //   pic: tess.src,
+  //   role: "Board Member",
+  //   description: [
+  //     "Dr. Theresa Baffour is a dedicated nursing professional who currently serves as the Vice President of the Association of Ghanaian Nurses in New Jersey. She earned her RN and BSN degrees from Seton Hall University. Committed to excellence in nursing leadership, she pursued a Master’s degree in Clinical Nursing Leadership at Rutgers University, followed by a Doctorate in Executive Leadership from the same institution. To further expand her expertise, Dr. Baffour obtained certification as a Psychiatric Mental Health Nurse Practitioner (PMHNP-BC) from Wilkes University.",
+  //     "With her extensive education and deep passion for healthcare, Dr. Baffour plays a pivotal role in advancing the association's mission to empower nurses of Ghanaian heritage and promote excellence in patient care. She is the founder of T & K Baffour Psychiatric Recovery Center in New Jersey, USA, where she provides compassionate, holistic care to individuals with mental health needs.",
+  //     "Dr. Baffour aspires to establish a similar organization in Ghana—dedicated to educating communities about the stigma surrounding mental health and delivering comprehensive, culturally sensitive care to her fellow Ghanaians.",
+  //   ],
+  // },
   {
     name: "Mr. Benjamin Commey Akrong",
     pic: ben.src,
@@ -46,37 +46,37 @@ export const teamData = [
       "Beyond his business ventures, Mr. Akrong is passionate about community development and women’s empowerment. He actively contributes his expertise to the West Africa Women Empowerment Foundation, supporting initiatives aimed at uplifting and creating opportunities for women across the region.",
     ],
   },
-  {
-    name: "Mr.Joseph Ayai Aryee",
-    pic: joseph.src,
-    role: "Advisory Board Member",
-    description: [
-      "Mr.Joseph Ayai Aryee, is an accomplished civil engineer, educator, and leader with over 4 decades of experience across Africa, the Caribbean, and the United States.",
-      "Joseph pursued his early education in Ghana before earning a Master of Science degree in Civil Engineering from Poznan Technical University in Poland. His career began in Jamaica, where he served as a Resident Engineer and later Director at the Estate Development Company under the Ministry of Housing. He also co-founded and led Hytech Associates Ltd., a private engineering consulting firm",
-      "In 1996, he earned his Professional Engineer’s License and transitioned into academia, lecturing at the University of Technology (UTech), Jamaica. He contributed to the Caribbean Board of Accreditation for Engineering and Technology and coordinated the National Building Code of Jamaica. He also served as President of the Jamaica Institution of Engineers from 2007 to 2009.",
-      "After moving to the United States in 2013, Joe worked with the New York City Department of Environmental Protection and later joined Northwell Health, New York State’s largest healthcare provider, as a Design and Construction Project Manager.",
-      "Joseph is currently training to become a Deacon at Franklin St. John’s United Methodist Church in New Jersey and proudly serves on the Advisory Board and Executive Council of the West Africa Women Empowerment Foundation, bringing decades of leadership and commitment to empowering women and communities across the region.",
-    ],
-  },
-  {
-    name: "Ishmael Neequaye",
-    pic: ishmael.src,
-    role: "Advisory Board Member",
-    description: [
-      "Ishmael Neequaye is a dynamic and results-driven healthcare professional with a rich, multidisciplinary background across healthcare, finance, and customer service. He holds a Bachelor of Science in Nursing from Chamberlain University and an Associate of Science in Nursing from Eastern International College. His academic journey also includes a Bachelor of Arts in English and Philosophy from the University of Ghana, Legon, and a High School Diploma from St. Augustine’s College.",
-      "With over a decade of experience as a Registered Nurse specializing in trauma and emergency care, Ishmael has consistently delivered excellence in fast-paced, high-pressure clinical settings. Before transitioning into healthcare, he spent seven years at Bank of America, gaining valuable expertise in credit acquisition, home mortgage servicing, and foreclosure review. His professional foundation was further strengthened by four years in retail at The Home Depot, where he honed his customer service and operational management skills.",
-      "Ishmael’s unique blend of clinical expertise, financial insight, and customer-focused service enables him to approach challenges with a balanced, strategic, and compassionate mindset. He remains deeply committed to continuous learning and to making a meaningful impact in every role he undertakes.",
-    ],
-  },
-  {
-    name: "Mr. Kyei Danso Baffour",
-    pic: kyei.src,
-    role: "Advisory Board Member",
-    description: [
-      "Mr. Kyei Danso Baffour is a results-driven Project Manager with a solid academic background in project management and a deep commitment to community development. He holds a Master of Science in Project Management from Penn State University, along with a Bachelor's degree and a professional certificate in project management from Phoenix University.",
-      "Mr. Baffour is known for his strategic approach, leadership skills, and ability to deliver high-impact projects across sectors. He currently serves as a Board Advisor for the West Africa Women Empowerment Foundation, where he supports initiatives that promote sustainable development and empower women across the region.",
-    ],
-  },
+  // {
+  //   name: "Mr.Joseph Ayai Aryee",
+  //   pic: joseph.src,
+  //   role: "Advisory Board Member",
+  //   description: [
+  //     "Mr.Joseph Ayai Aryee, is an accomplished civil engineer, educator, and leader with over 4 decades of experience across Africa, the Caribbean, and the United States.",
+  //     "Joseph pursued his early education in Ghana before earning a Master of Science degree in Civil Engineering from Poznan Technical University in Poland. His career began in Jamaica, where he served as a Resident Engineer and later Director at the Estate Development Company under the Ministry of Housing. He also co-founded and led Hytech Associates Ltd., a private engineering consulting firm",
+  //     "In 1996, he earned his Professional Engineer’s License and transitioned into academia, lecturing at the University of Technology (UTech), Jamaica. He contributed to the Caribbean Board of Accreditation for Engineering and Technology and coordinated the National Building Code of Jamaica. He also served as President of the Jamaica Institution of Engineers from 2007 to 2009.",
+  //     "After moving to the United States in 2013, Joe worked with the New York City Department of Environmental Protection and later joined Northwell Health, New York State’s largest healthcare provider, as a Design and Construction Project Manager.",
+  //     "Joseph is currently training to become a Deacon at Franklin St. John’s United Methodist Church in New Jersey and proudly serves on the Advisory Board and Executive Council of the West Africa Women Empowerment Foundation, bringing decades of leadership and commitment to empowering women and communities across the region.",
+  //   ],
+  // },
+  // {
+  //   name: "Ishmael Neequaye",
+  //   pic: ishmael.src,
+  //   role: "Advisory Board Member",
+  //   description: [
+  //     "Ishmael Neequaye is a dynamic and results-driven healthcare professional with a rich, multidisciplinary background across healthcare, finance, and customer service. He holds a Bachelor of Science in Nursing from Chamberlain University and an Associate of Science in Nursing from Eastern International College. His academic journey also includes a Bachelor of Arts in English and Philosophy from the University of Ghana, Legon, and a High School Diploma from St. Augustine’s College.",
+  //     "With over a decade of experience as a Registered Nurse specializing in trauma and emergency care, Ishmael has consistently delivered excellence in fast-paced, high-pressure clinical settings. Before transitioning into healthcare, he spent seven years at Bank of America, gaining valuable expertise in credit acquisition, home mortgage servicing, and foreclosure review. His professional foundation was further strengthened by four years in retail at The Home Depot, where he honed his customer service and operational management skills.",
+  //     "Ishmael’s unique blend of clinical expertise, financial insight, and customer-focused service enables him to approach challenges with a balanced, strategic, and compassionate mindset. He remains deeply committed to continuous learning and to making a meaningful impact in every role he undertakes.",
+  //   ],
+  // },
+  // {
+  //   name: "Mr. Kyei Danso Baffour",
+  //   pic: kyei.src,
+  //   role: "Advisory Board Member",
+  //   description: [
+  //     "Mr. Kyei Danso Baffour is a results-driven Project Manager with a solid academic background in project management and a deep commitment to community development. He holds a Master of Science in Project Management from Penn State University, along with a Bachelor's degree and a professional certificate in project management from Phoenix University.",
+  //     "Mr. Baffour is known for his strategic approach, leadership skills, and ability to deliver high-impact projects across sectors. He currently serves as a Board Advisor for the West Africa Women Empowerment Foundation, where he supports initiatives that promote sustainable development and empower women across the region.",
+  //   ],
+  // },
   {
     name: "Janet Kwakye",
     pic: jane.src,

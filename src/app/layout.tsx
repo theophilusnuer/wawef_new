@@ -5,6 +5,7 @@ import "./globals.css";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import Script from "next/script";
+import Popup501 from "./components/501Pop/501Popup";
 
 const gartis = localFont({
   src: "../../public/fonts/gartis.otf",
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "WAWEF - Empowering Women, Transforming Futures",
     description:
-      "Empowering women and girls in West Africa with WAWEF. Learn more about our initiatives.",
+      "Join WAWEF in empowering women and girls in West Africa through education, health, and economic initiatives.",
     images: ["/images/logo.png"],
   },
   robots: {
@@ -132,6 +133,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Popup501/>
       </body>
     </html>
   );
