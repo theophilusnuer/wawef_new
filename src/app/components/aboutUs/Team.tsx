@@ -5,7 +5,7 @@ import { getTeamPath } from '@/app/utils/teamUtils';
 import { teamData } from '../team/TeamData';
 
 // Filter team members for specific roles
-const featuredRoles = ["Founder & Executive Director", "Board Member",];
+const featuredRoles = ["Founder & Executive Director", "Board Member","Programs Director"];
 const featuredTeamMembers = teamData.filter((member) =>
     featuredRoles.includes(member.role)
 );
