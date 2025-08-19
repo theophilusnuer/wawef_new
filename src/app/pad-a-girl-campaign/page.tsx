@@ -31,7 +31,7 @@ export const metadata = {
     siteName: "WAWEF",
     images: [
       {
-        url: "/assets/images/logo1.png",
+        url: "/images/padhero.webp",
         width: 1200,
         height: 630,
         alt: "Pad a Girl Campaign by WAWEF",
@@ -42,10 +42,10 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pad a Girl Campaign",
+    title: "PadHER - SHEflow Campaign",
     description:
-      "Join the Pad a Girl Campaign to empower girls in West Africa with menstrual hygiene support.",
-    images: ["/images/pad-og-image.jpg"],
+      "Donate to the Pad a Girl Campaign to support menstrual hygiene and education for girls in West Africa.",
+    images: ["/images/padhero.webp"],
   },
   robots: {
     index: true,

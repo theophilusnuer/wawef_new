@@ -67,6 +67,9 @@ export const Footer: FC = () => {
             <h3 className="mb-6 text-sm md:text-base">About Us</h3>
             <ul className="space-y-2 text-xs md:text-base text-[#666666]">
               <li>
+                  WAWEF | EIN: 33-4982367
+              </li>
+              <li>
                 <Link href="/about-us" className="hover:underline underline-offset-5">
                   Who we are
                 </Link>
@@ -131,7 +134,10 @@ export const Footer: FC = () => {
 
         {/* Copyright */}
         <div className="text-center text-[#666666]">
-          <p className="text-xs md:text-sm">
+          <p className="text-xs md:text-base">
+            WAWEF is a 501(c)(3) nonprofit. Donations are tax-deductible as allowed by law.
+          </p>
+          <p className="text-xs md:text-sm mt-4 md:mt-1">
             © {currentYear} West Africa Women Empowerment Foundation (WAWEF). All rights reserved.
           </p>
         </div>
