@@ -113,14 +113,14 @@ export const teamData = [
 "Frank's dedication to excellence, attention to detail, and passion for his work make him a reliable choice for life insurance, real estate, and event hosting needs.",
     ],
   },
-  {
-    name: "Miriam Adwoa Darteh",
-    pic: miriam.src,
-    role: "Marketing and Communication Lead",
-    description: [
-      "Miriam Adwoa Darteh is a dynamic digital marketing specialist with a passion for helping brands grow and thrive online. With a strong foundation in social media strategy, content creation, email marketing, and SEO, she develops results-driven campaigns that increase visibility, boost engagement, and drive meaningful conversions.",
-      "Known for her ability to blend creativity with data insights, Miriam crafts compelling digital experiences that connect with the right audience at the right time. Her strategic approach to digital marketing ensures that every campaign is tailored, impactful, and aligned with business goals.",
-      "Whether optimizing a brand’s online presence or launching targeted marketing initiatives, Miriam is committed to delivering measurable success and long-term growth.",
-    ],
-  },
+  // {
+  //   name: "Miriam Adwoa Darteh",
+  //   pic: miriam.src,
+  //   role: "Marketing and Communication Lead",
+  //   description: [
+  //     "Miriam Adwoa Darteh is a dynamic digital marketing specialist with a passion for helping brands grow and thrive online. With a strong foundation in social media strategy, content creation, email marketing, and SEO, she develops results-driven campaigns that increase visibility, boost engagement, and drive meaningful conversions.",
+  //     "Known for her ability to blend creativity with data insights, Miriam crafts compelling digital experiences that connect with the right audience at the right time. Her strategic approach to digital marketing ensures that every campaign is tailored, impactful, and aligned with business goals.",
+  //     "Whether optimizing a brand’s online presence or launching targeted marketing initiatives, Miriam is committed to delivering measurable success and long-term growth.",
+  //   ],
+  // },
 ];
