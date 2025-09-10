@@ -8,6 +8,7 @@ import kyei from "../../assets/images/kyei.jpg";
 import essien from "../../assets/images/essien.jpg";
 import miriam from "../../assets/images/miriam.jpg";
 import frank from "../../assets/images/frank.jpg";
+import jose from "../../assets/images/jose.jpg";
 
 export const teamData = [
   {
@@ -110,17 +111,17 @@ export const teamData = [
       "2. Real Estate Mastery: Skilled in selling and renting prime properties in Accra, with a strong referral network built on professionalism and client-centricity",
       "3. Relationship Management: Expertise in managing, maintaining, and growing relationships, leveraging the value chain",
       "4. Event Management: Successfully managed over 200 corporate and social events in the past 4 years, showcasing; Excellent communication and interpersonal skills, Proven event management capabilities, and Strong stakeholder relationships (decoration teams, caterers, musicians, entertainment professionals) ",
-"Frank's dedication to excellence, attention to detail, and passion for his work make him a reliable choice for life insurance, real estate, and event hosting needs.",
+      "Frank's dedication to excellence, attention to detail, and passion for his work make him a reliable choice for life insurance, real estate, and event hosting needs.",
     ],
   },
-  // {
-  //   name: "Miriam Adwoa Darteh",
-  //   pic: miriam.src,
-  //   role: "Marketing and Communication Lead",
-  //   description: [
-  //     "Miriam Adwoa Darteh is a dynamic digital marketing specialist with a passion for helping brands grow and thrive online. With a strong foundation in social media strategy, content creation, email marketing, and SEO, she develops results-driven campaigns that increase visibility, boost engagement, and drive meaningful conversions.",
-  //     "Known for her ability to blend creativity with data insights, Miriam crafts compelling digital experiences that connect with the right audience at the right time. Her strategic approach to digital marketing ensures that every campaign is tailored, impactful, and aligned with business goals.",
-  //     "Whether optimizing a brand’s online presence or launching targeted marketing initiatives, Miriam is committed to delivering measurable success and long-term growth.",
-  //   ],
-  // },
+  {
+    name: "Joseph Jaja",
+    pic: jose.src,
+    role: "Marketing and Communication Lead",
+    description: [
+      "Joseph Jaja is the Marketing and Communication Lead at WAWEF, where he oversees branding, media relations, and stakeholder engagement. In this role, he ensures WAWEF’s vision and impact are effectively communicated across digital platforms, traditional media, and community networks. He leads the development of creative content strategies, manages campaigns, and builds partnerships that strengthen WAWEF’s visibility and reach",
+      "With a strong background in computer science and data analytics, Joseph brings a data-driven and innovative approach to communication. At Watersmet, he served as a Communication Strategist and Software Developer, where he contributed to digital strategy, crafted impactful messages, and developed web solutions to enhance user experience. As a Research Assistant at Ho Technical University, he supported academic research, contributed to publications, and provided technical expertise, an experience that sharpened his analytical, organizational, and communication skills.",
+      "Joseph is passionate about using technology and strategic communication to tell impactful stories, connect people to opportunities, and drive meaningful change. At WAWEF, he channels this passion into amplifying initiatives, engaging audiences, and advancing the organization’s mission.",
+    ],
+  },
 ];

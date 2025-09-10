@@ -5,7 +5,7 @@ import { Whoweare } from '../components/aboutUs/Whoweare'
 import { Vision } from '../components/aboutUs/Vision'
 import { Ewfsf } from '../components/homepage/Ewfsf'
 import { Team } from '../components/aboutUs/Team'
-import Enoch from '../components/aboutUs/Enock'
+import Enock from '../components/aboutUs/Enock'
 
 
 const page = () => {
@@ -20,7 +20,7 @@ const page = () => {
       <AboutusHero/>
       <Whoweare/>
       <Vision/>
-      <Enoch/>
+      <Enock/>
       <Ewfsf/>
       <Team/>
     </div>
