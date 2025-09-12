@@ -51,7 +51,7 @@ export const Ewfsf: FC = () => {
   ];
 
   return (
-    <div className="py-10 px-4 md:px-10 max-w-[78rem] mx-auto">
+    <div className="py-10 container mx-auto px-4 sm:px-6 lg:px-8">
       {/* Heading */}
       <h2 className="inline-block text-base md:text-2xl text-center md:text-left px-2.5 py-1.5 md:px-4 md:py-3 rounded-sm bg-[#DFF3E7] mb-8">
         Empowering Women for a Sustainable Future

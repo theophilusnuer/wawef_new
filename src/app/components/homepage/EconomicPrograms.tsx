@@ -29,9 +29,9 @@ export const EconomicPrograms: FC = () => {
     ];
 
     return (
-        <div>
+        <div className='py-10'>
             <Quote1 />
-            <div className="py-10 px-4 md:px-10 max-w-[78rem] mx-auto">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Heading */}
                 <h2 className="inline-block text-base md:text-2xl px-2.5 py-1.5 md:px-4 md:py-3 rounded-sm bg-[#FAEBE7] mb-8">
                     Economic Empowerment Programs

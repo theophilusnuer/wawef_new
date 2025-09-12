@@ -7,9 +7,7 @@ import Link from "next/link";
 
 const Overview: FC = () => {
   const descriptionPart1 =
-    "The Enock Addico Scholarship provides five talented, underprivileged young women in Ghana with a full scholarship to a leading technical and vocational institute. By removing financial barriers, it empowers recipients with quality training for employment and entrepreneurship.";
-  const descriptionPart2 =
-    "This initiative also serves as a pilot program, providing crucial insights to help WAWEF achieve its long-term vision: establishing the Enock Addico Technical and Vocational Institute to offer free, high-quality education to marginalized girls across West Africa.";
+  "The Enock Addico Scholarship Program is designed to provide  talented but underprivileged young women in Ghana with full scholarships to study at a leading technical and vocational Institute. The program removes financial barriers by granting access to quality vocational education at a recognized TVET institute, enabling recipients to pursue training that prepares them for both employment and entrepreneurial opportunities.";
   const scholarImages = [cos2, cos3, hw];
 
   return (
@@ -23,7 +21,6 @@ const Overview: FC = () => {
           </h2>
 
           <p className=" leading-relaxed md:text-lg">{descriptionPart1}</p>
-          <p className=" leading-relaxed md:text-lg">{descriptionPart2}</p>
 
           <Link href="https://forms.gle/tGWgyYVNvfzwGAMZ6" target="blank">
             <button

@@ -45,6 +45,11 @@ export const Footer: FC = () => {
             <h3 className="mb-6 text-sm md:text-base">What We Do</h3>
             <ul className="space-y-2 text-xs md:text-base text-[#666666]">
               <li>
+                <Link href="/enock-addico-scholarship" className="hover:underline underline-offset-5">
+                  Enock Addico Scholarship
+                </Link>
+              </li>
+              <li>
                 <Link href={`${getProgramPath("Cosmetology — Beauty & Personal Care")}`} className="hover:underline underline-offset-5">
                   Cosmetology Training
                 </Link>

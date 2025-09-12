@@ -4,12 +4,12 @@ import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import pad1 from "../../assets/images/pad1.webp"; // First image
-import pad2 from "../../assets/images/pad2.webp"; // Replace with your second image
-import pad3 from "../../assets/images/pad3.webp"; // Replace with your third image
+import pad1 from "../../assets/images/pad1.webp"; 
+import pad2 from "../../assets/images/pad2.webp"; 
+import pad3 from "../../assets/images/pad3.webp";
 
 export const Padgirl: FC = () => {
-  const images = [pad1.src, pad2.src, pad3.src]; // Array of image sources
+  const images = [pad1.src, pad2.src, pad3.src]; 
 
   // Slick Carousel settings
   const settings = {
@@ -34,7 +34,7 @@ export const Padgirl: FC = () => {
   };
 
   return (
-    <section className="py-10 px-4 md:px-12 max-w-[78rem] mx-auto">
+    <section className="py-10 container mx-auto px-4 sm:px-6 lg:px-8">
       <h2 className="inline-block text-base md:text-2xl px-2.5 py-1.5 md:px-4 md:py-3 rounded-sm bg-[#F2C94C] mb-8">
          Pad a Girl SHEFlow Campaign
       </h2>

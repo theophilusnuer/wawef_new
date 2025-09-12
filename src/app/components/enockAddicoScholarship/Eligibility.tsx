@@ -11,9 +11,9 @@ const Eligibility: FC = () => {
     "Open to FEMALE applicants only.",
     "Must be a Ghanaian citizen currently residing in Accra, Ghana.",
     "Must be 18 to 25 years.",
-    "Must have successfully completed WASSCE, demonstrating foundational academic readiness.",
-    "Must demonstrate strong commitment to personal growth, leadership potential, and a clear interest in pursuing a career in cosmetology and related vocational pathways.",
-    "Preference is given to applicants who show a desire to contribute positively to their communities and serve as role models for other young women.",
+    "Must have successfully completed Senior High School, demonstrating foundational academic readiness.",
+    "Must demonstrate strong commitment to personal growth, and a clear interest in pursuing a career in cosmetology and related vocational pathways.",
+    "Preference will be given to applicants who show a desire to contribute positively to their communities and serve as role models for other young women.",
   ];
 
   return (
@@ -35,7 +35,7 @@ const Eligibility: FC = () => {
         </ul>
 
         {/* Warning Notice */}
-        <div className="mt-8 flex items-start gap-3 rounded-md bg-red-50 border border-red-200 p-4 text-red-700">
+        <div className="mt-8 flex items-start gap-3 rounded-md bg-red-50 border border-red-200 p-4 text-red-700 ">
           <ExclamationTriangleIcon className="w-6 h-6 text-red-600 flex-shrink-0" />
           <p className="text-sm md:text-lg leading-relaxed">
             Any falsification of details or misrepresentation in the application will result in{" "}

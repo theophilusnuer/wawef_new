@@ -6,6 +6,7 @@ import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import Script from "next/script";
 import Popup501 from "./components/501Pop/501Popup";
+import { LoaderProvider } from "./components/LoaderContext";
 
 const gartis = localFont({
   src: "../../public/fonts/gartis.otf",
@@ -131,7 +132,9 @@ export default function RootLayout({
         className={`min-h-screen flex flex-col justify-between ${inter.variable} ${gartis.variable} antialiased`}
       >
         <Navbar />
+        <LoaderProvider>
         <main className="flex-1">{children}</main>
+        </LoaderProvider>
         <Footer />
         <Popup501/>
       </body>

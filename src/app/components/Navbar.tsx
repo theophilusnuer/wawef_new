@@ -33,10 +33,13 @@ export const Navbar: FC = () => {
         { label: 'Give Monthly', href: '/give-monthly' },
     ];
 
-    const whatWeDoItems = programsData.map((program) => ({
-        label: getSimplifiedLabel(program.title),
-        href: getProgramPath(program.title),
-    }));
+   const whatWeDoItems = [
+       { label: 'Enock Addico Scholarship', href: '/enock-addico-scholarship' },
+        ...programsData.map((program) => ({
+            label: getSimplifiedLabel(program.title),
+            href: getProgramPath(program.title),
+        })),
+    ];
     const aboutUsItems = [
         // { label: 'Impact Her Series Webinar', href: '/impact-her-series' },
         { label: 'Who We Are', href: '/about-us' },

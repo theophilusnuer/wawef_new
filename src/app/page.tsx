@@ -1,4 +1,5 @@
 import { EconomicPrograms } from "./components/homepage/EconomicPrograms";
+import EnockBanner from "./components/homepage/EnockBanner";
 import { Ewfsf } from "./components/homepage/Ewfsf";
 import { Give } from "./components/homepage/Give";
 import HomepageHero from "./components/homepage/HomepageHero";
@@ -13,6 +14,7 @@ export default function Home() {
     <div>
       <HomepageHero />
       <EconomicPrograms />
+      <EnockBanner/>
       <Give/>
       <ImpactNumbers />
       <Padgirl/>
