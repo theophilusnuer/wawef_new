@@ -70,7 +70,7 @@ const Overview: FC = () => {
           </div>
 
           {/* Mobile Apply Button */}
-            <div className="col-span-2 flex justify-center mt-4 md:hidden">
+            {/* <div className="col-span-2 flex justify-center mt-4 md:hidden">
           <Link href="https://forms.gle/tGWgyYVNvfzwGAMZ6" target="blank">
               <button
                 className="bg-[#27AE60] text-white font-semibold px-8 py-2 rounded-md cursor-pointer hover:scale-105 hover:shadow-md transition-all duration-200"
@@ -79,7 +79,7 @@ const Overview: FC = () => {
                 Apply
               </button>
           </Link>
-            </div>
+            </div> */}
         </div>
       </div>
     </section>
