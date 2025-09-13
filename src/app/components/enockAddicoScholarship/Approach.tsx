@@ -40,14 +40,14 @@ const Approach: FC = () => {
             ))}
           </ul>
 
-          <Link href="https://forms.gle/tGWgyYVNvfzwGAMZ6" target="blank">
+          {/* <Link href="https://forms.gle/tGWgyYVNvfzwGAMZ6" target="blank">
         <button
           className="bg-[#F2C94C] mt-2 font-semibold px-12 py-2 rounded-md cursor-pointer hover:scale-105 hover:shadow-md transition-all duration-200"
           aria-label="Apply for the scholarship"
         >
           Apply
         </button>
-       </Link>
+       </Link> */}
         </div>
       </div>
     </section>

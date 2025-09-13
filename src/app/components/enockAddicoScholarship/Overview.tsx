@@ -22,14 +22,14 @@ const Overview: FC = () => {
 
           <p className=" leading-relaxed md:text-lg">{descriptionPart1}</p>
 
-          <Link href="https://forms.gle/tGWgyYVNvfzwGAMZ6" target="blank">
+          {/* <Link href="https://forms.gle/tGWgyYVNvfzwGAMZ6" target="blank">
             <button
               className="bg-[#27AE60] text-white hidden md:block font-semibold px-12 py-1 rounded-md cursor-pointer hover:scale-105 hover:shadow-md transition-all duration-200 "
               aria-label="Apply for the scholarship"
             >
               Apply
             </button>
-          </Link>
+          </Link> */}
         </div>
 
         {/* Right: Image Grid */}
