@@ -40,6 +40,8 @@ export default function Report() {
               <p className="text-gray-700 italic underline underline-offset-4">Download full report</p>
               <a
                 href="https://pdfs.wawef.org/Project%20Report%20PADHERSHEFLOW.pdf"
+                 target="_blank"
+                    rel="noopener noreferrer"
                 download="project-report.pdf"
                 className="flex items-center gap-1 text-[#F2C94C] font-semibold text-sm sm:text-base"
               >
