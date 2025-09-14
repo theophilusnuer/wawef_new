@@ -21,7 +21,7 @@ export function DonateButton({
 }: DonateButtonProps) {
   return (
     <button
-      className={`inline-flex text-center justify-center bg-[#F2C94C] text-black py-1.5 md:py-3 px-6 rounded-sm cursor-pointer md:text-lg hover:scale-105 hover:shadow-md transition-all duration-200 ${width}`}
+      className={`inline-flex text-center justify-center bg-[#F2C94C] text-black py-1.5 md:py-2 px-6 rounded-sm cursor-pointer md:text-lg hover:scale-105 hover:shadow-md transition-all duration-200 ${width}`}
       disabled={loading}
       {...props}
     >

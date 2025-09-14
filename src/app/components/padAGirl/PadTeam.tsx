@@ -19,12 +19,13 @@ const PadTeam = () => {
       name: "Juliana Irene Buah",
       title: "Real Estate Builder/Founder, and Executive Director of WAWEF",
     },
-    { src: team2, name: "Louisa Arhin", title: "Nurse RN, BSN" },
     {
       src: team3,
       name: "Yvonne Ofori",
       title: "Research Scientist and Brand Ambassador for Especially Yours",
     },
+        { src: team2, name: "Louisa Arhin", title: "Nurse RN, BSN" },
+
     { src: team4, name: "Sybil Selorm Seade", title: "Student" },
     {
       src: team5,
@@ -41,8 +42,8 @@ const PadTeam = () => {
   ];
 
   return (
-    <section className="py-12 px-4">
-      <div className="container mx-auto max-w-6xl">
+     <section className="relative w-full py-12 md:py-16 lg:py-20">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         <h2 className="inline-block text-lg md:text-2xl px-4 py-2 bg-[#FDF7E4] border border-[#F2C94C] rounded-md mb-8">
           PadHER - SHEflow Campaign Fund Raising Team
         </h2>
@@ -69,9 +70,9 @@ const PadTeam = () => {
             </div>
           ))}
         </div>
-        <div className="mt-8">
+        {/* <div className="mt-8">
           <PadDonation width="w-full" />
-        </div>
+        </div> */}
       </div>
     </section>
   );
