@@ -2,7 +2,8 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import PadDonation from './PadDonation';
-import phero from "../../assets/images/phero.webp"
+import phero from "../../assets/images/phero.webp";
+
 // Load YouTube IFrame API dynamically
 const loadYouTubeIframeAPI = () => {
   if (!document.getElementById('youtube-iframe-api')) {
@@ -32,11 +33,12 @@ const PadAGirlHero: React.FC = () => {
       });
     };
 
-    if ((window as any).YT && (window as any).YT.loaded) {
-      onYouTubeIframeAPIReady();
-    } else {
-      (window as any).onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-    }
+   if (window.YT && window.YT.loaded) {
+  onYouTubeIframeAPIReady();
+} else {
+  window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+}
+
 
     return () => {
       // Cleanup not needed since player is not stored in ref
