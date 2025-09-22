@@ -1,19 +1,18 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import img1 from "../../assets/images/img1.jpg";
-import img2 from "../../assets/images/img2.jpg";
-import img3 from "../../assets/images/img3.jpg";
-import img4 from "../../assets/images/img4.jpg";
-import img5 from "../../assets/images/img5.jpg";
-import img6 from "../../assets/images/img6.jpg";
-import PadDonation from "./PadDonation";
+import img1 from "../../assets/images/phero.webp";
+import img2 from "../../assets/images/pg2.webp";
+import img3 from "../../assets/images/pg3.webp";
+import img4 from "../../assets/images/pg4.webp";
+import img5 from "../../assets/images/pg5.webp";
+import img6 from "../../assets/images/pg6.webp";
 
 const PadGallery = () => {
   return (
     <section className="py-12 px-4">
       <div className="container mx-auto max-w-6xl text-center">
-        <h2 className="inline-block text-lg md:text-2xl px-14 py-2 bg-[#DFF3E7] rounded-md mb-8">
+        <h2 className="inline-block text-lg md:text-2xl px-14 py-2 bg-[#FAEBE7] rounded-md mb-8">
           Gallery of Impact
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 grid-rows-3 gap-2 md:gap-4 mb-8">
@@ -77,7 +76,11 @@ const PadGallery = () => {
             />
           </div>
         </div>
-       <PadDonation/>
+        <Link href="https://wawef.pixieset.com/padhersheflowcampaign/" target="blank">
+         <button className="bg-[#F2C94C] text-black py-2 px-6 rounded-sm hover:scale-102 transition-all duration-200 text-sm md:text-base cursor-pointer">
+                       View gallery
+                    </button>
+        </Link>
       </div>
     </section>
   );
