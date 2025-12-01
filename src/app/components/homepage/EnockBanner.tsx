@@ -3,10 +3,12 @@
 import { FC } from "react";
 import Image from "next/image";
 import ebanner from "../../assets/images/ebanner.jpeg";
+import { Quote1 } from "./Quotes";
 
 const EnockBanner: FC = () => {
   return (
-    <section className="pb-12">
+    <section className="py-12">
+      <Quote1 />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Banner */}
         <div className="relative w-full rounded-md overflow-hidden">

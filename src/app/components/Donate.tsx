@@ -129,10 +129,11 @@ export const Donate: FC = () => {
             <div className="text-center mb-6">
            
               <p className="text-sm md:text-base font-bold">
-                <span className="font-normal">Name:</span> Juliana Buah
+                <span className="font-normal">Name:</span> WAWEF
               </p>
               <p className="text-sm md:text-base font-bold">
-                <span className="font-normal">Phone No:</span> 404-623-8789
+                <span className="font-normal">E-mail:</span> info@wawef.org
+
               </p>
             </div>
           )}
