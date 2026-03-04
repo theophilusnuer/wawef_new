@@ -1,0 +1,1239 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Name of the project.",
+        "name": "projectName",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "projectName",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Upcoming",
+              "value": "upcoming"
+            },
+            {
+              "title": "Completed",
+              "value": "completed"
+            }
+          ],
+          "layout": "radio"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "upcoming",
+                  "completed"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Is this an upcoming or completed project?",
+        "name": "status",
+        "type": "string",
+        "title": "Project Status"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "For ongoing/upcoming projects",
+        "hidden": "conditional",
+        "name": "expectedPeopleImpacted",
+        "type": "number",
+        "title": "Expected People to be Impacted"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "For ongoing/upcoming projects",
+        "hidden": "conditional",
+        "name": "expectedCommunitiesImpacted",
+        "type": "number",
+        "title": "Expected Communities to Impact"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "For completed projects",
+        "hidden": "conditional",
+        "name": "peopleImpacted",
+        "type": "number"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "For completed projects",
+        "hidden": "conditional",
+        "name": "communitiesImpacted",
+        "type": "number"
+      },
+      {
+        "description": "Auto-updated when the project is edited.",
+        "readOnly": true,
+        "name": "lastUpdated",
+        "type": "datetime"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Donation link for this project.",
+        "hidden": "conditional",
+        "name": "donateLink",
+        "type": "url",
+        "fieldset": "upcoming"
+      },
+      {
+        "hidden": "conditional",
+        "name": "about",
+        "type": "text",
+        "title": "What is this Project?",
+        "fieldset": "upcoming"
+      },
+      {
+        "hidden": "conditional",
+        "name": "problem",
+        "type": "text",
+        "title": "The Problem",
+        "fieldset": "upcoming"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Single Paragraph",
+              "value": "paragraph"
+            },
+            {
+              "title": "Objectives & Approach",
+              "value": "objectives"
+            }
+          ],
+          "layout": "radio"
+        },
+        "hidden": "conditional",
+        "name": "solutionType",
+        "type": "string",
+        "title": "Solution Format",
+        "fieldset": "upcoming"
+      },
+      {
+        "hidden": "conditional",
+        "name": "solution",
+        "type": "text",
+        "title": "Solution (Paragraph)",
+        "fieldset": "upcoming"
+      },
+      {
+        "hidden": "conditional",
+        "name": "objectivesApproach",
+        "type": "objectivesApproach",
+        "title": "Objectives & Approach",
+        "fieldset": "upcoming"
+      },
+      {
+        "hidden": "conditional",
+        "name": "location",
+        "type": "string",
+        "fieldset": "completed"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "youtubeLink",
+        "type": "url",
+        "title": "YouTube Link (Placeholder)",
+        "fieldset": "completed"
+      },
+      {
+        "hidden": "conditional",
+        "name": "completedProblem",
+        "type": "text",
+        "title": "The Problem",
+        "fieldset": "completed"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Single Paragraph",
+              "value": "paragraph"
+            },
+            {
+              "title": "Objectives & Approach",
+              "value": "objectives"
+            }
+          ],
+          "layout": "radio"
+        },
+        "hidden": "conditional",
+        "name": "completedSolutionType",
+        "type": "string",
+        "title": "Solution Format",
+        "fieldset": "completed"
+      },
+      {
+        "hidden": "conditional",
+        "name": "completedSolution",
+        "type": "text",
+        "title": "Solution (Paragraph)",
+        "fieldset": "completed"
+      },
+      {
+        "hidden": "conditional",
+        "name": "completedObjectivesApproach",
+        "type": "objectivesApproach",
+        "title": "Objectives & Approach",
+        "fieldset": "completed"
+      },
+      {
+        "hidden": "conditional",
+        "name": "overview",
+        "type": "text",
+        "title": "What We Have Done (Project Overview)",
+        "fieldset": "completed"
+      },
+      {
+        "options": {
+          "accept": ".pdf"
+        },
+        "hidden": "conditional",
+        "name": "projectReport",
+        "type": "file",
+        "title": "Project Report (PDF)",
+        "fieldset": "completed"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 10
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "partner"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "partners",
+        "type": "array",
+        "fieldset": "completed"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 3
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "galleryImage"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "impactGallery",
+        "type": "array",
+        "title": "Impact Gallery (3 Images)",
+        "fieldset": "completed"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "moreImagesLink",
+        "type": "url",
+        "title": "Link to More Images",
+        "fieldset": "completed"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 10
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "sponsors",
+        "type": "array",
+        "title": "Sponsors/Donors",
+        "fieldset": "completed"
+      }
+    ],
+    "fieldsets": [
+      {
+        "name": "upcoming",
+        "title": "Upcoming Project Details",
+        "options": {
+          "collapsible": true,
+          "collapsed": false
+        }
+      },
+      {
+        "name": "completed",
+        "title": "Completed Project Details",
+        "options": {
+          "collapsible": true,
+          "collapsed": true
+        }
+      }
+    ],
+    "name": "project",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "Partner Name"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "fields": [
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "presence",
+                    "constraint": "required"
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "alt",
+            "type": "string",
+            "title": "Alt Text"
+          }
+        ],
+        "name": "logo",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "website",
+        "type": "url",
+        "title": "Website/Social Link"
+      }
+    ],
+    "name": "partner",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "fields": [
+          {
+            "name": "alt",
+            "type": "string",
+            "title": "Alt Text"
+          }
+        ],
+        "name": "image",
+        "type": "image"
+      }
+    ],
+    "name": "galleryImage",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1
+              },
+              {
+                "flag": "max",
+                "constraint": 10
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "objectives",
+        "type": "array"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Text",
+              "value": "text"
+            },
+            {
+              "title": "List",
+              "value": "list"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "text",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "text",
+                  "list"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "approachType",
+        "type": "string",
+        "title": "Approach Format"
+      },
+      {
+        "hidden": "conditional",
+        "name": "approachText",
+        "type": "text",
+        "title": "Approach (Text)"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "hidden": "conditional",
+        "name": "approachList",
+        "type": "array",
+        "title": "Approach (List)"
+      }
+    ],
+    "name": "objectivesApproach",
+    "type": "object",
+    "title": "Objectives & Approach"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 100
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Title of Report/Action Plan"
+      },
+      {
+        "options": {
+          "hotspot": true,
+          "accept": "image/*"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "coverImage",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 400
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "summary",
+        "type": "text",
+        "title": "Summary (max 60 words)"
+      },
+      {
+        "options": {
+          "accept": ".pdf,.doc,.docx"
+        },
+        "name": "file",
+        "type": "file",
+        "title": "Upload File"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "externalLink",
+        "type": "url",
+        "title": "External Link (if any)"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      }
+    ],
+    "name": "resource",
+    "type": "document",
+    "title": "Resource/Review"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 120
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "coverImage",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Type and format your story, insert images and links as needed.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "type": "image"
+          }
+        ],
+        "name": "body",
+        "type": "array",
+        "title": "Story Text"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 10
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Add a list of images to be used in the story body or as a gallery.",
+        "of": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "type": "image"
+          }
+        ],
+        "name": "gallery",
+        "type": "array",
+        "title": "Gallery Images"
+      }
+    ],
+    "name": "impactStory",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 120
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "coverImage",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Type and format your news, insert images and links as needed.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "type": "image"
+          }
+        ],
+        "name": "body",
+        "type": "array",
+        "title": "News Text"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 10
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Add a list of images to be used in the news body or as a gallery.",
+        "of": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "type": "image"
+          }
+        ],
+        "name": "gallery",
+        "type": "array",
+        "title": "Gallery Images"
+      }
+    ],
+    "name": "news",
+    "type": "document"
+  }
+]

@@ -1,15 +1,14 @@
 "use client";
 import Link from 'next/link';
-import { useState } from 'react';
-import { FC } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Dropdown } from './Dropdown';
 import Image from 'next/image';
 import logo from '../assets/images/logo.png';
 import Emoji from 'react-emoji-render';
-import { programsData } from '@/app/components/programs/programsData';
-import { getProgramPath } from '../utils/slugUtils';
+import { NAVBAR_ITEMS } from './navbarItems';
 import { Donate } from './Donate';
+import { useEffect, useState } from 'react';
+import { createClient } from '@/sanity/lib/client';
 
 // Helper function to generate simplified labels from program titles
 const getSimplifiedLabel = (title: string): string => {
@@ -23,28 +22,38 @@ const getSimplifiedLabel = (title: string): string => {
     return title; // Fallback to the original title if no match
 };
 
-export const Navbar: FC = () => {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+export default function Navbar() {
+        const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+        const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
+        const [flagshipProjects, setFlagshipProjects] = useState<{ label: string; href: string }[]>([]);
+        const [reviewResources, setReviewResources] = useState<{ label: string; href: string }[]>([]);
 
-    const takeActionItems = [
-        { label: 'Pad A Girl', href: '/pad-a-girl-campaign' },
-        { label: 'Sponsor a Program', href: '/programs' },
-        { label: 'Give Monthly', href: '/give-monthly' },
-    ];
-
-   const whatWeDoItems = [
-       { label: 'Enock Addico Scholarship', href: '/enock-addico-scholarship' },
-        ...programsData.map((program) => ({
-            label: getSimplifiedLabel(program.title),
-            href: getProgramPath(program.title),
-        })),
-    ];
-    const aboutUsItems = [
-        // { label: 'Impact Her Series Webinar', href: '/impact-her-series' },
-        { label: 'Who We Are', href: '/about-us' },
-        { label: 'Meet the Team', href: '/team' },
-    ];
+        useEffect(() => {
+            const client = createClient({
+                projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
+                dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || '',
+                apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-01-01',
+                useCdn: true,
+            });
+            // Fetch flagship projects
+            client.fetch(`*[_type == "project"] | order(_createdAt desc)[0...5]{ projectName, "slug": slug.current }`).then((data) => {
+                setFlagshipProjects(
+                    (data || []).map((proj: any) => ({
+                        label: proj.projectName,
+                        href: `/projects/${proj.slug || proj.projectName.replace(/\s+/g, '-').toLowerCase()}`,
+                    }))
+                );
+            });
+            // Fetch review/resources
+            client.fetch(`*[_type == "resource"] | order(_createdAt desc)[0...3]{ title, "slug": _id }`).then((data) => {
+                setReviewResources(
+                    (data || []).map((res: any) => ({
+                        label: res.title,
+                        href: `/resources/${res.slug}`,
+                    }))
+                );
+            });
+        }, []);
 
     return (
         <>
@@ -70,11 +79,16 @@ export const Navbar: FC = () => {
                         </Link>
 
                         {/* Nav Items (Desktop Only) */}
-                        <div className="hidden lg:flex space-x-6 items-center">
-                            <Dropdown label="Take Action" items={takeActionItems} />
-                            <Dropdown label="About Us" items={aboutUsItems} />
-                            <Dropdown label="What We Do" items={whatWeDoItems} />
-                        </div>
+                                                <div className="hidden lg:flex space-x-6 items-center">
+                                                        <Dropdown label="Flagship Projects" items={flagshipProjects.length > 3 ? flagshipProjects.slice(0, 3).concat([{ label: 'SEE ALL PROJECTS', href: '/projects' }]) : flagshipProjects} />
+                                                        <Dropdown label="About Us" items={[
+                                                            { label: 'Who We Are', href: '/about-us' },
+                                                            { label: 'Leadership', href: '/team' },
+                                                            { label: 'Our Vibrant Volunteers', href: '/volunteers' },
+                                                        ]} />
+                                                        <Dropdown label="Review & Resources" items={reviewResources.length > 3 ? reviewResources.slice(0, 3).concat([{ label: 'SEE MORE', href: '/resources' }]) : reviewResources} />
+                                                        <Link href="/impact-stories" className="text-black text-sm md:text-base hover:underline hover:underline-offset-5 decoration-[#f2c94c]">Impact Stories</Link>
+                                                </div>
                     </div>
 
                     {/* Right Group: Give Button */}
@@ -90,62 +104,79 @@ export const Navbar: FC = () => {
                 </div>
 
                 {/* Mobile Menu */}
-                {isMobileMenuOpen && (
-                    <div className="lg:hidden bg-white px-4 py-4 border rounded-sm border-gray-200">
-                        <div className="flex flex-col space-y-4">
-                            {/* Take Action Dropdown as Links */}
-                            <div>
-                                <span className="text-black font-semibold text-sm">Take Action</span>
-                                <div className="mt-2 space-y-2.5">
-                                    {takeActionItems.map((item) => (
-                                        <Link
-                                            key={item.href}
-                                            href={item.href}
-                                            className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs"
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                            {item.label}
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
+                                {isMobileMenuOpen && (
+                                    <div className="lg:hidden bg-white px-4 py-4 border rounded-sm border-gray-200">
+                                        <div className="flex flex-col space-y-4">
+                                            {/* Flagship Projects */}
+                                            <div>
+                                                <span className="text-black font-semibold text-sm">Flagship Projects</span>
+                                                <div className="mt-2 space-y-2.5">
+                                                    {flagshipProjects.slice(0, 4).map((item) => (
+                                                        <Link
+                                                            key={item.href}
+                                                            href={item.href}
+                                                            className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs"
+                                                            onClick={() => setIsMobileMenuOpen(false)}
+                                                        >
+                                                            {item.label}
+                                                        </Link>
+                                                    ))}
+                                                    {flagshipProjects.length > 4 && (
+                                                        <Link
+                                                            href="/projects"
+                                                            className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs font-semibold"
+                                                            onClick={() => setIsMobileMenuOpen(false)}
+                                                        >
+                                                            See all projects
+                                                        </Link>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            {/* About Us */}
+                                            <div>
+                                                <span className="text-black font-semibold text-sm">About Us</span>
+                                                <div className="mt-2 space-y-2.5">
+                                                    <Link href="/about-us" className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs" onClick={() => setIsMobileMenuOpen(false)}>Who We Are</Link>
+                                                    <Link href="/team" className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs" onClick={() => setIsMobileMenuOpen(false)}>Leadership</Link>
+                                                    <Link href="/volunteers" className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs font-semibold" onClick={() => setIsMobileMenuOpen(false)}>Our Vibrant Volunteers</Link>
+                                                </div>
+                                            </div>
+                                            
+                                            {/* Review & Resources */}
+                                            <div>
+                                                <span className="text-black font-semibold text-sm">Review & Resources</span>
+                                                <div className="mt-2 space-y-2.5">
+                                                    {reviewResources.slice(0, 3).map((item) => (
+                                                        <Link
+                                                            key={item.href}
+                                                            href={item.href}
+                                                            className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs"
+                                                            onClick={() => setIsMobileMenuOpen(false)}
+                                                        >
+                                                            {item.label}
+                                                        </Link>
+                                                    ))}
+                                                    {reviewResources.length > 3 && (
+                                                        <Link
+                                                            href="/resources"
+                                                            className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs font-semibold"
+                                                            onClick={() => setIsMobileMenuOpen(false)}
+                                                        >
+                                                            See more
+                                                        </Link>
+                                                    )}
+                                                </div>
+                                            </div>
 
-                            {/* About Us */}
-                            <div>
-                                <span className="text-black font-semibold text-sm">About Us</span>
-                                <div className="mt-2 space-y-2.5">
-                                    {aboutUsItems.map((item) => (
-                                        <Link
-                                            key={item.href}
-                                            href={item.href}
-                                            className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs"
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                            {item.label}
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* What We Do Dropdown as Links */}
-                            <div>
-                                <span className="text-black font-semibold text-sm">What We Do</span>
-                                <div className="mt-2 space-y-2.5">
-                                    {whatWeDoItems.map((item) => (
-                                        <Link
-                                            key={item.href}
-                                            href={item.href}
-                                            className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs"
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                        >
-                                            {item.label}
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
+                                            {/* Impact Stories */}
+                                            <div>
+                                                <Link href="/impact-stories" className="block text-black font-semibold text-sm underline-offset-2 underline decoration-[#f2c94c]" onClick={() => setIsMobileMenuOpen(false)}>
+                                                    Impact Stories
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
             </nav>
 
             {/* Modal for Donate Component */}
