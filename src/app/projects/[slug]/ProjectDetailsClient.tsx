@@ -9,6 +9,7 @@ import ProblemSolution from '@/app/components/projectComponents/ProblemSolution'
 import { SponsorProject } from '@/app/components/projectComponents/SponsorProject';
 import ProjectOverview from '@/app/components/projectComponents/ProjectOverview';
 import ProjectGallery from '@/app/components/projectComponents/ProjectGallery';
+import ProjectSponsorsDonors from '@/app/components/projectComponents/ProjectSponsorsDonors';
 
 interface ProjectDetailsClientProps {
   project: FullProject;
@@ -22,11 +23,15 @@ const ProjectDetailsClient: React.FC<ProjectDetailsClientProps> = ({ project }) 
 
       {/* Conditional: Sponsor for upcoming, Overview for completed */}
       {project.status === 'upcoming' ? (
-        <SponsorProject project={project} />
+        <>
+          <SponsorProject project={project} />
+          <ProjectSponsorsDonors project={project} />
+        </>
       ) : (
         <>
-        <ProjectOverview project={project} />
-        <ProjectGallery project={project} />
+          <ProjectOverview project={project} />
+          <ProjectSponsorsDonors project={project} />
+          <ProjectGallery project={project} />
         </>
       )}
 

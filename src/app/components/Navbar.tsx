@@ -4,11 +4,15 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Dropdown } from './Dropdown';
 import Image from 'next/image';
 import logo from '../assets/images/logo.png';
-import Emoji from 'react-emoji-render';
-import { NAVBAR_ITEMS } from './navbarItems';
 import { Donate } from './Donate';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/sanity/lib/client';
+
+type NavDropdownItem = {
+    label: string;
+    href: string;
+    highlight?: boolean;
+};
 
 // Helper function to generate simplified labels from program titles
 const getSimplifiedLabel = (title: string): string => {
@@ -25,8 +29,12 @@ const getSimplifiedLabel = (title: string): string => {
 export default function Navbar() {
         const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
         const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
-        const [flagshipProjects, setFlagshipProjects] = useState<{ label: string; href: string }[]>([]);
-        const [reviewResources, setReviewResources] = useState<{ label: string; href: string }[]>([]);
+    const [flagshipProjects, setFlagshipProjects] = useState<NavDropdownItem[]>([]);
+
+    type FlagshipProjectItem = {
+        projectName?: string;
+        slug?: string;
+    };
 
         useEffect(() => {
             const client = createClient({
@@ -36,21 +44,17 @@ export default function Navbar() {
                 useCdn: true,
             });
             // Fetch flagship projects
-            client.fetch(`*[_type == "project"] | order(_createdAt desc)[0...5]{ projectName, "slug": slug.current }`).then((data) => {
+            client.fetch<FlagshipProjectItem[]>(`*[_type == "project"] | order(_createdAt desc)[0...5]{ projectName, "slug": slug.current }`).then((data) => {
                 setFlagshipProjects(
-                    (data || []).map((proj: any) => ({
-                        label: proj.projectName,
-                        href: `/projects/${proj.slug || proj.projectName.replace(/\s+/g, '-').toLowerCase()}`,
-                    }))
-                );
-            });
-            // Fetch review/resources
-            client.fetch(`*[_type == "resource"] | order(_createdAt desc)[0...3]{ title, "slug": _id }`).then((data) => {
-                setReviewResources(
-                    (data || []).map((res: any) => ({
-                        label: res.title,
-                        href: `/resources/${res.slug}`,
-                    }))
+                    (data || []).map((proj) => {
+                        const label = proj.projectName || 'Project';
+                        const fallbackSlug = label.replace(/\s+/g, '-').toLowerCase();
+
+                        return {
+                            label,
+                            href: `/projects/${proj.slug || fallbackSlug}`,
+                        };
+                    })
                 );
             });
         }, []);
@@ -80,13 +84,28 @@ export default function Navbar() {
 
                         {/* Nav Items (Desktop Only) */}
                                                 <div className="hidden lg:flex space-x-6 items-center">
-                                                        <Dropdown label="Flagship Projects" items={flagshipProjects.length > 3 ? flagshipProjects.slice(0, 3).concat([{ label: 'SEE ALL PROJECTS', href: '/projects' }]) : flagshipProjects} />
+                                                        <Dropdown
+                                                            label="Flagship Projects"
+                                                            items={
+                                                                flagshipProjects.length > 3
+                                                                    ? flagshipProjects
+                                                                          .slice(0, 3)
+                                                                          .concat([
+                                                                              {
+                                                                                  label: 'See all projects',
+                                                                                  href: '/projects',
+                                                                                  highlight: true,
+                                                                              },
+                                                                          ])
+                                                                    : flagshipProjects
+                                                            }
+                                                        />
                                                         <Dropdown label="About Us" items={[
                                                             { label: 'Who We Are', href: '/about-us' },
                                                             { label: 'Leadership', href: '/team' },
                                                             { label: 'Our Vibrant Volunteers', href: '/volunteers' },
                                                         ]} />
-                                                        <Dropdown label="Review & Resources" items={reviewResources.length > 3 ? reviewResources.slice(0, 3).concat([{ label: 'SEE MORE', href: '/resources' }]) : reviewResources} />
+                                                        <Link href="/reviews-resources" className="text-black text-sm md:text-base hover:underline hover:underline-offset-5 decoration-[#f2c94c]">Review & Resources</Link>
                                                         <Link href="/impact-stories" className="text-black text-sm md:text-base hover:underline hover:underline-offset-5 decoration-[#f2c94c]">Impact Stories</Link>
                                                 </div>
                     </div>
@@ -144,28 +163,9 @@ export default function Navbar() {
                                             
                                             {/* Review & Resources */}
                                             <div>
-                                                <span className="text-black font-semibold text-sm">Review & Resources</span>
-                                                <div className="mt-2 space-y-2.5">
-                                                    {reviewResources.slice(0, 3).map((item) => (
-                                                        <Link
-                                                            key={item.href}
-                                                            href={item.href}
-                                                            className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs"
-                                                            onClick={() => setIsMobileMenuOpen(false)}
-                                                        >
-                                                            {item.label}
-                                                        </Link>
-                                                    ))}
-                                                    {reviewResources.length > 3 && (
-                                                        <Link
-                                                            href="/resources"
-                                                            className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs font-semibold"
-                                                            onClick={() => setIsMobileMenuOpen(false)}
-                                                        >
-                                                            See more
-                                                        </Link>
-                                                    )}
-                                                </div>
+                                                <Link href="/reviews-resources" className="block text-black font-semibold text-sm underline-offset-2 underline decoration-[#f2c94c]" onClick={() => setIsMobileMenuOpen(false)}>
+                                                    Review & Resources
+                                                </Link>
                                             </div>
 
                                             {/* Impact Stories */}

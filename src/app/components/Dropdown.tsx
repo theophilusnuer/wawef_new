@@ -5,7 +5,7 @@ import { FC } from 'react';
 
 interface DropdownProps {
   label: string;
-  items: { label: string; href: string }[];
+  items: { label: string; href: string; highlight?: boolean }[];
 }
 
 export const Dropdown: FC<DropdownProps> = ({ label, items }) => {
@@ -20,7 +20,7 @@ export const Dropdown: FC<DropdownProps> = ({ label, items }) => {
   const handleMouseLeave = () => {
     const id = setTimeout(() => {
       setIsOpen(false);
-    }, 200); // 200ms delay to allow moving to dropdown items
+    }, 200);
     setTimeoutId(id);
   };
 
@@ -47,15 +47,25 @@ export const Dropdown: FC<DropdownProps> = ({ label, items }) => {
           />
         </svg>
       </button>
+
       {isOpen && (
-        <div className="absolute top-full left-0 w-58 bg-white shadow-sm rounded-lg lg:block hidden">
+        <div className="absolute top-full left-0 w-64 bg-white shadow-lg rounded-lg mt-2 overflow-hidden border border-gray-200 lg:block hidden">
           {items.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="block p-4 border-b border-gray-200 text-black hover:underline decoration-[#000000]"
+              className="block px-4 py-3 text-black hover:bg-gray-50 transition-colors"
             >
-              {item.label}
+              <span
+                className={`
+                  ${item.highlight 
+                    ? 'font-semibold text-[#F2C94C] ' 
+                    : 'font-normal hover:underline hover:underline-offset-4 hover:decoration-[#f2c94c]'
+                  }
+                `}
+              >
+                {item.label}
+              </span>
             </Link>
           ))}
         </div>

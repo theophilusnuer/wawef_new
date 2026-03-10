@@ -13,7 +13,7 @@ import fas1 from '../../assets/images/fas1.webp';
 import fas2 from '../../assets/images/fas2.webp';
 import fas3 from '../../assets/images/fas3.webp';
 import fas4 from '../../assets/images/fas4.webp';
-import eccentric from '../../assets/images/eccentric.png';
+// import eccentric from '../../assets/images/eccentric.png';
 
 
 
@@ -101,7 +101,7 @@ cos4.src,
         partnerLogo: [
           mantse.src,
           raget.src,
-          eccentric.src
+          // eccentric.src
 
         ],
         gallery: [

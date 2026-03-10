@@ -139,33 +139,17 @@ export const project = defineType({
       fieldset: "upcoming",
     }),
     defineField({
-      name: "solutionType",
-      title: "Solution Format",
-      type: "string",
-      options: {
-        list: [
-          { title: "Single Paragraph", value: "paragraph" },
-          { title: "Objectives & Approach", value: "objectives" },
-        ],
-        layout: "radio",
-      },
-      hidden: ({ parent }) => parent?.status !== "upcoming",
-      fieldset: "upcoming",
-    }),
-    defineField({
       name: "solution",
-      title: "Solution (Paragraph)",
+      title: "Solution",
       type: "text",
-      hidden: ({ parent }) =>
-        parent?.status !== "upcoming" || parent?.solutionType !== "paragraph",
+      hidden: ({ parent }) => parent?.status !== "upcoming",
       fieldset: "upcoming",
     }),
     defineField({
       name: "objectivesApproach",
       title: "Objectives & Approach",
       type: "objectivesApproach",
-      hidden: ({ parent }) =>
-        parent?.status !== "upcoming" || parent?.solutionType !== "objectives",
+      hidden: ({ parent }) => parent?.status !== "upcoming",
       fieldset: "upcoming",
     }),
     // --- Completed Project Fields ---
@@ -191,35 +175,17 @@ export const project = defineType({
       fieldset: "completed",
     }),
     defineField({
-      name: "completedSolutionType",
-      title: "Solution Format",
-      type: "string",
-      options: {
-        list: [
-          { title: "Single Paragraph", value: "paragraph" },
-          { title: "Objectives & Approach", value: "objectives" },
-        ],
-        layout: "radio",
-      },
-      hidden: ({ parent }) => parent?.status !== "completed",
-      fieldset: "completed",
-    }),
-    defineField({
       name: "completedSolution",
-      title: "Solution (Paragraph)",
+      title: "Solution",
       type: "text",
-      hidden: ({ parent }) =>
-        parent?.status !== "completed" ||
-        parent?.completedSolutionType !== "paragraph",
+      hidden: ({ parent }) => parent?.status !== "completed",
       fieldset: "completed",
     }),
     defineField({
       name: "completedObjectivesApproach",
       title: "Objectives & Approach",
       type: "objectivesApproach",
-      hidden: ({ parent }) =>
-        parent?.status !== "completed" ||
-        parent?.completedSolutionType !== "objectives",
+      hidden: ({ parent }) => parent?.status !== "completed",
       fieldset: "completed",
     }),
     defineField({
@@ -264,11 +230,11 @@ export const project = defineType({
     }),
     defineField({
       name: "sponsors",
-      title: "Sponsors/Donors",
+      title: "Sponsors and Donors",
       type: "array",
-      of: [{ type: "string" }],
-      hidden: ({ parent }) => parent?.status !== "completed",
-      fieldset: "completed",
+      of: [{ type: "sponsorDonor" }],
+      description:
+        "Optional list of sponsors/donors. Each entry can include an image, name, or both.",
       validation: (rule) => rule.max(10),
     }),
   ],

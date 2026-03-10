@@ -4,14 +4,9 @@ import { connectToDatabase } from "@/lib/mongodb";
 import Donation from "@/models/Donation";
 import transporter from "@/app/utils/Transporter";
 import { emailTemplates } from "@/lib/emailTemplates";
-import { headers } from "next/headers";
 
-// Disable Next.js body parsing to get raw body for signature verification
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// Stripe webhook processing requires Node.js runtime.
+export const runtime = "nodejs";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2025-04-30.basil",
@@ -25,8 +20,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  //   const sig = request.headers.get("stripe-signature");
-  const sig = (await headers()).get("stripe-signature");
+  const sig = request.headers.get("stripe-signature");
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 
   if (!sig || !webhookSecret) {

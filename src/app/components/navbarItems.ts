@@ -31,12 +31,8 @@ export const NAVBAR_ITEMS = [
   },
   {
     label: 'Review & Resources',
-    type: 'dropdown',
+    type: 'link',
     key: 'review-resources',
-    items: [], // Will be filled with recent reports/action plans from Sanity
-    seeMore: {
-      label: 'See more',
-      href: '/resources',
-    },
+    href: '/reviews-resources',
   },
 ];

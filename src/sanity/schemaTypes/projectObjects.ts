@@ -9,7 +9,7 @@ export const partner = defineType({
   icon: UsersIcon,
   fields: [
     defineField({ name: 'name', type: 'string', title: 'Partner Name', validation: rule => rule.required() }),
-    defineField({ name: 'logo', type: 'image', title: 'Logo', icon: ImageIcon, options: { hotspot: true }, fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })], validation: rule => rule.required() }),
+    defineField({ name: 'logo', type: 'image', title: 'Logo', icon: ImageIcon, options: { hotspot: true, accept: 'image/*' }, fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })], validation: rule => rule.required() }),
     defineField({ name: 'website', type: 'url', title: 'Website/Social Link', icon: LinkIcon }),
   ],
 });
@@ -43,7 +43,7 @@ export const objectivesApproach = defineType({
   title: 'Objectives & Approach',
   type: 'object',
   fields: [
-    defineField({ name: 'objectives', title: 'Objectives', type: 'array', of: [defineArrayMember({ type: 'string' })], validation: rule => rule.min(1).max(10) }),
+    defineField({ name: 'objectives', title: 'Objectives', type: 'array', of: [defineArrayMember({ type: 'string' })], validation: rule => rule.max(10) }),
     defineField({
       name: 'approachType',
       title: 'Approach Format',
@@ -70,6 +70,33 @@ export const objectivesApproach = defineType({
       type: 'array',
       of: [defineArrayMember({ type: 'string' })],
       hidden: ({ parent }) => parent?.approachType !== 'list',
+    }),
+  ],
+});
+
+// Sponsor/Donor object type
+export const sponsorDonor = defineType({
+  name: 'sponsorDonor',
+  title: 'Sponsor or Donor',
+  type: 'object',
+  icon: UsersIcon,
+  fields: [
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      icon: ImageIcon,
+      options: {
+        hotspot: true,
+        accept: 'image/*',
+      },
+      fields: [defineField({ name: 'alt', type: 'string', title: 'Alt Text' })],
+    }),
+    defineField({
+      name: 'name',
+      title: 'Name',
+      type: 'string',
+      description: 'Name of the sponsor or donor.',
     }),
   ],
 });

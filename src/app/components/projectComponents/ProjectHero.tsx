@@ -68,7 +68,7 @@ const ProjectHero: React.FC<ProjectHeroProps> = ({ project }) => {
   const hasVideo = project.status === "completed" && project.youtubeLink;
 
   return (
-    <section className="relative w-full min-h-[55vh] sm:min-h-[65vh] md:min-h-[75vh] lg:min-h-[85vh] overflow-hidden">
+    <section className="relative w-full min-h-[55vh] sm:min-h-[65vh] md:min-h-[75vh] lg:min-h-[80vh] overflow-hidden">
       {/* Background Image */}
       {project.coverImage && (
         <Image

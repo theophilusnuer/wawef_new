@@ -5,7 +5,7 @@ import { type SchemaTypeDefinition } from 'sanity'
 import { project } from './project'
 
 
-import { partner, galleryImage, objectivesApproach } from './projectObjects'
+import { partner, galleryImage, objectivesApproach, sponsorDonor } from './projectObjects'
 
 import { impactStory, news } from './impactStoryNews'
 import { resource } from './resource'
@@ -15,6 +15,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
 	partner,
 	galleryImage,
 	objectivesApproach,
+	sponsorDonor,
 	resource,
 	impactStory,
 	news,

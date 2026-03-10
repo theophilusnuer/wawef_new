@@ -17,7 +17,7 @@ export const impactStory = defineType({
       name: 'coverImage',
       title: 'Cover Image',
       type: 'image',
-      options: { hotspot: true },
+      options: { hotspot: true, accept: 'image/*' },
       validation: rule => rule.required(),
     }),
     defineField({
@@ -26,7 +26,7 @@ export const impactStory = defineType({
       type: 'array',
       of: [
         defineArrayMember({ type: 'block' }),
-        defineArrayMember({ type: 'image', icon: ImageIcon, options: { hotspot: true } }),
+        defineArrayMember({ type: 'image', icon: ImageIcon, options: { hotspot: true, accept: 'image/*' } }),
       ],
       validation: rule => rule.required(),
       description: 'Type and format your story, insert images and links as needed.'
@@ -50,7 +50,7 @@ export const impactStory = defineType({
       name: 'gallery',
       title: 'Gallery Images',
       type: 'array',
-      of: [defineArrayMember({ type: 'image', icon: ImageIcon, options: { hotspot: true } })],
+      of: [defineArrayMember({ type: 'image', icon: ImageIcon, options: { hotspot: true, accept: 'image/*' } })],
       validation: rule => rule.max(10),
       description: 'Add a list of images to be used in the story body or as a gallery.'
     }),
@@ -79,7 +79,7 @@ export const news = defineType({
       name: 'coverImage',
       title: 'Cover Image',
       type: 'image',
-      options: { hotspot: true },
+      options: { hotspot: true, accept: 'image/*' },
       validation: rule => rule.required(),
     }),
     defineField({
@@ -88,7 +88,7 @@ export const news = defineType({
       type: 'array',
       of: [
         defineArrayMember({ type: 'block' }),
-        defineArrayMember({ type: 'image', icon: ImageIcon, options: { hotspot: true } }),
+        defineArrayMember({ type: 'image', icon: ImageIcon, options: { hotspot: true, accept: 'image/*' } }),
       ],
       validation: rule => rule.required(),
       description: 'Type and format your news, insert images and links as needed.'
@@ -112,7 +112,7 @@ export const news = defineType({
       name: 'gallery',
       title: 'Gallery Images',
       type: 'array',
-      of: [defineArrayMember({ type: 'image', icon: ImageIcon, options: { hotspot: true } })],
+      of: [defineArrayMember({ type: 'image', icon: ImageIcon, options: { hotspot: true, accept: 'image/*' } })],
       validation: rule => rule.max(10),
       description: 'Add a list of images to be used in the news body or as a gallery.'
     }),

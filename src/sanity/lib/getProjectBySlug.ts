@@ -41,7 +41,6 @@ export const fullProjectQuery = groq`
     donateLink,
     about,
     problem,
-    solutionType,
     solution,
     objectivesApproach {
       objectives,
@@ -54,7 +53,6 @@ export const fullProjectQuery = groq`
     location,
     youtubeLink,
     completedProblem,
-    completedSolutionType,
     completedSolution,
     completedObjectivesApproach {
       objectives,
@@ -105,7 +103,19 @@ export const fullProjectQuery = groq`
     },
     
     moreImagesLink,
-    sponsors
+    sponsors[] {
+      name,
+      image {
+        asset -> {
+          _id,
+          url,
+          metadata { dimensions, lqip }
+        },
+        alt,
+        hotspot,
+        crop
+      }
+    }
   }
 `;
 
@@ -135,11 +145,10 @@ export interface FullProject {
   donateLink?: string;
   about?: string;
   problem?: string;
-  solutionType?: 'paragraph' | 'objectives';
   solution?: string;
   objectivesApproach?: {
-    objectives: string[];
-    approachType: 'text' | 'list';
+    objectives?: string[];
+    approachType?: 'text' | 'list';
     approachText?: string;
     approachList?: string[];
   };
@@ -147,11 +156,10 @@ export interface FullProject {
   location?: string;
   youtubeLink?: string;
   completedProblem?: string;
-  completedSolutionType?: 'paragraph' | 'objectives';
   completedSolution?: string;
   completedObjectivesApproach?: {
-    objectives: string[];
-    approachType: 'text' | 'list';
+    objectives?: string[];
+    approachType?: 'text' | 'list';
     approachText?: string;
     approachList?: string[];
   };
@@ -185,7 +193,18 @@ export interface FullProject {
 }>;
 
   moreImagesLink?: string;
-  sponsors?: string[];
+  sponsors?: Array<{
+    name?: string;
+    image?: {
+      asset?: {
+        url: string;
+        metadata?: { dimensions?: any; lqip?: string };
+      };
+      alt?: string;
+      hotspot?: any;
+      crop?: any;
+    };
+  }>;
 }
 
 // ────────────────────────────────────────────────

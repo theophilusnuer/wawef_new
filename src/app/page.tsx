@@ -5,6 +5,7 @@ import { Give } from "./components/homepage/Give";
 import HomepageHero from "./components/homepage/HomepageHero";
 import { ImpactNumbers } from "./components/homepage/ImpactNumbers";
 import { Newsletter } from "./components/homepage/Newsletter";
+import { NewsStories } from "./components/homepage/NewsStories";
 import Padgirl from "./components/homepage/Padgirl";
 import { Sdg } from "./components/homepage/Sdg";
 
@@ -17,8 +18,9 @@ export default function Home() {
       <EnockBanner/>
       <Give/>
       <ImpactNumbers />
-      <Padgirl/>
+      {/* <Padgirl/> */}
       <Ewfsf />
+      <NewsStories />
       <Sdg />
       <Newsletter />
     </div>
