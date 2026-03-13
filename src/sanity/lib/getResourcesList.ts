@@ -1,4 +1,4 @@
-import { client } from "./client";
+import { sanityFetch } from "./live";
 
 export interface ResourceListItem {
   _id: string;
@@ -37,5 +37,10 @@ const resourcesListQuery = `*[_type == "resource"] | order(_createdAt desc) {
 }`;
 
 export async function getResourcesList(): Promise<ResourceListItem[]> {
-  return await client.fetch<ResourceListItem[]>(resourcesListQuery);
+  const { data } = await sanityFetch({
+    query: resourcesListQuery,
+    tags: ['resource'],
+  });
+
+  return data as ResourceListItem[];
 }

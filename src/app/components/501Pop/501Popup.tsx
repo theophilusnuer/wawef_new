@@ -9,18 +9,28 @@ const Popup501: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (pathname === '/') {
-      setIsOpen(true);
+    const openTimer = setTimeout(() => {
+      setIsOpen(pathname === '/');
+    }, 0);
 
-      // 🎉 Trigger a single confetti burst after popup opens
-      setTimeout(() => {
+    let confettiTimer: ReturnType<typeof setTimeout> | undefined;
+    if (pathname === '/') {
+      // Trigger a single confetti burst shortly after showing the popup.
+      confettiTimer = setTimeout(() => {
         confetti({
           particleCount: 80,
           spread: 70,
-          origin: { x: 0.5, y: 0.5 }, // center of screen
+          origin: { x: 0.5, y: 0.5 },
         });
-      }, 100); // slight delay for popup entrance
+      }, 100);
     }
+
+    return () => {
+      clearTimeout(openTimer);
+      if (confettiTimer) {
+        clearTimeout(confettiTimer);
+      }
+    };
   }, [pathname]);
 
   const handleClose = () => {

@@ -1,4 +1,4 @@
-import { client } from './client';
+import { sanityFetch } from './live';
 
 export async function getNewsBySlug(slug: string) {
   const query = `*[_type == "news" && slug.current == $slug][0]{
@@ -9,5 +9,11 @@ export async function getNewsBySlug(slug: string) {
     body,
     gallery
   }`;
-  return await client.fetch(query, { slug });
+  const { data } = await sanityFetch({
+    query,
+    params: { slug },
+    tags: ['news'],
+  });
+
+  return data;
 }

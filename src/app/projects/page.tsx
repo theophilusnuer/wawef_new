@@ -2,10 +2,10 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { getProjectsList } from "@/sanity/lib/getProjectsList"; // we'll fix this next
+import { getProjectsList, type ProjectListItem } from "@/sanity/lib/getProjectsList";
 import pad3 from "../assets/images/pad3.webp";
 import { urlFor } from "@/sanity/lib/image";
-import { getProjectBySlug } from "@/sanity/lib/getProjectBySlug"; // ← reuse this!
+import { getProjectBySlug, type FullProject } from "@/sanity/lib/getProjectBySlug";
 import { Quote3 } from "../components/homepage/Quotes";
 
 export default async function ProjectsPage() {
@@ -14,14 +14,16 @@ export default async function ProjectsPage() {
 
   // Fetch full project data for each slug using the reliable function
   const projects = await Promise.all(
-    projectSlugs.map(async (p: any) => {
+    projectSlugs.map(async (p: ProjectListItem) => {
       if (!p.slug?.current) return null;
       return await getProjectBySlug(p.slug.current);
     }),
   );
 
   // Filter out nulls
-  const validProjects = projects.filter(Boolean);
+  const validProjects = projects.filter(
+    (project): project is FullProject => Boolean(project),
+  );
 
   return (
     <>
@@ -65,10 +67,10 @@ export default async function ProjectsPage() {
         <div>
           <p className="text-left pb-6 text-2xl sm:text-4xl">All Projects</p>
           <div className="grid gap-6 sm:gap-8 md:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {validProjects.map((project: any) => (
+            {validProjects.map((project) => (
               <Link
                 key={project._id}
-                href={`/projects/${project.slug?.current}`}
+                href={`/projects/${project.slug.current}`}
                 className="group  rounded-sm overflow-hidden transition-all duration-300 flex flex-col "
               >
                 {/* Cover Image */}

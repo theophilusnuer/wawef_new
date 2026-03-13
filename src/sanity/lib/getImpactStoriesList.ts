@@ -1,4 +1,4 @@
-import { client } from "./client";
+import { sanityFetch } from "./live";
 
 export interface ImpactStoryListItem {
   _id: string;
@@ -19,5 +19,10 @@ const impactStoriesListQuery = `*[_type == "impactStory"] | order(_createdAt des
 }`;
 
 export async function getImpactStoriesList(): Promise<ImpactStoryListItem[]> {
-  return await client.fetch<ImpactStoryListItem[]>(impactStoriesListQuery);
+  const { data } = await sanityFetch({
+    query: impactStoriesListQuery,
+    tags: ['impactStory'],
+  });
+
+  return data as ImpactStoryListItem[];
 }

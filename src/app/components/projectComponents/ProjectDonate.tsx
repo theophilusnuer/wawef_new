@@ -57,7 +57,6 @@ function DonateModal({ projectName, donateLink, onClose }: DonateModalProps) {
   const [apiError, setApiError] = useState(false);
 
   const validateForm = () => {
-    let isValid = true;
     const newErrors = { name: "", email: "", country: "" };
 
     if (!donorData.name.trim()) newErrors.name = "Name is required";
@@ -66,7 +65,7 @@ function DonateModal({ projectName, donateLink, onClose }: DonateModalProps) {
     if (!donorData.country) newErrors.country = "Country is required";
 
     setErrors(newErrors);
-    return isValid && !newErrors.name && !newErrors.email && !newErrors.country;
+    return !newErrors.name && !newErrors.email && !newErrors.country;
   };
 
   const handleProceed = async () => {

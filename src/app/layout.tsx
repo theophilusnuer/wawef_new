@@ -8,6 +8,7 @@ import { Footer } from "./components/Footer";
 import Script from "next/script";
 import Popup501 from "./components/501Pop/501Popup";
 import { LoaderProvider } from "./components/LoaderContext";
+import { SanityLive } from "@/sanity/lib/live";
 
 const gartis = localFont({
   src: "../../public/fonts/gartis.otf",
@@ -138,6 +139,7 @@ export default function RootLayout({
         </LoaderProvider>
         <Footer />
         <Popup501/>
+        <SanityLive />
       </body>
     </html>
   );

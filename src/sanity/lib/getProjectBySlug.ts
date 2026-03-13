@@ -1,5 +1,5 @@
 import { groq } from 'next-sanity';
-import { client } from './client';
+import { sanityFetch } from './live';
 
 // ────────────────────────────────────────────────
 // Full single project query – all fields from schema
@@ -136,10 +136,10 @@ export interface FullProject {
   lastUpdated?: string;
 
   coverImage?: {
-    asset?: { url: string; metadata?: { dimensions?: any; lqip?: string } };
+    asset?: { url: string; metadata?: { dimensions?: unknown; lqip?: string } };
     alt?: string;
-    hotspot?: any;
-    crop?: any;
+    hotspot?: unknown;
+    crop?: unknown;
   };
 
   donateLink?: string;
@@ -184,11 +184,11 @@ export interface FullProject {
   image: {
     asset: {
       url: string;
-      metadata?: { dimensions?: any; lqip?: string };
+        metadata?: { dimensions?: unknown; lqip?: string };
     };
     alt?: string;
-    hotspot?: any;
-    crop?: any;
+      hotspot?: unknown;
+      crop?: unknown;
   };
 }>;
 
@@ -198,11 +198,11 @@ export interface FullProject {
     image?: {
       asset?: {
         url: string;
-        metadata?: { dimensions?: any; lqip?: string };
+        metadata?: { dimensions?: unknown; lqip?: string };
       };
       alt?: string;
-      hotspot?: any;
-      crop?: any;
+      hotspot?: unknown;
+      crop?: unknown;
     };
   }>;
 }
@@ -217,7 +217,13 @@ export async function getProjectBySlug(slug: string): Promise<FullProject | null
   }
 
   try {
-    const project = await client.fetch<FullProject>(fullProjectQuery, { slug });
+    const { data } = await sanityFetch({
+      query: fullProjectQuery,
+      params: { slug },
+      tags: ['project'],
+    });
+
+    const project = data as FullProject | null;
     
     if (!project) {
       console.log(`No project found for slug: ${slug}`);

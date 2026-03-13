@@ -1,4 +1,4 @@
-import { client } from './client';
+import { sanityFetch } from './live';
 
 export interface ProjectListItem {
   _id: string;
@@ -30,5 +30,10 @@ export async function getProjectsList() {
     communitiesImpacted,
     expectedCommunitiesImpacted
   } | order(_createdAt desc)`;
-  return await client.fetch<ProjectListItem[]>(query);
+  const { data } = await sanityFetch({
+    query,
+    tags: ['project'],
+  });
+
+  return data as ProjectListItem[];
 }

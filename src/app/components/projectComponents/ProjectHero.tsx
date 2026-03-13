@@ -3,22 +3,18 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
+import type { FullProject } from "@/sanity/lib/getProjectBySlug";
 import ProjectDonate from "./ProjectDonate";
 
 interface ProjectHeroProps {
-  project: {
-    projectName: string;
-    status: "upcoming" | "completed";
-    coverImage?: any;
-    donateLink?: string;
-    about?: string;
-    youtubeLink?: string;
-    location?: string; 
-  };
+  project: Pick<
+    FullProject,
+    "projectName" | "status" | "coverImage" | "donateLink" | "about" | "youtubeLink" | "location"
+  >;
 }
 
 const ProjectHero: React.FC<ProjectHeroProps> = ({ project }) => {
-  const playerRef = useRef<any>(null);
+  const playerRef = useRef<YT.Player | null>(null);
 
   useEffect(() => {
     if (project.status !== "completed" || !project.youtubeLink) return;

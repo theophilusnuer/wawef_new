@@ -1,4 +1,4 @@
-import { client } from "./client";
+import { sanityFetch } from "./live";
 
 export interface NewsListItem {
   _id: string;
@@ -27,9 +27,19 @@ const latestThreeNewsQuery = `*[_type == "news"] | order(_createdAt desc)[0...3]
 }`;
 
 export async function getNewsList(): Promise<NewsListItem[]> {
-  return await client.fetch<NewsListItem[]>(newsListQuery);
+  const { data } = await sanityFetch({
+    query: newsListQuery,
+    tags: ['news'],
+  });
+
+  return data as NewsListItem[];
 }
 
 export async function getLatestNewsList(): Promise<NewsListItem[]> {
-  return await client.fetch<NewsListItem[]>(latestThreeNewsQuery);
+  const { data } = await sanityFetch({
+    query: latestThreeNewsQuery,
+    tags: ['news'],
+  });
+
+  return data as NewsListItem[];
 }
