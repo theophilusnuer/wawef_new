@@ -6,6 +6,7 @@ import "./globals.css";
 import NavbarClientWrapper from "./components/NavbarClientWrapper";
 import { Footer } from "./components/Footer";
 import Script from "next/script";
+import { draftMode } from "next/headers";
 import Popup501 from "./components/501Pop/501Popup";
 import { LoaderProvider } from "./components/LoaderContext";
 import { SanityLive } from "@/sanity/lib/live";
@@ -88,11 +89,13 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { isEnabled: isDraftMode } = await draftMode();
+
   return (
     <html lang="en">
       <head>
@@ -139,7 +142,7 @@ export default function RootLayout({
         </LoaderProvider>
         <Footer />
         <Popup501/>
-        <SanityLive />
+        {isDraftMode ? <SanityLive /> : null}
       </body>
     </html>
   );
