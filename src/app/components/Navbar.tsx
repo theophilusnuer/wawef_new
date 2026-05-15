@@ -7,6 +7,7 @@ import logo from '../assets/images/logo.png';
 import { Donate } from './Donate';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/sanity/lib/client';
+import { NAVBAR_ITEMS, type NavItem, type NavItemLink } from './navbarItems';
 
 type NavDropdownItem = {
     label: string;
@@ -14,50 +15,45 @@ type NavDropdownItem = {
     highlight?: boolean;
 };
 
-// Helper function to generate simplified labels from program titles
-const getSimplifiedLabel = (title: string): string => {
-    if (title.includes("Cosmetology")) {
-        return "Cosmetology Training";
-    } else if (title.includes("Fashion Design")) {
-        return "Fashion & Design Training";
-    } else if (title.includes("ICT")) {
-        return "ICT - Web Development & Digital Marketing";
-    }
-    return title; // Fallback to the original title if no match
-};
-
 export default function Navbar() {
-        const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-        const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
-    const [flagshipProjects, setFlagshipProjects] = useState<NavDropdownItem[]>([]);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [navItems, setNavItems] = useState<NavItem[]>(NAVBAR_ITEMS);
 
     type FlagshipProjectItem = {
         projectName?: string;
         slug?: string;
     };
 
-        useEffect(() => {
-            const client = createClient({
-                projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
-                dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || '',
-                apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-01-01',
-                useCdn: true,
+    useEffect(() => {
+        const client = createClient({
+            projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
+            dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || '',
+            apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-01-01',
+            useCdn: true,
+        });
+        
+        // Fetch flagship projects
+        client.fetch<FlagshipProjectItem[]>(`*[_type == "program"] | order(_createdAt desc)[0...5]{ "projectName": title, "slug": slug.current }`).then((data) => {
+            const projectItems = (data || []).map((proj) => {
+                const label = proj.projectName || 'Project';
+                const fallbackSlug = label.replace(/\s+/g, '-').toLowerCase();
+                return {
+                    label,
+                    href: `/programs/${proj.slug || fallbackSlug}`,
+                };
             });
-            // Fetch flagship projects
-            client.fetch<FlagshipProjectItem[]>(`*[_type == "project"] | order(_createdAt desc)[0...5]{ projectName, "slug": slug.current }`).then((data) => {
-                setFlagshipProjects(
-                    (data || []).map((proj) => {
-                        const label = proj.projectName || 'Project';
-                        const fallbackSlug = label.replace(/\s+/g, '-').toLowerCase();
 
-                        return {
-                            label,
-                            href: `/projects/${proj.slug || fallbackSlug}`,
-                        };
-                    })
-                );
-            });
-        }, []);
+            // Update navItems with fetched projects
+            setNavItems((prevItems) =>
+                prevItems.map((item) =>
+                    item.key === 'programs'
+                        ? { ...item, items: projectItems }
+                        : item
+                )
+            );
+        });
+    }, []);
 
     return (
         <>
@@ -82,32 +78,35 @@ export default function Navbar() {
                             <Image src={logo} alt="WAWEF" width={160} height={40} className="sm:h-15 h-10 w-full" />
                         </Link>
 
-                        {/* Nav Items (Desktop Only) */}
-                                                <div className="hidden lg:flex space-x-6 items-center">
-                                                        <Dropdown
-                                                            label="Flagship Projects"
-                                                            items={
-                                                                flagshipProjects.length > 3
-                                                                    ? flagshipProjects
-                                                                          .slice(0, 3)
-                                                                          .concat([
-                                                                              {
-                                                                                  label: 'See all projects',
-                                                                                  href: '/projects',
-                                                                                  highlight: true,
-                                                                              },
-                                                                          ])
-                                                                    : flagshipProjects
-                                                            }
-                                                        />
-                                                        <Dropdown label="About Us" items={[
-                                                            { label: 'Who We Are', href: '/about-us' },
-                                                            { label: 'Leadership', href: '/team' },
-                                                            { label: 'Our Vibrant Volunteers', href: '/volunteers' },
-                                                        ]} />
-                                                        <Link href="/reviews-resources" className="text-black text-sm md:text-base hover:underline hover:underline-offset-5 decoration-[#f2c94c]">Review & Resources</Link>
-                                                        <Link href="/impact-stories" className="text-black text-sm md:text-base hover:underline hover:underline-offset-5 decoration-[#f2c94c]">Impact Stories</Link>
-                                                </div>
+                        {/* Desktop Navigation - Loop through navItems */}
+                        <div className="hidden lg:flex space-x-6 items-center">
+                            {navItems.map((item) => {
+                                if (item.type === 'link') {
+                                    return (
+                                        <Link
+                                            key={item.key}
+                                            href={item.href!}
+                                            className="text-black text-sm md:text-base hover:underline hover:underline-offset-5 decoration-[#f2c94c]"
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    );
+                                } else if (item.type === 'dropdown') {
+                                    const displayItems =
+                                        item.key === 'programs' && item.items!.length > 3
+                                            ? item.items!.slice(0, 3).concat([item.seeAll!])
+                                            : item.items || [];
+
+                                    return (
+                                        <Dropdown
+                                            key={item.key}
+                                            label={item.label}
+                                            items={displayItems}
+                                        />
+                                    );
+                                }
+                            })}
+                        </div>
                     </div>
 
                     {/* Right Group: Give Button */}
@@ -122,61 +121,54 @@ export default function Navbar() {
                     </div> */}
                 </div>
 
-                {/* Mobile Menu */}
-                                {isMobileMenuOpen && (
-                                    <div className="lg:hidden bg-white px-4 py-4 border rounded-sm border-gray-200">
-                                        <div className="flex flex-col space-y-4">
-                                            {/* Flagship Projects */}
-                                            <div>
-                                                <span className="text-black font-semibold text-sm">Flagship Projects</span>
-                                                <div className="mt-2 space-y-2.5">
-                                                    {flagshipProjects.slice(0, 4).map((item) => (
-                                                        <Link
-                                                            key={item.href}
-                                                            href={item.href}
-                                                            className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs"
-                                                            onClick={() => setIsMobileMenuOpen(false)}
-                                                        >
-                                                            {item.label}
-                                                        </Link>
-                                                    ))}
-                                                    {flagshipProjects.length > 4 && (
-                                                        <Link
-                                                            href="/projects"
-                                                            className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs font-semibold"
-                                                            onClick={() => setIsMobileMenuOpen(false)}
-                                                        >
-                                                            See all projects
-                                                        </Link>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            {/* About Us */}
-                                            <div>
-                                                <span className="text-black font-semibold text-sm">About Us</span>
-                                                <div className="mt-2 space-y-2.5">
-                                                    <Link href="/about-us" className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs" onClick={() => setIsMobileMenuOpen(false)}>Who We Are</Link>
-                                                    <Link href="/team" className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs" onClick={() => setIsMobileMenuOpen(false)}>Leadership</Link>
-                                                    <Link href="/volunteers" className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs font-semibold" onClick={() => setIsMobileMenuOpen(false)}>Our Vibrant Volunteers</Link>
-                                                </div>
-                                            </div>
-                                            
-                                            {/* Review & Resources */}
-                                            <div>
-                                                <Link href="/reviews-resources" className="block text-black font-semibold text-sm underline-offset-2 underline decoration-[#f2c94c]" onClick={() => setIsMobileMenuOpen(false)}>
-                                                    Review & Resources
-                                                </Link>
-                                            </div>
-
-                                            {/* Impact Stories */}
-                                            <div>
-                                                <Link href="/impact-stories" className="block text-black font-semibold text-sm underline-offset-2 underline decoration-[#f2c94c]" onClick={() => setIsMobileMenuOpen(false)}>
-                                                    Impact Stories
-                                                </Link>
+                {/* Mobile Menu - Loop through navItems */}
+                {isMobileMenuOpen && (
+                    <div className="lg:hidden bg-white px-4 py-4 border rounded-sm border-gray-200">
+                        <div className="flex flex-col space-y-4">
+                            {navItems.map((item) => {
+                                if (item.type === 'link') {
+                                    return (
+                                        <Link
+                                            key={item.key}
+                                            href={item.href!}
+                                            className="block text-black font-semibold text-sm underline-offset-2 underline decoration-[#f2c94c]"
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    );
+                                } else if (item.type === 'dropdown') {
+                                    return (
+                                        <div key={item.key}>
+                                            <span className="text-black font-semibold text-sm">{item.label}</span>
+                                            <div className="mt-2 space-y-2.5">
+                                                {item.items?.map((subitem) => (
+                                                    <Link
+                                                        key={subitem.href}
+                                                        href={subitem.href}
+                                                        className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs"
+                                                        onClick={() => setIsMobileMenuOpen(false)}
+                                                    >
+                                                        {subitem.label}
+                                                    </Link>
+                                                ))}
+                                                {item.seeAll && (
+                                                    <Link
+                                                        href={item.seeAll.href}
+                                                        className="block text-black underline-offset-2 underline decoration-[#f2c94c] text-xs font-semibold"
+                                                        onClick={() => setIsMobileMenuOpen(false)}
+                                                    >
+                                                        {item.seeAll.label}
+                                                    </Link>
+                                                )}
                                             </div>
                                         </div>
-                                    </div>
-                                )}
+                                    );
+                                }
+                            })}
+                        </div>
+                    </div>
+                )}
             </nav>
 
             {/* Modal for Donate Component */}
@@ -197,4 +189,4 @@ export default function Navbar() {
             )}
         </>
     );
-};
+}

@@ -9,7 +9,7 @@ const TeamsPage: React.FC = () => {
     return (
       <div>
         <TeamHero/>
-        <div className="w-full max-w-[72rem] mx-auto py-10 my-10 px-4">
+       <div className="container mx-auto px-4 sm:px-6 lg:px-8 my-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 md:gap-y-16 gap-x-20">
                 {teamData.map((member, index) => (
                     <Link key={index} href={getTeamPath(member.name)} className="block">

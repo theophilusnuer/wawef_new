@@ -28,7 +28,7 @@ export const Footer: FC = () => {
 
     client
       .fetch<FooterProjectItem[]>(
-        `*[_type == "project"] | order(_createdAt desc)[0...5]{ projectName, "slug": slug.current }`,
+        `*[_type == "program"] | order(_createdAt desc)[0...5]{ "projectName": title, "slug": slug.current }`,
       )
       .then((data) => {
         setFlagshipProjects(
@@ -38,14 +38,14 @@ export const Footer: FC = () => {
 
             return {
               label,
-              href: `/projects/${project.slug || fallbackSlug}`,
+              href: `/programs/${project.slug || fallbackSlug}`,
             };
           }),
         );
       });
   }, []);
 
-  const featuredProjects = useMemo(() => flagshipProjects.slice(0, 4), [flagshipProjects]);
+  const featuredProjects = useMemo(() => flagshipProjects.slice(0, 3), [flagshipProjects]);
   const hasMoreProjects = flagshipProjects.length > 4;
 
   return (
@@ -56,21 +56,26 @@ export const Footer: FC = () => {
 
           {/* Resources and Stories */}
           <div>
-            <h3 className="mb-6 text-sm md:text-base">Resources & Stories</h3>
+            <h3 className="mb-6 text-sm md:text-base">Get Involved</h3>
             <ul className="space-y-2 text-xs md:text-base text-[#666666]">
               <li>
                 <Link href="/reviews-resources" className="hover:underline underline-offset-5">
-                  Review & Resources
+                  Partner with us
                 </Link>
               </li>
               <li>
                 <Link href="/impact-stories" className="hover:underline underline-offset-5">
-                  Impact Stories
+                  Sponsor a girl
                 </Link>
               </li>
               <li>
                 <Link href="/news-stories" className="hover:underline underline-offset-5">
-                  News Stories
+                  Volunteer
+                </Link>
+              </li>
+              <li>
+                <Link href="/news-stories" className="hover:underline underline-offset-5">
+                  Join Advisory Board
                 </Link>
               </li>
             </ul>
@@ -78,7 +83,7 @@ export const Footer: FC = () => {
 
           {/* Flagship Projects */}
           <div>
-            <h3 className="mb-6 text-sm md:text-base">Flagship Projects</h3>
+            <h3 className="mb-6 text-sm md:text-base">Programs</h3>
             <ul className="space-y-2 text-xs md:text-base text-[#666666]">
               {featuredProjects.map((project) => (
                 <li key={project.href}>
@@ -89,8 +94,8 @@ export const Footer: FC = () => {
               ))}
               {hasMoreProjects && (
                 <li>
-                  <Link href="/projects" className="font-semibold hover:underline underline-offset-5">
-                    See all projects
+                  <Link href="/programs" className="italic hover:underline underline-offset-5">
+                    See all programs
                   </Link>
                 </li>
               )}

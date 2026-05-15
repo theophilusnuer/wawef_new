@@ -18,11 +18,21 @@ type StoryBodyItem = {
   alt?: string;
 };
 
+type StorySections = {
+  introduction?: StoryBodyItem[];
+  situation?: StoryBodyItem[];
+  intervention?: StoryBodyItem[];
+  outcome?: StoryBodyItem[];
+  closing?: StoryBodyItem[];
+};
+
 type StoryData = {
   _id: string;
   _createdAt?: string;
   title: string;
   coverImage?: StoryImage;
+  youtubeLink?: string;
+  storySections?: StorySections;
   body?: StoryBodyItem[];
   gallery?: StoryImage[];
 };
@@ -69,6 +79,38 @@ const buildParagraphs = (body?: StoryBodyItem[]): string[] => {
     );
 };
 
+const getStoryParagraphs = (story: StoryData): string[] => {
+  const sections = story.storySections;
+  const orderedSections: Array<StoryBodyItem[] | undefined> = [
+    sections?.introduction,
+    sections?.situation,
+    sections?.intervention,
+    sections?.outcome,
+    sections?.closing,
+  ];
+
+  const sectionParagraphs = orderedSections.flatMap((sectionBody) =>
+    buildParagraphs(sectionBody),
+  );
+
+  if (sectionParagraphs.length > 0) {
+    return sectionParagraphs;
+  }
+
+  return buildParagraphs(story.body);
+};
+
+const getYouTubeEmbedUrl = (youtubeLink?: string): string | null => {
+  if (!youtubeLink) return null;
+
+  const match = youtubeLink.match(
+    /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})/,
+  );
+
+  if (!match?.[1]) return null;
+  return `https://www.youtube.com/embed/${match[1]}`;
+};
+
 const formatStoryDate = (isoDate?: string): string => {
   if (!isoDate) return 'Date unavailable';
 
@@ -87,7 +129,8 @@ const ImpactStoryDetailsClient: React.FC<ImpactStoryDetailsClientProps> = ({
   otherStories,
   newsStories,
 }) => {
-  const paragraphs = buildParagraphs(story.body);
+  const paragraphs = getStoryParagraphs(story);
+  const youtubeEmbedUrl = getYouTubeEmbedUrl(story.youtubeLink);
   const galleryImages = Array.isArray(story.gallery) ? story.gallery.filter(hasImageAsset) : [];
   const maxImagesToInsert = Math.min(galleryImages.length, Math.floor(paragraphs.length / 3));
 
@@ -107,13 +150,13 @@ const ImpactStoryDetailsClient: React.FC<ImpactStoryDetailsClientProps> = ({
       if (imageInsertIndex < maxImagesToInsert) {
         const img = galleryImages[imageInsertIndex];
         acc.push(
-          <div key={`img-${index}`} className="my-10 sm:my-12 lg:my-16">
+          <div key={`img-${index}`} className="my-10 sm:my-12 lg:my-14">
             <Image
-              src={urlFor(img).width(1400).fit('max').quality(88).url()}
+              src={urlFor(img).width(1000).fit('max').quality(86).url()}
               alt={img.alt || 'Impact story image'}
-              width={1400}
-              height={700}
-              className="w-full h-auto max-h-[16rem] sm:max-h-[18rem] lg:max-h-[22rem] rounded-sm object-fit-cover"
+              width={1000}
+              height={620}
+              className="w-full h-[25vh] md:h-[40vh] mx-auto object-top object-cover"
             />
           </div>,
         );
@@ -138,20 +181,33 @@ const ImpactStoryDetailsClient: React.FC<ImpactStoryDetailsClientProps> = ({
 
           <SocialShareButtons title={story.title} className="mb-6 sm:mb-8" />
 
-          {hasImageAsset(story.coverImage) && (
-            <div className="mb-8 sm:mb-10 lg:mb-12">
-              <Image
-                src={urlFor(story.coverImage)
-                  .width(1400)
-                  .fit('max')
-                  .quality(88)
-                  .url()}
-                alt={story.coverImage.alt || story.title}
-                width={1400}
-                height={650}
-                className="w-full h-auto max-h-[22rem] sm:max-h-[26rem] lg:max-h-[28rem] rounded-sm object-cover"
+          {youtubeEmbedUrl ? (
+            <div className="mb-8 sm:mb-10 lg:mb-12 relative w-full aspect-video rounded-sm overflow-hidden bg-black">
+              <iframe
+                src={youtubeEmbedUrl}
+                title={`${story.title} video`}
+                className="absolute inset-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
               />
             </div>
+          ) : (
+            hasImageAsset(story.coverImage) && (
+              <div className="mb-8 sm:mb-10 lg:mb-12">
+                <Image
+                  src={urlFor(story.coverImage)
+                    .width(1400)
+                    .fit('max')
+                    .quality(88)
+                    .url()}
+                  alt={story.coverImage.alt || story.title}
+                  width={1400}
+                  height={650}
+                  className="w-full h-auto max-h-[22rem] sm:max-h-[26rem] lg:max-h-[28rem]  object-cover"
+                />
+              </div>
+            )
           )}
 
           <div className="space-y-6 sm:space-y-8 lg:space-y-10">
@@ -167,25 +223,29 @@ const ImpactStoryDetailsClient: React.FC<ImpactStoryDetailsClientProps> = ({
           {/* Other Impact Stories Grid – after main story */}
           {otherStories.length > 0 && (
             <section className="mt-16 sm:mt-20 lg:mt-24">
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 sm:mb-10">
-                Other Impact Stories
-              </h2>
+            <div className="text-left">
+                    <h2 className="text-2xl md:text-3xl font-bold mb-10 relative inline-block">
+                        Other Impact Stories
+                        <span className="absolute left-0 -bottom-3 w-28 h-1.5 bg-[#F2C94C]"></span>
+                    </h2>
+                </div>
 
-              <div className="grid gap-6 sm:gap-8 md:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {otherStories.map((item) => (
                   <Link
                     key={item._id}
                     href={`/impact-stories/${item.slug.current}`}
-                    className="group block rounded-sm overflow-hidden"
+                className="group overflow-hidden transition-all duration-300 flex flex-col"
                   >
                     {hasImageAsset(item.coverImage) ? (
-                      <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden">
                         <Image
                           src={urlFor(item.coverImage).width(600).height(450).fit('crop').url()}
                           alt={item.coverImage.alt || item.title}
                           fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
+ className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />                        
                       </div>
                     ) : (
                       <div className="aspect-[4/3] bg-gray-200 flex items-center justify-center text-sm text-gray-500">
@@ -193,13 +253,13 @@ const ImpactStoryDetailsClient: React.FC<ImpactStoryDetailsClientProps> = ({
                       </div>
                     )}
 
-                    <div className="p-5 text-center">
-                      <h3 className="md:text-xl font-semibold text-gray-900 group-hover:text-primary transition-colors">
-                    <span className="inline- underline underline-offset-2 pb-1">
-                          {item.title}
-                        </span>
-                      </h3>
-                    </div>
+                   <div className="py-4 text-left flex-grow flex ">
+                  <h3 className="md:text-xl font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                    <span className="inline-underline underline underline-offset-2 pb-1">
+                      {item.title}
+                    </span>
+                  </h3>
+                </div>
                   </Link>
                 ))}
               </div>
@@ -225,10 +285,10 @@ const ImpactStoryDetailsClient: React.FC<ImpactStoryDetailsClientProps> = ({
                       alt={news.coverImage.alt || news.title}
                       width={500}
                       height={360}
-                      className="w-full h-36 xl:h-40 object-cover rounded-sm mb-2"
+                      className="w-full h-36 xl:h-40 object-cover  mb-2"
                     />
                   ) : (
-                    <div className="w-full h-36 xl:h-40 bg-gray-200 rounded-sm mb-2" />
+                    <div className="w-full h-36 xl:h-40 bg-gray-200  mb-2" />
                   )}
                   <p className="underline font-medium text-black leading-snug">{news.title}</p>
                 </>
@@ -236,7 +296,7 @@ const ImpactStoryDetailsClient: React.FC<ImpactStoryDetailsClientProps> = ({
 
               if (!href) {
                 return (
-                  <div key={news._id} className="block rounded-sm p-2">
+                  <div key={news._id} className="block  p-2">
                     {card}
                   </div>
                 );
@@ -246,7 +306,7 @@ const ImpactStoryDetailsClient: React.FC<ImpactStoryDetailsClientProps> = ({
                 <Link
                   key={news._id}
                   href={href}
-                  className="block rounded-sm p-2 transition-colors"
+                  className="block  p-2 transition-colors"
                 >
                   {card}
                 </Link>
@@ -256,7 +316,7 @@ const ImpactStoryDetailsClient: React.FC<ImpactStoryDetailsClientProps> = ({
             <div className="pt-2 flex justify-center">
               <Link
                 href="/news-stories"
-                className="inline-flex items-center justify-center rounded-sm bg-[#F2C94C] px-4 py-2 text-sm font-semibold text-black hover:opacity-90 transition-opacity"
+                className="inline-flex items-center justify-center  bg-[#F2C94C] px-4 py-2 text-sm font-semibold text-black hover:opacity-90 transition-opacity"
               >
                 See more
               </Link>

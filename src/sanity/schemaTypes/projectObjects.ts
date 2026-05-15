@@ -1,5 +1,6 @@
 import { defineType, defineField, defineArrayMember } from 'sanity';
-import { DocumentIcon, UsersIcon, ImageIcon, LinkIcon } from '@sanity/icons';
+import { UsersIcon, ImageIcon, LinkIcon } from '@sanity/icons';
+// projectObjects.ts is still used for galleryImage, partner, sponsorDonor, objectivesApproach
 
 // Partner object type
 export const partner = defineType({

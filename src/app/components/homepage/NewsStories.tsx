@@ -9,8 +9,8 @@ export const NewsStories = async () => {
 
   return (
     <section className="py-12 ">
-        <div className='py-12 bg-[#f4e8e8]'>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className='py-12 bg-[#F8F8F6]'>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl sm:text-4xl font-semibold text-center mb-10 text-black">
           News Stories
         </h2>

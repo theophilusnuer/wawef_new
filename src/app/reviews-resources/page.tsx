@@ -91,7 +91,7 @@ export default async function ReviewsResourcesPage() {
 												target="_blank"
 												rel="noopener noreferrer"
 												download={fileName}
-												className="inline-flex items-center gap-2 text-sm font-semibold text-[#c78d00] hover:text-[#a87400] transition-colors"
+												className="inline-flex items-center gap-2 text-sm font-semibold text-gray-800 hover:text-gray-950 transition-colors"
 											>
 												<ArrowDownTrayIcon className="h-[1.125rem] w-[1.125rem]" />
 												Download file
@@ -103,10 +103,9 @@ export default async function ReviewsResourcesPage() {
 												href={resource.externalLink}
 												target="_blank"
 												rel="noopener noreferrer"
-												className="inline-flex items-center gap-2 text-sm font-semibold text-gray-800 hover:text-gray-950 transition-colors"
+												className=" italic inline-flex items-center gap-2 text-sm font-semibold text-gray-800 hover:text-gray-950 transition-colors"
 											>
-											<ArrowDownTrayIcon className="h-[1.125rem] w-[1.125rem]" />
-												Download file
+ 												Check this out 
 											</a>
 										)}
 									</div>

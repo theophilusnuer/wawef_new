@@ -21,7 +21,7 @@ const page = () => {
       <Whoweare/>
       <Vision/>
       <Enock/>
-      <Ewfsf/>
+      {/* <Ewfsf/> */}
       <Team/>
     </div>
   )

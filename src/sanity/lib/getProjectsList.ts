@@ -17,18 +17,18 @@ export interface ProjectListItem {
 }
 
 export async function getProjectsList() {
-  // GROQ query to fetch all projects with relevant fields
-  const query = `*[_type == "project"]{
+  // Fetch program documents while keeping the existing project-shaped payload.
+  const query = `*[_type == "program"]{
     _id,
     _updatedAt,
-    projectName,
-    status,
+    "projectName": title,
+    "status": "completed",
     slug,
-    coverImage,
-    peopleImpacted,
-    expectedPeopleImpacted,
-    communitiesImpacted,
-    expectedCommunitiesImpacted
+    "coverImage": null,
+    "peopleImpacted": null,
+    "expectedPeopleImpacted": null,
+    "communitiesImpacted": null,
+    "expectedCommunitiesImpacted": null
   } | order(_createdAt desc)`;
   const { data } = await sanityFetch({
     query,

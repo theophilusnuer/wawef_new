@@ -4,7 +4,7 @@ import { defineLive } from "next-sanity/live";
 import { client } from './client'
 
 const token = process.env.SANITY_API_READ_TOKEN;
-const SANITY_REVALIDATE_SECONDS = 300;
+const SANITY_REVALIDATE_SECONDS = 3;
 
 export const { sanityFetch, SanityLive } = defineLive({
   client,

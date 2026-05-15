@@ -4,7 +4,8 @@ import enock from '../../assets/images/enock.jpeg'
 
 const Enock: React.FC = () => {
     return (
-        <div className="w-full max-w-[78rem] mx-auto my-10 px-6 md:px-0">
+    <div className="py-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {/* Heading Above the Grid */}
             <h1 className="inline-block text-lg md:text-xl mb-6 bg-[#F2C94C] px-3 py-2 md:px-6 md:py-3 rounded-sm">
                 A Legacy of Generosity: In Honor of Enock Addico
@@ -35,6 +36,7 @@ const Enock: React.FC = () => {
                     </p>
                 </div>
             </div>
+        </div>
         </div>
     );
 };

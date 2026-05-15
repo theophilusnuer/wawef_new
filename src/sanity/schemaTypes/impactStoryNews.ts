@@ -21,15 +21,69 @@ export const impactStory = defineType({
       validation: rule => rule.required(),
     }),
     defineField({
-      name: 'body',
+      name: 'youtubeLink',
+      title: 'YouTube Link',
+      type: 'url',
+      validation: rule =>
+        rule.uri({ scheme: ['http', 'https'] }).custom((value) => {
+          if (!value) return true;
+          return /(youtube\.com|youtu\.be)/i.test(value)
+            ? true
+            : 'Please enter a valid YouTube URL';
+        }),
+      description: 'Optional YouTube URL for this impact story.',
+    }),
+    defineField({
+      name: 'storySections',
       title: 'Story Text',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'introduction',
+          title: 'Introduction',
+          type: 'array',
+          of: [defineArrayMember({ type: 'block' })],
+          validation: rule => rule.required(),
+        }),
+        defineField({
+          name: 'situation',
+          title: 'Situation',
+          type: 'array',
+          of: [defineArrayMember({ type: 'block' })],
+        }),
+        defineField({
+          name: 'intervention',
+          title: 'Intervention',
+          type: 'array',
+          of: [defineArrayMember({ type: 'block' })],
+        }),
+        defineField({
+          name: 'outcome',
+          title: 'Outcome',
+          type: 'array',
+          of: [defineArrayMember({ type: 'block' })],
+        }),
+        defineField({
+          name: 'closing',
+          title: 'Closing',
+          type: 'array',
+          of: [defineArrayMember({ type: 'block' })],
+        }),
+      ],
+      validation: rule => rule.required(),
+      description:
+        'Write the story in sections: Introduction, Situation, Intervention, Outcome, and Closing.',
+    }),
+    defineField({
+      name: 'body',
+      title: 'Legacy Story Text',
       type: 'array',
       of: [
         defineArrayMember({ type: 'block' }),
         defineArrayMember({ type: 'image', icon: ImageIcon, options: { hotspot: true, accept: 'image/*' } }),
       ],
-      validation: rule => rule.required(),
-      description: 'Type and format your story, insert images and links as needed.'
+      hidden: true,
+      description: 'Deprecated. Kept temporarily for existing stories while migrating to Story Sections.',
     }),
     defineField({
       name: 'slug',

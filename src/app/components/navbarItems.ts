@@ -1,38 +1,56 @@
-// This file contains the list of navbar items for the WAWEF site, including flagship projects, about us, impact stories, and review/resources.
-// The flagship projects dropdown is dynamically generated from Sanity (see Navbar.tsx for fetch logic).
+// Single source of truth for navbar items used on both mobile and desktop
+// Edit labels and links here and they'll automatically update everywhere
 
-export const NAVBAR_ITEMS = [
+export type NavItemLink = {
+  label: string;
+  href: string;
+};
+
+export type NavItem = {
+  key: string;
+  label: string;
+  type: 'link' | 'dropdown';
+  href?: string; // for type: 'link'
+  items?: NavItemLink[]; // for type: 'dropdown'
+  seeAll?: NavItemLink; // for type: 'dropdown' with see all link
+};
+
+export const NAVBAR_ITEMS: NavItem[] = [
   {
-    label: 'Flagship Projects',
+    key: 'programs',
+    label: 'Programs',
     type: 'dropdown',
-    key: 'flagship-projects',
-    // items will be injected dynamically from Sanity
-    items: [],
+    items: [], // Dynamically populated from Sanity
     seeAll: {
-      label: 'See all projects',
-      href: '/projects',
+      label: 'See all programs',
+      href: '/programs',
     },
   },
   {
+    key: 'about-us',
     label: 'About Us',
     type: 'dropdown',
-    key: 'about-us',
     items: [
       { label: 'Who We Are', href: '/about-us' },
       { label: 'Leadership', href: '/team' },
-      { label: 'Our Vibrant Volunteers!', href: '/volunteers'},
     ],
   },
   {
+    key: 'impact-stories',
     label: 'Impact Stories',
     type: 'link',
-    key: 'impact-stories',
     href: '/impact-stories',
   },
   {
-    label: 'Review & Resources',
+    key: 'get-involved',
+    label: 'Get Involved',
     type: 'link',
-    key: 'review-resources',
-    href: '/reviews-resources',
+    href: '/get-involved',
   },
+  // {
+  //   key: 'reviews-resources',
+  //   label: 'Review & Resources',
+  //   type: 'link',
+  //   href: '/reviews-resources',
+  // },
 ];

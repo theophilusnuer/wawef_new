@@ -6,6 +6,8 @@ export async function getImpactStoryBySlug(slug: string) {
     _createdAt,
     title,
     coverImage,
+    youtubeLink,
+    storySections,
     body,
     gallery
   }`;

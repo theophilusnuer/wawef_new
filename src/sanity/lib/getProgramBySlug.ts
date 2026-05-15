@@ -1,46 +1,52 @@
-import { groq } from 'next-sanity';
-import { sanityFetch } from './live';
+import { groq } from "next-sanity";
+import { sanityFetch } from "./live";
 
-// ────────────────────────────────────────────────
-// Full single project query – all fields from schema
-// ────────────────────────────────────────────────
-export const fullProjectQuery = groq`
+export const fullProgramQuery = groq`
   *[_type == "program" && slug.current == $slug][0] {
     _id,
     _createdAt,
     _updatedAt,
-    
-    "projectName": title,
+
+    "programName": title,
     slug,
     "status": "completed",
-    
-    // Keep compatibility keys for existing UI.
+
     "expectedPeopleImpacted": null,
     "expectedCommunitiesImpacted": null,
     "peopleImpacted": null,
     "communitiesImpacted": null,
-    
+
     "lastUpdated": _updatedAt,
-    
-    "coverImage": null,
-    
+    "coverImage": gallery[0].image {
+      asset -> {
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      },
+      alt,
+      hotspot,
+      crop
+    },
+
     "donateLink": null,
     "about": null,
     "problem": null,
     "solution": null,
     "objectivesApproach": null,
-    
+
     location,
     youtubeLink,
     "completedProblem": null,
     "completedSolution": null,
     "completedObjectivesApproach": null,
     "overview": details,
-    
+
     "projectReport": null,
-    
     "partners": [],
-    
+
     "impactGallery": gallery[] {
       image {
         asset -> {
@@ -53,20 +59,17 @@ export const fullProjectQuery = groq`
         crop
       }
     },
-    
+
     "moreImagesLink": null,
     "sponsors": []
   }
 `;
 
-// ────────────────────────────────────────────────
-// TypeScript interface – match the GROQ shape exactly
-// ────────────────────────────────────────────────
-export interface FullProject {
+export interface FullProgram {
   _id: string;
-  projectName: string;
+  programName: string;
   slug: { current: string };
-  status: 'upcoming' | 'completed';
+  status: "upcoming" | "completed";
 
   expectedPeopleImpacted?: number;
   expectedCommunitiesImpacted?: number;
@@ -88,7 +91,7 @@ export interface FullProject {
   solution?: string;
   objectivesApproach?: {
     objectives?: string[];
-    approachType?: 'text' | 'list';
+    approachType?: "text" | "list";
     approachText?: string;
     approachList?: string[];
   };
@@ -99,7 +102,7 @@ export interface FullProject {
   completedSolution?: string;
   completedObjectivesApproach?: {
     objectives?: string[];
-    approachType?: 'text' | 'list';
+    approachType?: "text" | "list";
     approachText?: string;
     approachList?: string[];
   };
@@ -120,17 +123,17 @@ export interface FullProject {
     website?: string;
   }>;
 
- impactGallery?: Array<{
-  image: {
-    asset: {
-      url: string;
+  impactGallery?: Array<{
+    image: {
+      asset: {
+        url: string;
         metadata?: { dimensions?: unknown; lqip?: string };
-    };
-    alt?: string;
+      };
+      alt?: string;
       hotspot?: unknown;
       crop?: unknown;
-  };
-}>;
+    };
+  }>;
 
   moreImagesLink?: string;
   sponsors?: Array<{
@@ -147,29 +150,26 @@ export interface FullProject {
   }>;
 }
 
-// ────────────────────────────────────────────────
-// Reusable fetch function
-// ────────────────────────────────────────────────
-export async function getProjectBySlug(slug: string): Promise<FullProject | null> {
+export async function getProgramBySlug(slug: string): Promise<FullProgram | null> {
   if (!slug?.trim()) {
-    console.warn("No valid slug provided to getProjectBySlug");
+    console.warn("No valid slug provided to getProgramBySlug");
     return null;
   }
 
   try {
     const { data } = await sanityFetch({
-      query: fullProjectQuery,
+      query: fullProgramQuery,
       params: { slug },
-      tags: ['project'],
+      tags: ["program"],
     });
 
-    const project = data as FullProject | null;
-    
-    if (!project) {
-      console.log(`No project found for slug: ${slug}`);
+    const program = data as FullProgram | null;
+
+    if (!program) {
+      console.log(`No program found for slug: ${slug}`);
     }
-    
-    return project || null;
+
+    return program || null;
   } catch (err) {
     console.error(`Sanity fetch error for slug "${slug}":`, err);
     return null;

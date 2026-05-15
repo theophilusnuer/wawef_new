@@ -24,9 +24,7 @@ const formatStoryDate = (isoDate?: string) => {
 export default async function ImpactStoriesPage() {
   const stories = await getImpactStoriesList();
   const validStories = stories.filter(
-    (
-      story,
-    ): story is ImpactStoryListItem & { slug: { current: string } } =>
+    (story): story is ImpactStoryListItem & { slug: { current: string } } =>
       Boolean(story.slug?.current),
   );
 
@@ -42,15 +40,20 @@ export default async function ImpactStoriesPage() {
 
       <GiveMonthlyHero />
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pb-20">
-        <p className="text-left pb-6 text-2xl sm:text-4xl">All Impact Stories</p>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-left">
+          <h2 className="text-2xl md:text-3xl font-bold mb-10 relative inline-block">
+            All Impact Stories
+            <span className="absolute left-0 -bottom-3 w-28 h-1.5 bg-[#F2C94C]"></span>
+          </h2>
+        </div>{" "}
 
-        <div className="grid gap-6 sm:gap-8 md:gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {validStories.map((story) => (
             <Link
               key={story._id}
               href={`/impact-stories/${story.slug.current}`}
-              className="group rounded-sm overflow-hidden transition-all duration-300 flex flex-col"
+                className="group overflow-hidden transition-all duration-300 flex flex-col"
             >
               {story.coverImage?.asset?._ref ? (
                 <div className="relative aspect-[4/3] overflow-hidden">
@@ -63,8 +66,8 @@ export default async function ImpactStoriesPage() {
                       .url()}
                     alt={story.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 </div>
               ) : (
@@ -73,17 +76,16 @@ export default async function ImpactStoriesPage() {
                 </div>
               )}
 
-              <div className="p-5 md:p-6 text-center flex-grow flex flex-col items-center justify-center">
-                <h3 className="md:text-xl font-semibold text-gray-900 group-hover:text-primary transition-colors">
-                  <span className="inline underline underline-offset-2 pb-1">
-                    {story.title}
-                  </span>
-                </h3>
-              </div>
+            <div className="py-4 text-left flex-grow flex ">
+                  <h3 className="md:text-xl font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                    <span className="inline-underline underline underline-offset-2 pb-1">
+                      {story.title}
+                    </span>
+                  </h3>
+                </div>
             </Link>
           ))}
         </div>
-
         {validStories.length === 0 && (
           <p className="text-center text-gray-500 py-12 text-lg">
             No impact stories available yet. Check back soon!

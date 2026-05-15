@@ -18,9 +18,9 @@ export const AboutusHero: FC = () => {
       <div className="absolute inset-0 bg-black/65" />
 
       {/* Hero text overlay */}
-      <div className="relative z-10 flex flex-col justify-end h-full p-8 w-full">
-        <div className="w-full max-w-[78rem] mx-auto flex flex-col items-start text-left mb-6">
-          <h3 className="text-white text-2xl md:text-3xl">About Us</h3>
+     <div className="relative z-10 flex flex-col justify-end h-full p-8 w-full">
+        <div className="container mx-auto sm:px-6 lg:px-8">
+          <h3 className="text-white text-2xl md:text-3xl mb-6">About Us</h3>
         </div>
       </div>
     </div>
