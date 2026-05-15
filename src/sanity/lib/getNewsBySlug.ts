@@ -1,6 +1,25 @@
 import { sanityFetch } from './live';
 
-export async function getNewsBySlug(slug: string) {
+interface NewsImage {
+  asset?: { _ref?: string };
+  alt?: string;
+}
+
+interface NewsBodyItem {
+  _type?: string;
+  children?: Array<{ _type?: string; text?: string }>;
+}
+
+export interface NewsBySlugResult {
+  _id: string;
+  _createdAt?: string;
+  title: string;
+  coverImage?: NewsImage;
+  body?: NewsBodyItem[];
+  gallery?: NewsImage[];
+}
+
+export async function getNewsBySlug(slug: string): Promise<NewsBySlugResult | null> {
   const query = `*[_type == "news" && slug.current == $slug][0]{
     _id,
     _createdAt,
@@ -15,5 +34,5 @@ export async function getNewsBySlug(slug: string) {
     tags: ['news'],
   });
 
-  return data;
+  return data as NewsBySlugResult | null;
 }
