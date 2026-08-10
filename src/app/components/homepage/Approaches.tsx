@@ -2,9 +2,9 @@
 import { FC } from 'react';
 import { AboutSummary } from './Quotes';
 import Image from 'next/image';
-import cos from '../../assets/images/cos.webp';
-import dev from '../../assets/images/dev.jpg';
-import fas from '../../assets/images/fas.webp';
+import access from '../../assets/images/access.webp';
+import emp from '../../assets/images/emp.webp';
+import edu from '../../assets/images/edu.webp';
 
 
 export const Approaches: FC = () => {
@@ -13,17 +13,17 @@ export const Approaches: FC = () => {
         {
             title: "Access",
             subtitle: "Providing essential resources such as menstrual products and scholarships",
-            image: cos.src,
+            image: access.src,
         },
         {
             title: "Education",
             subtitle: "Supporting academic and vocational development",
-            image: fas.src,
+            image: edu.src,
         },
         {
             title: "Empowerment",
             subtitle: "Building confidence, leadership, and independence",
-            image: dev.src,
+            image: emp.src,
         },
     ];
 

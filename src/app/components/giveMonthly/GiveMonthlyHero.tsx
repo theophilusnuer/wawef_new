@@ -1,7 +1,7 @@
 import React from 'react';
-import { DonateMonthly } from './DonateMonthly';
 import Image from 'next/image';
 import sheCan from '../../assets/images/girls.webp';
+import { Donate } from '../Donate';
 
 export const GiveMonthlyHero = () => {
   return (
@@ -22,18 +22,7 @@ export const GiveMonthlyHero = () => {
           <h1 className="text-3xl md:text-5xl font-gartis">
             Because of You, She Can
           </h1>
-          {/* <p className="text-sm md:text-base text-center leading-relaxed">
-            Your giving does more than change a life — it changes generations.
-            When you give, a girl learns, a woman leads, a family thrives, a
-            community rises. <br /> <br />You are not just donating — you are opening doors,
-            creating opportunity, and fueling dreams that would otherwise be out
-            of reach.
-
-
-            Your support gives a woman the skills to earn, provide, and lead.
-She builds a business, supports her family, and uplifts her community.
-Because of you, she can break the cycle of poverty—for herself and others
-          </p> */}
+      
           <p className="text-sm md:text-base text-center leading-relaxed">
             Your giving does more than change a life — it changes generations.
             When you give, a girl learns, a woman leads, a family thrives, a
@@ -41,7 +30,10 @@ Because of you, she can break the cycle of poverty—for herself and others
             creating opportunity, and fueling dreams that would otherwise be out
             of reach.
           </p>
-          <DonateMonthly />
+          <p className='border'>
+            <Donate />
+            </p>
+          
         </div>
       </div>
     </div>

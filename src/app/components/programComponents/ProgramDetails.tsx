@@ -1,5 +1,8 @@
 "use client";
 
+import Image from 'next/image';
+import { PortableText } from '@portabletext/react';
+import { urlFor } from '@/sanity/lib/image';
 import type { FullProgram } from "@/sanity/lib/getProgramBySlug";
 
 interface ProgramDetailsProps {
@@ -22,9 +25,64 @@ export default function ProgramDetails({ program }: ProgramDetailsProps) {
           </div>
 
           {program.overview && (
-            <p className="text-gray-700 leading-relaxed text-base md:text-lg whitespace-pre-line">
-              {program.overview}
-            </p>
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            <PortableText
+              value={program.overview as any}
+              components={{
+                block: {
+                  normal: ({ children }) => (
+                    <p className="text-gray-700 leading-relaxed text-base md:text-lg mb-2">{children}</p>
+                  ),
+                  h2: ({ children }) => (
+                    <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">{children}</h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">{children}</h3>
+                  ),
+                  blockquote: ({ children }) => (
+                    <blockquote className="border-l-4 border-[#F2C94C] pl-4 italic text-gray-600 my-6">{children}</blockquote>
+                  ),
+                },
+                marks: {
+                  strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                  em: ({ children }) => <em className="italic">{children}</em>,
+                  link: ({ value, children }) => (
+                    <a href={value?.href} target="_blank" rel="noopener noreferrer" className="underline text-[#8A6D1A] hover:opacity-80">
+                      {children}
+                    </a>
+                  ),
+                },
+                list: {
+                  bullet: ({ children }) => (
+                    <ul className="list-disc ml-6 mb-4 space-y-1 text-gray-700 text-base md:text-lg">{children}</ul>
+                  ),
+                  number: ({ children }) => (
+                    <ol className="list-decimal ml-6 mb-4 space-y-1 text-gray-700 text-base md:text-lg">{children}</ol>
+                  ),
+                },
+                listItem: {
+                  bullet: ({ children }) => <li className="leading-relaxed">{children}</li>,
+                  number: ({ children }) => <li className="leading-relaxed">{children}</li>,
+                },
+                types: {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  image: ({ value }: { value: any }) => {
+                    if (!value?.asset?._ref) return null;
+                    return (
+                      <div className="my-4">
+                        <Image
+                          src={urlFor(value).width(1400).fit('max').quality(88).url()}
+                          alt={value.alt || 'Program image'}
+                          width={1400}
+                          height={700}
+                          className="w-full h-auto object-cover"
+                        />
+                      </div>
+                    );
+                  },
+                },
+              }}
+            />
           )}
         </div>
       </section>

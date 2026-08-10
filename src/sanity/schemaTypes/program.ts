@@ -1,4 +1,4 @@
-import { defineType, defineField } from "sanity";
+import { defineType, defineField, defineArrayMember } from "sanity";
 import { DocumentIcon } from "@sanity/icons";
 
 export const program = defineType({
@@ -37,7 +37,11 @@ export const program = defineType({
     defineField({
       name: "details",
       title: "Program Details",
-      type: "text",
+      type: "array",
+      of: [
+        defineArrayMember({ type: "block" }),
+        defineArrayMember({ type: "image", options: { hotspot: true } }),
+      ],
       validation: (rule) => rule.required(),
     }),
     defineField({

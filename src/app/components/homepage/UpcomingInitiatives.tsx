@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getUpcomingInitiativesList } from '@/sanity/lib/getUpcomingInitiativesList';
+import { urlFor } from '@/sanity/lib/image';
 
 const getInitials = (title: string) => {
 	return title.trim().charAt(0).toUpperCase() || 'I';
@@ -43,15 +45,26 @@ export const UpcomingInitiatives = async ({ showAll = false }: UpcomingInitiativ
 							{visibleInitiatives.map((initiative) => {
 								return (
 									<article key={initiative._id} className={`${cardWidthClass} overflow-hidden flex flex-col`}>
-										<div
-											className="w-full h-48 md:h-56 flex items-center justify-center"
-											style={{ backgroundColor: initiative.initialBackgroundColor }}
-											aria-label={`${initiative.title} initial`}
-										>
-											<span className="text-6xl md:text-7xl font-bold text-[#2f2f2f]">
-												{getInitials(initiative.title)}
-											</span>
-										</div>
+										{initiative.backgroundType === 'image' && initiative.backgroundImage ? (
+											<div className="w-full aspect-[4/5] md:h-56 relative overflow-hidden">
+												<Image
+													src={urlFor(initiative.backgroundImage).url()}
+													alt={initiative.title}
+													fill
+													className="object-cover"
+												/>
+											</div>
+										) : (
+											<div
+												className="w-full h-48 md:h-56 flex items-center justify-center"
+												style={{ backgroundColor: initiative.initialBackgroundColor ?? '#E6E6E6' }}
+												aria-label={`${initiative.title} initial`}
+											>
+												<span className="text-6xl md:text-7xl font-bold text-[#2f2f2f]">
+													{getInitials(initiative.title)}
+												</span>
+											</div>
+										)}
 
 										<div className="pt-4 px-1 flex flex-col">
 											<h3 className="text-base md:text-xl font-semibold text-gray-800 mb-1">

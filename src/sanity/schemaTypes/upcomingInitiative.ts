@@ -6,6 +6,27 @@ export const upcomingInitiative = defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'isLaunched',
+      title: 'Mark as Launched',
+      type: 'boolean',
+      description: 'When enabled, this initiative is hidden from the website but kept in the backend.',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'backgroundType',
+      title: 'Background Type',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Color', value: 'color' },
+          { title: 'Image', value: 'image' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'color',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'initialBackgroundColor',
       title: 'Initial Background Color',
       type: 'string',
@@ -20,7 +41,21 @@ export const upcomingInitiative = defineType({
           { title: 'Mint (#CFE7DA)', value: '#CFE7DA' },
         ],
       },
-      validation: (Rule) => Rule.required(),
+      hidden: ({ document }) => document?.backgroundType === 'image',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          if (context.document?.backgroundType !== 'image' && !value) {
+            return 'Required when Background Type is Color'
+          }
+          return true
+        }),
+    }),
+    defineField({
+      name: 'backgroundImage',
+      title: 'Background Image',
+      type: 'image',
+      options: { hotspot: true },
+      hidden: ({ document }) => document?.backgroundType !== 'image',
     }),
     defineField({
       name: 'title',
@@ -70,16 +105,17 @@ export const upcomingInitiative = defineType({
       title: 'title',
       month: 'launchMonth',
       year: 'launchYear',
+      isLaunched: 'isLaunched',
     },
     prepare(selection) {
-      const { title, month, year } = selection
+      const { title, month, year, isLaunched } = selection
       const monthName = month
         ? `${month.charAt(0).toUpperCase()}${month.slice(1)}`
         : ''
       const launch = monthName ? `${monthName} ${year}` : `${year}`
 
       return {
-        title: title || 'Upcoming Initiative',
+        title: `${isLaunched ? '[LAUNCHED] ' : ''}${title || 'Upcoming Initiative'}`,
         subtitle: year ? `Launch: ${launch}` : 'Launch date not set',
       }
     },

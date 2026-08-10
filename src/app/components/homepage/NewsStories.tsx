@@ -5,7 +5,8 @@ import { urlFor } from '@/sanity/lib/image';
 
 export const NewsStories = async () => {
   const stories = await getLatestNewsList();
-  const placeholderCount = Math.max(0, 3 - stories.length);
+
+  if (stories.length === 0) return null;
 
   return (
     <section className="py-12 ">
@@ -56,10 +57,6 @@ export const NewsStories = async () => {
               </Link>
             );
           })}
-
-          {Array.from({ length: placeholderCount }).map((_, index) => (
-            <div key={`placeholder-${index}`} className="aspect-[4/5] rounded-sm bg-gray-300" />
-          ))}
         </div>
 
         <div className="flex justify-center">

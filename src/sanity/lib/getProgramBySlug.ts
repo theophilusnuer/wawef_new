@@ -106,7 +106,8 @@ export interface FullProgram {
     approachText?: string;
     approachList?: string[];
   };
-  overview?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  overview?: any[];
 
   projectReport?: {
     asset?: {

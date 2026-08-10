@@ -1,6 +1,6 @@
 'use client'
 import { Donate } from '../Donate';
-import hw from '../../assets/images/hero-women.webp';
+import hw from '../../assets/images/hw.jpeg';
 import Image from 'next/image';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';

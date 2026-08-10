@@ -6,17 +6,21 @@ export interface UpcomingInitiativeItem {
   launchMonth?: string;
   launchYear: number;
   shortDescription: string;
-  initialBackgroundColor: string;
+  backgroundType: 'color' | 'image';
+  initialBackgroundColor?: string;
+  backgroundImage?: { asset: { _ref: string } };
 }
 
 export async function getUpcomingInitiativesList() {
-  const query = `*[_type == "upcomingInitiative"]{
+  const query = `*[_type == "upcomingInitiative" && isLaunched != true]{
     _id,
     title,
     launchMonth,
     launchYear,
     shortDescription,
-    initialBackgroundColor
+    backgroundType,
+    initialBackgroundColor,
+    backgroundImage
   } | order(
     launchYear asc,
     select(

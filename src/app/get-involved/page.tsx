@@ -49,7 +49,7 @@ const involvementItems: InvolvementItem[] = [
       "Be part of a journey that creates lasting change, one girl at a time.",
     ],
     buttonLabel: "Sponsor a Girl",
-    href: "/enock-addico-scholarship",
+    href: "/give-monthly",
   },
   {
     key: "volunteer",
@@ -128,7 +128,7 @@ export default function GetInvolvedPage() {
                 <button
                   type="button"
                   onClick={() => openLink(item.href)}
-                  className="mt-7 inline-flex items-center justify-center bg-[#F2C94C] text-[#1D1D1B] font-semibold px-4 py-3  hover:opacity-90 transition-opacity"
+                  className="mt-7 inline-flex items-center justify-center bg-[#F2C94C] text-[#1D1D1B] font-semibold px-4 py-3  hover:opacity-90 transition-opacity cursor-pointer"
                 >
                   {item.buttonLabel}
                 </button>

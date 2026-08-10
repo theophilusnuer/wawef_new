@@ -1,6 +1,6 @@
 import { sanityFetch } from './live';
 
-interface ImpactStoryImage {
+ interface ImpactStoryImage {
   asset?: { _ref?: string };
   alt?: string;
 }
@@ -12,23 +12,13 @@ interface ImpactStoryBodyItem {
   alt?: string;
 }
 
-interface ImpactStorySections {
-  introduction?: ImpactStoryBodyItem[];
-  situation?: ImpactStoryBodyItem[];
-  intervention?: ImpactStoryBodyItem[];
-  outcome?: ImpactStoryBodyItem[];
-  closing?: ImpactStoryBodyItem[];
-}
-
 export interface ImpactStoryBySlugResult {
   _id: string;
   _createdAt?: string;
   title: string;
   coverImage?: ImpactStoryImage;
   youtubeLink?: string;
-  storySections?: ImpactStorySections;
   body?: ImpactStoryBodyItem[];
-  gallery?: ImpactStoryImage[];
 }
 
 export async function getImpactStoryBySlug(
@@ -40,9 +30,7 @@ export async function getImpactStoryBySlug(
     title,
     coverImage,
     youtubeLink,
-    storySections,
-    body,
-    gallery
+    body
   }`;
   const { data } = await sanityFetch({
     query,

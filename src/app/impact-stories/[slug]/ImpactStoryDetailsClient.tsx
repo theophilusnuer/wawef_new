@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { PortableText } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import SocialShareButtons from '@/app/components/SocialShareButtons';
 
@@ -18,23 +19,13 @@ type StoryBodyItem = {
   alt?: string;
 };
 
-type StorySections = {
-  introduction?: StoryBodyItem[];
-  situation?: StoryBodyItem[];
-  intervention?: StoryBodyItem[];
-  outcome?: StoryBodyItem[];
-  closing?: StoryBodyItem[];
-};
-
 type StoryData = {
   _id: string;
   _createdAt?: string;
   title: string;
   coverImage?: StoryImage;
   youtubeLink?: string;
-  storySections?: StorySections;
   body?: StoryBodyItem[];
-  gallery?: StoryImage[];
 };
 
 type StoryCard = {
@@ -60,44 +51,59 @@ interface ImpactStoryDetailsClientProps {
 const hasImageAsset = (image?: StoryImage): image is StoryImage & { asset: { _ref: string } } =>
   Boolean(image?.asset?._ref);
 
-const buildParagraphs = (body?: StoryBodyItem[]): string[] => {
-  if (!Array.isArray(body)) return [];
-
-  return body
-    .filter((item) => item._type === 'block' && Array.isArray(item.children))
-    .map((item) =>
-      (item.children || [])
-        .map((child) => child.text || '')
-        .join('')
-        .trim(),
-    )
-    .flatMap((text) =>
-      text
-        .split(/\r?\n+/)
-        .map((part) => part.trim())
-        .filter((part) => part.length > 0),
-    );
-};
-
-const getStoryParagraphs = (story: StoryData): string[] => {
-  const sections = story.storySections;
-  const orderedSections: Array<StoryBodyItem[] | undefined> = [
-    sections?.introduction,
-    sections?.situation,
-    sections?.intervention,
-    sections?.outcome,
-    sections?.closing,
-  ];
-
-  const sectionParagraphs = orderedSections.flatMap((sectionBody) =>
-    buildParagraphs(sectionBody),
-  );
-
-  if (sectionParagraphs.length > 0) {
-    return sectionParagraphs;
-  }
-
-  return buildParagraphs(story.body);
+const portableTextComponents = {
+  block: {
+    normal: ({ children }: { children: React.ReactNode }) => (
+      <p className="text-gray-700 text-base sm:text-lg leading-[1.65] mb-2">{children}</p>
+    ),
+    h2: ({ children }: { children: React.ReactNode }) => (
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-10 mb-4">{children}</h2>
+    ),
+    h3: ({ children }: { children: React.ReactNode }) => (
+      <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mt-8 mb-3">{children}</h3>
+    ),
+    blockquote: ({ children }: { children: React.ReactNode }) => (
+      <blockquote className="border-l-4 border-[#F2C94C] pl-4 italic text-gray-600 my-6">{children}</blockquote>
+    ),
+  },
+  marks: {
+    strong: ({ children }: { children: React.ReactNode }) => <strong className="font-bold">{children}</strong>,
+    em: ({ children }: { children: React.ReactNode }) => <em className="italic">{children}</em>,
+    link: ({ value, children }: { value?: { href?: string }; children: React.ReactNode }) => (
+      <a href={value?.href} target="_blank" rel="noopener noreferrer" className="underline text-[#8A6D1A] hover:opacity-80">
+        {children}
+      </a>
+    ),
+  },
+  list: {
+    bullet: ({ children }: { children: React.ReactNode }) => (
+      <ul className="list-disc ml-6 mb-5 space-y-1 text-gray-700 text-base sm:text-lg">{children}</ul>
+    ),
+    number: ({ children }: { children: React.ReactNode }) => (
+      <ol className="list-decimal ml-6 mb-5 space-y-1 text-gray-700 text-base sm:text-lg">{children}</ol>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }: { children: React.ReactNode }) => <li className="leading-[1.65]">{children}</li>,
+    number: ({ children }: { children: React.ReactNode }) => <li className="leading-[1.65]">{children}</li>,
+  },
+  types: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    image: ({ value }: { value: any }) => {
+      if (!value?.asset?._ref) return null;
+      return (
+        <div className="my-10 sm:my-12 lg:my-16">
+          <Image
+            src={urlFor(value).width(1400).fit('max').quality(88).url()}
+            alt={value.alt || 'Story image'}
+            width={1400}
+            height={700}
+            className="w-full h-auto max-h-[20rem] sm:max-h-[24rem] lg:max-h-[28rem] rounded-sm object-cover"
+          />
+        </div>
+      );
+    },
+  },
 };
 
 const getYouTubeEmbedUrl = (youtubeLink?: string): string | null => {
@@ -129,42 +135,7 @@ const ImpactStoryDetailsClient: React.FC<ImpactStoryDetailsClientProps> = ({
   otherStories,
   newsStories,
 }) => {
-  const paragraphs = getStoryParagraphs(story);
   const youtubeEmbedUrl = getYouTubeEmbedUrl(story.youtubeLink);
-  const galleryImages = Array.isArray(story.gallery) ? story.gallery.filter(hasImageAsset) : [];
-  const maxImagesToInsert = Math.min(galleryImages.length, Math.floor(paragraphs.length / 3));
-
-  const storyContent = paragraphs.reduce<React.ReactNode[]>((acc, paragraph, index) => {
-    acc.push(
-      <p
-        key={`p-${index}`}
-        className="text-gray-700 text-base sm:text-lg leading-[1.65] mb-5 sm:mb-7 lg:mb-9 whitespace-pre-line"
-      >
-        {paragraph}
-      </p>,
-    );
-
-    if ((index + 1) % 3 === 0) {
-      const imageInsertIndex = Math.floor((index + 1) / 3) - 1;
-
-      if (imageInsertIndex < maxImagesToInsert) {
-        const img = galleryImages[imageInsertIndex];
-        acc.push(
-          <div key={`img-${index}`} className="my-10 sm:my-12 lg:my-14">
-            <Image
-              src={urlFor(img).width(1000).fit('max').quality(86).url()}
-              alt={img.alt || 'Impact story image'}
-              width={1000}
-              height={620}
-              className="w-full h-[25vh] md:h-[40vh] mx-auto object-top object-cover"
-            />
-          </div>,
-        );
-      }
-    }
-
-    return acc;
-  }, []);
 
   return (
     <div className="my-[2rem] px-6 md:px-10 lg:px-20 2xl:px-64">
@@ -210,9 +181,10 @@ const ImpactStoryDetailsClient: React.FC<ImpactStoryDetailsClientProps> = ({
             )
           )}
 
-          <div className="space-y-6 sm:space-y-8 lg:space-y-10">
-            {storyContent.length > 0 ? (
-              storyContent
+          <div>
+            {story.body && story.body.length > 0 ? (
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              <PortableText value={story.body as any} components={portableTextComponents as any} />
             ) : (
               <p className="text-gray-600 text-base sm:text-lg leading-[1.65]">
                 No impact story content available yet.
