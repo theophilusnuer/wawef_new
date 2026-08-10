@@ -59,22 +59,22 @@ export const Footer: FC = () => {
             <h3 className="mb-6 text-sm md:text-base">Get Involved</h3>
             <ul className="space-y-2 text-xs md:text-base text-[#666666]">
               <li>
-                <Link href="/reviews-resources" className="hover:underline underline-offset-5">
+                <Link href="mailto:info@wawef.org?subject=Partnership%20Inquiry" className="hover:underline underline-offset-5">
                   Partner with us
                 </Link>
               </li>
               <li>
-                <Link href="/impact-stories" className="hover:underline underline-offset-5">
+                <Link href="/give-monthly" className="hover:underline underline-offset-5">
                   Sponsor a girl
                 </Link>
               </li>
               <li>
-                <Link href="/news-stories" className="hover:underline underline-offset-5">
+                <Link href="mailto:info@wawef.org?subject=Volunteer%20Application" className="hover:underline underline-offset-5">
                   Volunteer
                 </Link>
               </li>
               <li>
-                <Link href="/news-stories" className="hover:underline underline-offset-5">
+                <Link href="mailto:info@wawef.org?subject=Advisory%20Board%20Interest" className="hover:underline underline-offset-5">
                   Join Advisory Board
                 </Link>
               </li>
