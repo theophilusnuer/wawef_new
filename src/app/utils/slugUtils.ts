@@ -3,16 +3,25 @@
  * @param title - The title of the program (e.g., "Cosmetology - Beauty & Personal Care")
  * @returns The generated slug (e.g., "cosmetology-beauty-personal-care")
  */
-export const generateProgramSlug = (title: string): string => {
-    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+// Generic slug generator
+const generateSlug = (input: string): string => {
+    return input.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 };
 
-/**
- * Generates the full URL path for a program's detail page.
- * @param title - The title of the program (e.g., "Cosmetology - Beauty & Personal Care")
- * @returns The full path (e.g., "/program/cosmetology-beauty-personal-care")
- */
-export const getProgramPath = (title: string): string => {
-    const slug = generateProgramSlug(title);
-    return `/programs/${slug}`;
-};
+// Program slug and path
+export const generateProgramSlug = (title: string): string => generateSlug(title);
+export const getProgramPath = (title: string): string => `/programs/${generateProgramSlug(title)}`;
+
+// Project slug and path
+export const generateProjectSlug = (title: string): string => generateSlug(title);
+export const getProjectPath = (title: string): string => `/projects/${generateProjectSlug(title)}`;
+
+// News slug and path
+export const generateNewsSlug = (title: string): string => generateSlug(title);
+export const getNewsPath = (title: string): string => `/news-stories/${generateNewsSlug(title)}`;
+
+// Impact Story slug and path
+export const generateImpactStorySlug = (title: string): string => generateSlug(title);
+export const getImpactStoryPath = (title: string): string => `/impact-stories/${generateImpactStorySlug(title)}`;
+

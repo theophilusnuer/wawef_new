@@ -36,7 +36,7 @@ export const Donate: FC = () => {
     <>
       <div className="py-8 px-4 max-w-lg mx-auto">
         {/* Tabs */}
-        <div className="flex bg-white rounded-lg justify-center space-x-2 mb-6 w-full">
+        <div className="flex bg-white rounded-md justify-center space-x-2 mb-6 w-full border">
           <button
             onClick={() => setDonationMode('once')}
             className={`py-1.5 font-medium cursor-pointer md:px-6 rounded-lg text-sm w-full md:text-base ${donationMode === 'once'

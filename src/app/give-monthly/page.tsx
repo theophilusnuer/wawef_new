@@ -7,8 +7,8 @@ const page = () => {
   return (
     <div>
       <GiveMonthlyHero />
-      <Motivation/>
-      <GalleryOfImpact/>
+      {/* <Motivation/> */}
+      {/* <GalleryOfImpact/> */}
     </div>
   )
 }

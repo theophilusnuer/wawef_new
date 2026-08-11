@@ -85,16 +85,22 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
   }, [name, email, amount, type, donationMode, programTitle, country]);
 
   useEffect(() => {
+    let initializeTimer: ReturnType<typeof setTimeout> | undefined;
+
     if (isOpen && step === 2) {
-      fetchSessionId();
-      const initializeStripe = async () => {
-        await stripePromise;
-        setStripeReady(true);
-      };
-      initializeStripe();
+      initializeTimer = setTimeout(() => {
+        void fetchSessionId();
+        void stripePromise.then(() => {
+          setStripeReady(true);
+        });
+      }, 0);
     }
 
     return () => {
+      if (initializeTimer) {
+        clearTimeout(initializeTimer);
+      }
+
       if (!isOpen) {
         setLoading(false);
         setStripeReady(false);

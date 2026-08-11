@@ -30,7 +30,8 @@ export default async function TeamMemberPage({
     const { name, pic, role, description } = member;
 
     return (
-        <div className="w-full max-w-[72rem] mx-auto py-10 px-4">
+         <div className="py-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 {/* 1st Column: Picture, Name, Role */}
                 <div className="flex flex-col items-center">
@@ -56,6 +57,7 @@ export default async function TeamMemberPage({
                         </p>
                     ))}
                 </div>
+            </div>
             </div>
         </div>
     );

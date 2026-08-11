@@ -37,7 +37,7 @@ export const Sdg: FC = () => {
   ];
 
   return (
-    <div className="py-10 px-4 md:px-10 sm:max-w-lg md:max-w-2xl lg:max-w-[52rem] md:mt-8 md:mb-16 mb-6 mx-auto bg-[#F5F5F5]">
+    <div className="py-10 px-4 md:px-10 sm:max-w-lg md:max-w-2xl lg:max-w-[52rem] md:mt-8 md:mb-16 mb-6 mx-auto">
       <h2 className="text-lg md:text-3xl text-center mb-6 md:mb-8">
         We are committed to Sustainable Development Goals
       </h2>

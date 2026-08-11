@@ -3,7 +3,7 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import PaymentOptions from "./PaymentOptions";
-import { countries } from "../Countries"; // Adjusted import path
+import { countries } from "../Countries"; 
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 // Reusable DonateButton Component
