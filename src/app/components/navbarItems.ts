@@ -42,6 +42,12 @@ export const NAVBAR_ITEMS: NavItem[] = [
     href: '/impact-stories',
   },
   {
+    key: 'careers',
+    label: 'Careers',
+    type: 'link',
+    href: '/careers',
+  },
+  {
     key: 'get-involved',
     label: 'Get Involved',
     type: 'link',

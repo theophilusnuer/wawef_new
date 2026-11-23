@@ -11,6 +11,7 @@ import { impactStory, news } from './impactStoryNews'
 import { resource } from './resource'
 import { impactSummary } from './impactSummary'
 import { upcomingInitiative } from './upcomingInitiative'
+import { career } from './career'
 
 export const schemaTypes: SchemaTypeDefinition[] = [
 	program,
@@ -23,4 +24,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
 	news,
 	impactSummary,
 	upcomingInitiative,
+	career,
 ];
